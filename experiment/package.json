@@ -1,0 +1,16 @@
+{
+  "name": "experiment",
+  "private": true,
+  "workspaces": [
+    "webserver",
+    "matrix-multiplication"
+  ],
+  "version": "1.0.0",
+  "repository": "https://github.com/choffmann/hsfl-bachelor-thesis",
+  "author": "Cedrik Hoffmann",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn workspace webserver dev",
+    "build:matrix": "yarn workspace matrix-multiplication build"
+  }
+}

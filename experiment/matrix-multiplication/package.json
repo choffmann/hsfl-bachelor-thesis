@@ -1,0 +1,17 @@
+{
+  "name": "matrix-multiplication",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "repository": "https://github.com/choffmann/hsfl-bachelor-thesis",
+  "author": "Cedrik Hoffmann",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "yarn build:wasm && yarn build:ts",
+    "build:wasm": "cd matrix-wasm && wasm-pack build --profiling --no-pack --target web",
+    "build:ts": "cd matrix-ts && tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
