@@ -38,7 +38,7 @@ const BenchmarkModel = ({title, n, onButtonClick, currentStep, ready, estimatedT
           <Typography variant="h6">{title}</Typography>
           <Button variant="contained" disabled={disableButton} onClick={() => handleButtonClick()}>Starten</Button>
         </Stack>
-        <Typography variant="subtitle2" color="text.secondary">Geschätzte Zeit: {estimatedTime} Sekunden</Typography>
+        <Typography variant="subtitle2" color="text.secondary">Geschätzte Zeit: {Math.round(estimatedTime)} Sekunden</Typography>
         {running &&
           <Box sx={{mt: 1}}>
             <LinearProgress variant="determinate" value={progress}/>
