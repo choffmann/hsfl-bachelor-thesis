@@ -10,7 +10,7 @@
   "author": "Cedrik Hoffmann",
   "license": "MIT",
   "scripts": {
-    "start": "yarn workspace webserver dev",
+    "start": "concurrently \"yarn workspace webserver dev\" \"yarn workspace matrix-multiplication watch:ts\" ",
     "build:matrix": "yarn workspace matrix-multiplication build"
   }
 }

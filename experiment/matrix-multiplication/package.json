@@ -9,7 +9,8 @@
   "scripts": {
     "build": "yarn build:wasm && yarn build:ts",
     "build:wasm": "cd matrix-wasm && wasm-pack build --profiling --no-pack --target web",
-    "build:ts": "cd matrix-ts && tsc"
+    "build:ts": "cd matrix-ts && tsc",
+    "watch:ts": "cd matrix-ts && tsc -w"
   },
   "devDependencies": {
     "typescript": "^5.3.3"

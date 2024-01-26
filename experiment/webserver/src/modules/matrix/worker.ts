@@ -16,7 +16,6 @@ export interface WebWorkerSendData {
 }
 
 self.addEventListener("message", async (event: MessageEvent<WebWorkerReceiveData>) => {
-  console.log("Starting WebWorker", event.data)
   const {id, n} = event.data
   const subscription = status$.subscribe(value => {
     self.postMessage({id, step: value, status: "running"})

@@ -1,7 +1,7 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import IndexPage from "./pages/IndexPage";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
-import MatrixMultiplication from "./pages/MatrixMultiplication";
+import MatrixMultiplication from "./modules/matrix/MatrixMultiplication.tsx";
 
 function App() {
   const theme = createTheme()
