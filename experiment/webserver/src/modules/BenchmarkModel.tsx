@@ -1,5 +1,5 @@
-import {Box, Button, Stack, Typography} from "@mui/material";
-import React, {useMemo} from "react";
+import {Box, Button, LinearProgress, Stack, Typography} from "@mui/material";
+import React, {useEffect, useMemo, useState} from "react";
 
 export interface BenchmarkModelProps {
   title: string
@@ -11,19 +11,40 @@ export interface BenchmarkModelProps {
 }
 
 const BenchmarkModel = ({title, n, onButtonClick, currentStep, ready, estimatedTime}: BenchmarkModelProps) => {
+  const [running, setRunning] = useState(false)
+
+  useEffect(() => {
+    if (n === currentStep) {
+      setRunning(false)
+    }
+  }, [currentStep]);
+
+  const progress = useMemo(() => {
+    return Math.round(100 / n * currentStep)
+  }, [currentStep])
 
   const disableButton = useMemo(() => {
-    return ready !== undefined && !ready
-  }, [ready])
+    return (ready !== undefined && !ready) || running
+  }, [ready, running])
+
+  const handleButtonClick = () => {
+    setRunning(true)
+    onButtonClick()
+  }
 
   return (
       <Box>
         <Stack direction="row" justifyContent="space-between" sx={{mb: 2}}>
           <Typography variant="h6">{title}</Typography>
-          <Button variant="contained" disabled={disableButton} onClick={() => onButtonClick()}>Starten</Button>
+          <Button variant="contained" disabled={disableButton} onClick={() => handleButtonClick()}>Starten</Button>
         </Stack>
         <Typography variant="subtitle2" color="text.secondary">Geschätzte Zeit: {estimatedTime} Sekunden</Typography>
-        <Typography variant="subtitle2" color="text.secondary">Status: {currentStep}/{n}</Typography>
+        {running &&
+          <Box sx={{mt: 1}}>
+            <LinearProgress variant="determinate" value={progress}/>
+            <Typography variant="subtitle2" color="text.secondary">Status: {currentStep}/{n}</Typography>
+          </Box>
+        }
       </Box>
   )
 }
