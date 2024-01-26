@@ -1,16 +1,18 @@
 mod utils;
 
 use wasm_bindgen::prelude::*;
+use web_sys::js_sys;
+use serde::Serialize;
 
 #[wasm_bindgen]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, Serialize)]
 pub struct NthReport {
     pub n: usize,
     pub time: usize,
 }
 
 #[wasm_bindgen]
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Serialize)]
 pub struct BenchmarkReport {
     pub total_time: usize,
     nth_report: Vec<NthReport>,
@@ -28,8 +30,8 @@ impl BenchmarkReport {
         self.total_time = total_time;
     }
 
-    pub fn get_nth_report(&self, n: usize) -> NthReport {
-        self.nth_report.get(n).copied().unwrap()
+    pub fn to_json(&self) -> Result<JsValue, JsValue> {
+        Ok(serde_wasm_bindgen::to_value(&self)?)
     }
 }
 
@@ -46,13 +48,18 @@ fn generate_random_matrix(n: usize) -> Matrix {
 }
 
 #[wasm_bindgen]
-pub fn matrix_multi(n: usize) -> BenchmarkReport {
+pub fn matrix_multi(n: usize, report_status: &js_sys::Function) -> BenchmarkReport {
     console_log("[WASM] Starting Matrix multiplication");
     utils::set_panic_hook();
     let mut report = BenchmarkReport::default();
     let start = instant::Instant::now();
+    let this = JsValue::null();
 
-    for i in 1..n {
+    for i in 1..=n {
+
+        let report_value = JsValue::from(i);
+        let _ = report_status.call1(&this, &report_value);
+
         let a_matrix = generate_random_matrix(i);
         let b_matrix = generate_random_matrix(i);
         let mut result = vec![vec![0; i + 1]; i + 1];
@@ -70,7 +77,6 @@ pub fn matrix_multi(n: usize) -> BenchmarkReport {
     }
     let total_duration = start.elapsed();
     report.add_total_time(total_duration.as_millis() as usize);
-    console_log(format!("[WASM] Finished {:?}", report).as_str());
     report
 }
 

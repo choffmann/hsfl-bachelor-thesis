@@ -45,14 +45,29 @@ const LineChart = ({n, tsReport, wasmReport, jsReport}: LineChartProps) => {
 
           <Line data={{
             labels: Array.from(Array(n).keys()),
-            datasets
+            datasets,
           }}/>
           {(tsReport || jsReport || wasmReport) &&
               <Box>
                 <Typography>Benötigte Zeit insgesamt:</Typography>
-                {tsReport && <Typography><Icon path={mdiLanguageTypescript} size={1}/> {calculateTotalNthTime(tsReport) / 1000} Sekunden</Typography>}
-                {jsReport && <Typography><Icon path={mdiLanguageJavascript} size={1}/> {jsReport.totalTime} ms</Typography>}
-                {wasmReport && <Typography><Icon path={mdiLanguageRust} size={1}/> {wasmReport.totalTime} ms</Typography>}
+                {tsReport &&
+                    <Typography>
+                      <Icon path={mdiLanguageTypescript} size={1}/>
+                      {calculateTotalNthTime(tsReport) / 1000} Sekunden
+                    </Typography>
+                }
+                {jsReport &&
+                    <Typography>
+                      <Icon path={mdiLanguageJavascript} size={1}/>
+                      {jsReport.totalTime} ms
+                    </Typography>
+                }
+                {wasmReport &&
+                    <Typography>
+                      <Icon path={mdiLanguageRust} size={1}/>
+                      {wasmReport.totalTime} ms
+                    </Typography>
+                }
               </Box>
           }
         </Box>

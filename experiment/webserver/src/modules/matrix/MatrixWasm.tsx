@@ -4,10 +4,11 @@ import {matrix_wasm} from "matrix-multiplication"
 import BenchmarkModel from "../BenchmarkModel.tsx";
 import {useEstimatedTimeONPow3} from "../../hooks/useEstimatedTime.ts";
 import {WebWorkerSendData} from "./worker";
+import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 
 export interface MatrixWasmProps {
   n: number
-  onCompleted: (report: matrix_wasm.BenchmarkReport | undefined) => any
+  onCompleted: (report: BenchmarkReport | undefined) => any
 }
 
 const MatrixWasm = ({n, onCompleted}: MatrixWasmProps) => {
@@ -26,7 +27,7 @@ const MatrixWasm = ({n, onCompleted}: MatrixWasmProps) => {
     const worker = new Worker(new URL("./worker/WasmWorker.ts", import.meta.url), {type: "module"})
     const taskId = Date.now()
     setCurrentStep(0)
-    worker.addEventListener("message", (event) => {
+    worker.addEventListener("message", (event: MessageEvent<WebWorkerSendData>) => {
       const {status, report, step} = event.data
       switch (status) {
         case "running":
@@ -34,7 +35,7 @@ const MatrixWasm = ({n, onCompleted}: MatrixWasmProps) => {
           break
         case "completed":
           console.log("[WASM] Completed", report)
-          //onCompleted(report)
+          onCompleted(report)
           worker.terminate()
           break
       }
