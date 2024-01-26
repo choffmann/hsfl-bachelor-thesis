@@ -1,16 +1,15 @@
-export function greet() {
-  alert("Hello from TypeScript")
-}
+import {BehaviorSubject} from "rxjs";
 
-export const MAX_SIZE = 500
 export type Matrix = number[][]
+
+export interface NthReport {
+  n: number
+  time: number
+}
 
 export interface BenchmarkReport {
   totalTime: number
-  nthReport: {
-    n: number
-    time: number
-  }[]
+  nthReport: NthReport[]
 }
 
 function generateRandomMatrix(n: number) {
@@ -39,7 +38,9 @@ function generateEmptyMatrix(n: number) {
   return matrix
 }
 
-export function matrixMulti() {
+export const status$ = new BehaviorSubject<number>(0)
+
+export async function matrixMulti(n: number) {
   let report: BenchmarkReport = {
     nthReport: [],
     totalTime: 0
@@ -47,9 +48,9 @@ export function matrixMulti() {
   console.log("[TS] Starting matrix multiplication")
   const start = performance.now()
 
-  for (let i = 1; i <= MAX_SIZE; i++) {
+  for (let i = 1; i <= n; i++) {
+    status$.next(i)
     const startTime = performance.now()
-
     const aMatrix = generateRandomMatrix(i)
     const bMatrix = generateRandomMatrix(i)
     const result: Matrix = generateEmptyMatrix(i)

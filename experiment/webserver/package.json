@@ -16,10 +16,13 @@
     "@mdi/react": "^1.6.1",
     "@mui/material": "^5.15.6",
     "@mui/styled-engine-sc": "^6.0.0-alpha.13",
+    "chart.js": "^4.4.1",
     "matrix-multiplication": "*",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.3",
+    "rxjs": "^7.8.1",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {
