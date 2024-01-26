@@ -50,11 +50,11 @@ export async function matrixMulti(n: number) {
 
   for (let i = 1; i <= n; i++) {
     status$.next(i)
-    const startTime = performance.now()
     const aMatrix = generateRandomMatrix(i)
     const bMatrix = generateRandomMatrix(i)
     const result: Matrix = generateEmptyMatrix(i)
 
+    const startTime = performance.now()
     for (let row = 0; row <= i; row++) {
       for (let col = 0; col <= i; col++) {
         for (let inner = 0; inner <= i; inner++) {

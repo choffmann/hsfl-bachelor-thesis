@@ -1,8 +1,8 @@
 import React, {useCallback, useState} from "react";
-import {WebWorkerSendData} from "./worker.ts";
 import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 import BenchmarkModel from "../BenchmarkModel.tsx";
 import {useEstimatedTimeONPow3} from "../../hooks/useEstimatedTime.ts";
+import {WebWorkerSendData} from "./worker";
 
 export interface MatrixTsProps {
   n: number
@@ -17,7 +17,7 @@ const MatrixTs = ({n, onComplete}: MatrixTsProps) => {
   }, n)
 
   const handleOnTypeScriptClick = useCallback(() => {
-    const worker = new Worker(new URL("./worker.ts", import.meta.url), {type: "module"})
+    const worker = new Worker(new URL("./worker/TsWorker.ts", import.meta.url), {type: "module"})
     const taskId = Date.now()
     setCurrentStep(0)
     worker.addEventListener("message", (event: MessageEvent<WebWorkerSendData>) => {

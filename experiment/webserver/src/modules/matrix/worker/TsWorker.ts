@@ -1,19 +1,7 @@
 import {matrixMulti, status$} from "matrix-multiplication/matrix-ts/dist"
 import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
+import {WebWorkerReceiveData} from "./index.ts";
 
-export interface WebWorkerReceiveData {
-  id: string
-  n: number
-}
-
-type WebWorkerStatus = "running" | "completed"
-
-export interface WebWorkerSendData {
-  id: string,
-  status: WebWorkerStatus
-  step: number
-  report?: BenchmarkReport
-}
 
 self.addEventListener("message", async (event: MessageEvent<WebWorkerReceiveData>) => {
   const {id, n} = event.data
