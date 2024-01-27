@@ -58,9 +58,9 @@ const AnalyseTable = ({n, wasmReport, jsReport, tsReport}: ChartTableProps) => {
   }, [tsReport, wasmReport, jsReport])
 
   const tableRow = [
+    {report: jsReport, name: "JavaScript"},
     {report: tsReport, name: "TypeScript"},
-    {report: wasmReport, name: "WASM"},
-    {report: jsReport, name: "JavaScript"}
+    {report: wasmReport, name: "WebAssembly"},
   ]
 
   const TableToolBar = () => {
@@ -75,7 +75,7 @@ const AnalyseTable = ({n, wasmReport, jsReport, tsReport}: ChartTableProps) => {
               id="tableTitle"
               component="div"
           >
-            Wertetabelle
+            Wertetabelle (Zeit)
           </Typography>
 
           <Tooltip title={"Download Report"}>
@@ -95,6 +95,7 @@ const AnalyseTable = ({n, wasmReport, jsReport, tsReport}: ChartTableProps) => {
             <TableHead>
               <TableRow>
                 <TableCell>Sprache</TableCell>
+                <TableCell>Total</TableCell>
                 <TableCell>Gesamt</TableCell>
                 <TableCell>Durchschnitt (mean)</TableCell>
                 <TableCell>Mittelwert (median)</TableCell>
@@ -104,6 +105,7 @@ const AnalyseTable = ({n, wasmReport, jsReport, tsReport}: ChartTableProps) => {
               {tableRow.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.report && row.report.totalTime + " ms" || "-"}</TableCell>
                     <TableCell>{row.report && calculateTotalNthTime(row.report) + " ms" || "-"}</TableCell>
                     <TableCell>{row.report && calculateMean(row.report) + " ms" || "-"}</TableCell>
                     <TableCell>{row.report && calculateMedian(row.report) + " ms" || "-"}</TableCell>

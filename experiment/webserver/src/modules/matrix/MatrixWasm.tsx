@@ -43,7 +43,7 @@ const MatrixWasm = ({n, onCompleted}: MatrixWasmProps) => {
   }
 
   return (
-      <BenchmarkModel title="WASM" n={n} estimatedTime={estimatedTime} currentStep={currentStep} ready={ready} onButtonClick={() => handleOnClick()}/>
+      <BenchmarkModel title="WebAssembly" n={n} estimatedTime={estimatedTime} currentStep={currentStep} ready={ready} onButtonClick={() => handleOnClick()}/>
   )
 }
 

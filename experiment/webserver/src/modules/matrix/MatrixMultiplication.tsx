@@ -30,7 +30,7 @@ const MatrixMultiplication = (props: MatrixMultiplicationProps) => {
         <Box sx={{mt: 3, mb: 3}}>
           <Stack spacing={2}>
             <Stack spacing={1}>
-              <Typography variant="h5">Matrizenmultiplikation</Typography>
+              <Typography variant="h4">Matrizenmultiplikation</Typography>
               <MatrixDescription/>
               <TextField
                   label={"Wähle eine N"}
@@ -39,7 +39,7 @@ const MatrixMultiplication = (props: MatrixMultiplicationProps) => {
               />
             </Stack>
 
-            <Stack spacing={2} direction="row" justifyContent="space-evenly">
+            <Stack spacing={2} direction={{xs: "column", sm: "row"}} justifyContent="space-evenly">
               <Paper elevation={3} sx={{p: 2, width: "100%"}}>
                 <MatrixJs n={n} onComplete={(report) => setJsReport(report ?? null)}/>
               </Paper>
