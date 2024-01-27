@@ -1,8 +1,17 @@
-import {CategoryScale, Chart, ChartDataset, LinearScale, LineElement, PointElement} from "chart.js";
+import {
+  CategoryScale,
+  Chart,
+  ChartDataset, Legend,
+  LinearScale,
+  LineElement,
+  Tooltip as ChartTooltip,
+  PointElement,
+  Title
+} from "chart.js";
 import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 import {
   Box,
-  Paper,
+  Paper, Tooltip,
   Typography
 } from "@mui/material";
 import {Line} from "react-chartjs-2";
@@ -16,21 +25,34 @@ export interface LineChartProps {
 }
 
 const LineChart = ({n, tsReport, wasmReport, jsReport}: LineChartProps) => {
-  Chart.register(CategoryScale, LinearScale, PointElement, LineElement)
+  Chart.register(CategoryScale,
+      LinearScale,
+      PointElement,
+      LineElement,
+      Title,
+      ChartTooltip,
+      Legend
+  )
 
   const datasets = useMemo(() => {
     let set: ChartDataset<"line", number[]>[] = []
     tsReport && set.push({
       label: "TypeScript",
-      data: tsReport.nthReport.map(x => x.time)
+      data: tsReport.nthReport.map(x => x.time),
+      borderColor: "#2f74c0",
+      backgroundColor: "#2f74c0"
     })
     jsReport && set.push({
       label: "JavaScript",
-      data: jsReport.nthReport.map(x => x.time)
+      data: jsReport.nthReport.map(x => x.time),
+      borderColor: "#e8d44d",
+      backgroundColor: "#e8d44d"
     })
     wasmReport && set.push({
       label: "WebAssembly",
-      data: wasmReport.nthReport.map(x => x.time)
+      data: wasmReport.nthReport.map(x => x.time),
+      borderColor: "#f04900",
+      backgroundColor: "#f04900"
     })
     return set
   }, [tsReport, wasmReport, jsReport])
@@ -43,6 +65,9 @@ const LineChart = ({n, tsReport, wasmReport, jsReport}: LineChartProps) => {
           <Line data={{
             labels: Array.from(Array(n).keys()),
             datasets,
+          }}
+          options={{
+
           }}/>
         </Box>
       </Paper>
