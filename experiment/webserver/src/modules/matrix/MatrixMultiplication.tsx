@@ -1,14 +1,12 @@
 import {Box, Container, Paper, Stack, TextField, Typography} from "@mui/material";
 import MatrixDescription from "./MatrixDescription.tsx";
-import React, {
-  useEffect,
-  useState
-} from "react";
+import React, {useState} from "react";
 import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
-import LineChart from "../chart/LineChart.tsx";
+import LineChart from "../analyse/LineChart.tsx";
 import MatrixTs from "./MatrixTs.tsx";
 import MatrixWasm from "./MatrixWasm.tsx";
 import MatrixJs from "./MatrixJs.tsx";
+import AnalyseTable from "../analyse/AnalyseTable.tsx";
 
 export interface MatrixMultiplicationProps {
 
@@ -16,34 +14,16 @@ export interface MatrixMultiplicationProps {
 
 const DEFAULT_N = 300
 
-const calculateTimeConstant = () => {
-  const medianTime = 44.7568
-  const defaultN = 300
-
-  return medianTime / (Math.pow(defaultN, 3))
-}
-
 const MatrixMultiplication = (props: MatrixMultiplicationProps) => {
   const [n, setN] = useState(DEFAULT_N)
-  const [estimatedTime, setEstimatedTime] = useState(0)
   const [tsReport, setTsReport] = useState<BenchmarkReport | null>(null)
   const [jsReport, setJsReport] = useState<BenchmarkReport | null>(null)
   const [wasmReport, setWasmReport] = useState<BenchmarkReport | null>(null)
-
-  useEffect(() => {
-    setEstimatedTime(estimateTime(n))
-  }, [n])
 
   const handleSetNInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value)
     isNaN(value) ? setN(DEFAULT_N) : setN(value)
   }
-
-  const estimateTime = (n: number) => {
-    const k = calculateTimeConstant()
-    return k * Math.pow(n, 3)
-  }
-
 
   return (
       <Container>
@@ -76,6 +56,7 @@ const MatrixMultiplication = (props: MatrixMultiplicationProps) => {
 
 
             <LineChart n={n} tsReport={tsReport} wasmReport={wasmReport} jsReport={jsReport}/>
+            <AnalyseTable n={n} tsReport={tsReport} jsReport={jsReport} wasmReport={wasmReport}/>
           </Stack>
         </Box>
       </Container>

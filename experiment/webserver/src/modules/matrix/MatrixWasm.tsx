@@ -15,7 +15,7 @@ const MatrixWasm = ({n, onCompleted}: MatrixWasmProps) => {
   const [ready, setReady] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
   const estimatedTime = useEstimatedTimeONPow3({
-    medianTime: 44.80740,
+    medianTime: 11.325,
     medianN: 300
   }, n)
 
