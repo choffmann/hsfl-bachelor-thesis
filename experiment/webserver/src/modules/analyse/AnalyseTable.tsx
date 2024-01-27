@@ -21,6 +21,24 @@ export interface ChartTableProps {
 }
 
 const AnalyseTable = ({n, wasmReport, jsReport, tsReport}: ChartTableProps) => {
+
+  const handleDownloadReport = () => {
+    const report = {
+      n,
+      tsReport: tsReport || {},
+      wasmReport: wasmReport || {},
+      jsReport: jsReport || {}
+    }
+
+    const bytes = new TextEncoder().encode(JSON.stringify(report))
+    const file = new Blob([bytes], {type: "application/json"})
+    const url = URL.createObjectURL(file)
+    const link = document.createElement("a")
+    link.download = `report-matrix-${Date.now()}.json`
+    link.href = url
+    link.click()
+  }
+
   const calculateTotalNthTime = useCallback((report: BenchmarkReport) => {
     return report.nthReport.map(x => x.time).reduce((acc, v) => acc + v, 0)
   }, [tsReport, wasmReport, jsReport])
@@ -61,7 +79,7 @@ const AnalyseTable = ({n, wasmReport, jsReport, tsReport}: ChartTableProps) => {
           </Typography>
 
           <Tooltip title={"Download Report"}>
-            <IconButton>
+            <IconButton onClick={() => handleDownloadReport()}>
               <Icon path={mdiDownload} size={1}/>
             </IconButton>
           </Tooltip>
