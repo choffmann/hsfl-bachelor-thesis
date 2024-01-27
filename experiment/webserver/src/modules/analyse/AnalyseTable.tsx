@@ -1,6 +1,6 @@
 import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 import {
- IconButton,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -106,7 +106,7 @@ const AnalyseTable = ({n, wasmReport, jsReport, tsReport}: ChartTableProps) => {
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.report && calculateTotalNthTime(row.report) + " ms" || "-"}</TableCell>
                     <TableCell>{row.report && calculateMean(row.report) + " ms" || "-"}</TableCell>
-                    <TableCell>{row.report && calculateMedian(row.report) || "-"}</TableCell>
+                    <TableCell>{row.report && calculateMedian(row.report) + " ms" || "-"}</TableCell>
                   </TableRow>
               ))}
             </TableBody>

@@ -77,6 +77,7 @@ pub fn matrix_multi(n: usize, report_status: &js_sys::Function) -> BenchmarkRepo
     }
     let total_duration = start.elapsed();
     report.add_total_time(total_duration.as_millis() as usize);
+    console_log("[WASM] Finished Matrix multiplication");
     report
 }
 

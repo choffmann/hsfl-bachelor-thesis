@@ -34,7 +34,6 @@ const MatrixWasm = ({n, onCompleted}: MatrixWasmProps) => {
           setCurrentStep(step)
           break
         case "completed":
-          console.log("[WASM] Completed", report)
           onCompleted(report)
           worker.terminate()
           break

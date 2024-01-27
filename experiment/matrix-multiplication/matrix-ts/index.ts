@@ -64,7 +64,7 @@ export async function matrixMulti(n: number) {
     }
 
     const endTime = performance.now()
-    report.nthReport.push({n: i, time: endTime - startTime})
+    report.nthReport.push({n: i, time: Math.round(endTime - startTime)})
   }
   const end = performance.now()
   console.log("[TS] Finished matrix multiplication")
