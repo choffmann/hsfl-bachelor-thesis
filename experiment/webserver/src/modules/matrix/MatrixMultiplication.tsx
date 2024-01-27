@@ -41,8 +41,7 @@ const MatrixMultiplication = (props: MatrixMultiplicationProps) => {
 
             <Stack spacing={2} direction="row" justifyContent="space-evenly">
               <Paper elevation={3} sx={{p: 2, width: "100%"}}>
-                <MatrixJs n={n} onComplete={() => {
-                }}/>
+                <MatrixJs n={n} onComplete={(report) => setJsReport(report ?? null)}/>
               </Paper>
 
               <Paper elevation={3} sx={{p: 2, width: "100%"}}>
