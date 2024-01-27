@@ -1,5 +1,3 @@
-import {BehaviorSubject} from "rxjs";
-
 export type Matrix = number[][]
 
 export interface NthReport {
@@ -38,9 +36,7 @@ function generateEmptyMatrix(n: number) {
   return matrix
 }
 
-export const status$ = new BehaviorSubject<number>(0)
-
-export async function matrixMulti(n: number) {
+export async function matrixMulti(n: number, reportStatus: (n: number) => any) {
   let report: BenchmarkReport = {
     nthReport: [],
     totalTime: 0
@@ -49,7 +45,7 @@ export async function matrixMulti(n: number) {
   const start = performance.now()
 
   for (let i = 1; i <= n; i++) {
-    status$.next(i)
+    reportStatus(i)
     const aMatrix = generateRandomMatrix(i)
     const bMatrix = generateRandomMatrix(i)
     const result: Matrix = generateEmptyMatrix(i)
