@@ -12,7 +12,7 @@ import {
   useTheme
 } from "@mui/material";
 import Icon from "@mdi/react";
-import {mdiCake, mdiChevronRight, mdiMatrix} from "@mdi/js";
+import {mdiBaguette, mdiCake, mdiChevronRight, mdiMatrix} from "@mdi/js";
 
 export interface IndexPageProps {
 
@@ -52,13 +52,13 @@ const IndexPage = (props: IndexPageProps) => {
                 <ListItemText primary="Matrizenmultiplikation"/>
                 <Icon path={mdiChevronRight} size={1}/>
               </ListItemButton>
-              <ListItemButton>
+              <ListItemButton  onClick={() => navigateToBenchmark("mandelbrot")}>
                 <ListItemAvatar>
                   <Avatar sx={{backgroundColor: randomColor()}}>
-                    <Icon path={mdiCake} size={1}/>
+                    <Icon path={mdiBaguette} size={1}/>
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary="Fannkuch Redux"/>
+                <ListItemText primary="Mandelbrot"/>
                 <Icon path={mdiChevronRight} size={1}/>
               </ListItemButton>
             </List>

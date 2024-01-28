@@ -1,5 +1,5 @@
-
-export type MandelbrotMap = { x: number, y: number, z: number, isMandelBrot: boolean }[]
+export type MandelbrotMapItem = { x: number, y: number, z: number, isMandelBrot: boolean }
+export type MandelbrotMap = MandelbrotMapItem[]
 export type BenchmarkReport = { totalTime: number, nthReport: NthReport }
 export type NthReport = { n: number, time: number }[]
 
@@ -67,16 +67,18 @@ function calcZ(c: Complex, n: number): [number, boolean] {
   return [i, abs <= 2]
 }
 
-export function mandelbrotTs(n: number, reportStatus: (step: number, map: MandelbrotMap) => any, options: MandelBrotOptions) {
+export async function mandelbrotTs(n: number, options: MandelBrotOptions, reportStatus: (step: number) => any, reportMap: (map: MandelbrotMap) => any) {
+  console.log("[TS] Starting mandelbrot benchmark")
   let report: BenchmarkReport = {
     totalTime: 0,
     nthReport: []
   }
-  const map: MandelbrotMap = []
+  let map: MandelbrotMap = []
+
   const start = performance.now()
 
   for (let i = 1; i <= n; i++) {
-    reportStatus(i, map)
+    reportStatus(i)
     const startTime = performance.now()
 
     for (let yMap = 0; yMap <= options.height; yMap++) {
@@ -95,6 +97,8 @@ export function mandelbrotTs(n: number, reportStatus: (step: number, map: Mandel
   }
 
   const end = performance.now()
+  console.log("[TS] Finished mandelbrot benchmark")
+  reportMap(map)
   report.totalTime = Math.round(end - start)
   return report
 }
