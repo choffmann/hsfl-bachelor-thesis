@@ -1,0 +1,4 @@
+# Notes
+
+## tsconfig
+- target ESNext
