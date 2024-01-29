@@ -12,7 +12,7 @@ const draw = (map: MandelbrotMap, ctx: OffscreenCanvasRenderingContext2D) => {
 }
 
 self.addEventListener("message", async (event: MessageEvent<any>) => {
-  const {n, id} = event.data
+  const {n, id, render} = event.data
   const canvas: OffscreenCanvas = event.data.canvas
   const ctx = canvas.getContext("2d")
 
@@ -34,7 +34,7 @@ self.addEventListener("message", async (event: MessageEvent<any>) => {
   }
 
   const reportMap = (map: MandelbrotMap) => {
-    if (ctx) {
+    if (render && ctx) {
       draw(map, ctx)
       const bitmap = canvas.transferToImageBitmap()
       self.postMessage({id, bitmap, status: "bitmap"})

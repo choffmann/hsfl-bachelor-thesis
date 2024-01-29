@@ -1,4 +1,13 @@
-import {Box, Container, Paper, Stack, TextField, Typography} from "@mui/material";
+import {
+  Box, Checkbox,
+  Container, FormControlLabel,
+  IconButton,
+  Paper,
+  Stack,
+  TextField,
+  Toolbar, Tooltip,
+  Typography
+} from "@mui/material";
 import React, {createRef, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import MandelbrotBitmap from "./MandelbrotBitmap.tsx";
 import LineChart from "../analyse/LineChart.tsx";
@@ -6,16 +15,16 @@ import AnalyseTable from "../analyse/AnalyseTable.tsx";
 import {useWorker} from "../../hooks/useWorker.ts";
 import BenchmarkModel from "../BenchmarkModel.tsx";
 import {useCanvas} from "../../hooks/useCanvas.ts";
+import {useMandelbrotSettings} from "../../hooks/useSettings.ts";
 
 export interface MandelbrotProps {
 
 }
 
-const DEFAULT_N = 200
 
 const Mandelbrot = (props: MandelbrotProps) => {
-  const [n, setN] = useState(DEFAULT_N)
-  const tsWorker = useWorker(new URL("./worker/TsMandelbrotWorker.ts", import.meta.url), n)
+  const settings = useMandelbrotSettings()
+  const tsWorker = useWorker(new URL("./worker/TsMandelbrotWorker.ts", import.meta.url), settings.n)
   const tsCanvas = useCanvas()
 
   useEffect(() => {
@@ -26,10 +35,6 @@ const Mandelbrot = (props: MandelbrotProps) => {
     tsWorker.finished && tsCanvas.rebuildOffscreen()
   }, [tsWorker.finished]);
 
-  const handleSetNInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value)
-    isNaN(value) ? setN(DEFAULT_N) : setN(value)
-  }
 
   const tsAppendWorkerHandler = (event: MessageEvent<any>) => {
     const {status} = event.data
@@ -41,40 +46,53 @@ const Mandelbrot = (props: MandelbrotProps) => {
 
   return (
       <Container>
-        <Box sx={{mt: 3, mb: 3}}>
+        <Box sx={{mt: 2}}>
           <Stack spacing={2}>
             <Stack spacing={1}>
               <Typography variant="h4">Mandelbrot</Typography>
               <Typography>
                 Dieser Algorithmus berechnet die Mandelbrot Menge. Die Mandelbrot Menge
-                ist eine Menge der komplexen Zahlen, wo eine Folge beschränkt ist. Diese Menge kann
+                ist eine Menge der komplexen Zahlen, wo eine Folge beschränkt ist. Diese Menge
+                kann
                 als Fraktal visualisiert werden.
               </Typography>
               <TextField
                   label={"Wähle eine N"}
-                  value={n}
-                  onChange={handleSetNInput}
+                  value={settings.n}
+                  onChange={(e) => settings.setN(e.target.value)}
               />
+
+              <FormControlLabel control={<Checkbox checked={settings.displayCanvas}/>}
+                                label={"Benchmark visualisieren"}
+                                onChange={(_, checked) => settings.setDisplayCanvas(checked)}/>
             </Stack>
 
-            <Stack spacing={2} direction={{xs: "column", sm: "row"}} justifyContent="space-evenly">
+            <Stack spacing={2} direction={{xs: "column", sm: "row"}}
+                   justifyContent="space-evenly">
               <Paper elevation={3} sx={{p: 2, width: "100%"}}>
-                <BenchmarkModel title="TypeScript" n={n} estimatedTime={0}
+                <BenchmarkModel title="TypeScript" n={settings.n} estimatedTime={0}
                                 currentStep={tsWorker.step}
                                 onButtonClick={() => {
-                                  tsWorker.startWorker({canvas: tsCanvas.offscreen}, [tsCanvas.offscreen!!])
+                                  tsWorker.startWorker({
+                                    canvas: tsCanvas.offscreen,
+                                    render: settings.displayCanvas
+                                  }, [tsCanvas.offscreen!!])
                                 }}/>
               </Paper>
             </Stack>
 
-            <Stack spacing={2} direction={{xs: "column", sm: "row"}} justifyContent="space-evenly">
-              <MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"} ref={tsCanvas.ref}/>
+            <Stack spacing={2} direction={{xs: "column", sm: "row"}}
+                   justifyContent="space-evenly">
+              <MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"}
+                                hide={!settings.displayCanvas || !tsCanvas.hasContent}
+                                ref={tsCanvas.ref}/>
               {/*<MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"} map={tsBitMap} display={tsBitMap !== null && tsBitMap !== undefined}/>*/}
               {/*<MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"} map={tsBitMap} display={tsBitMap !== null && tsBitMap !== undefined}/>*/}
             </Stack>
 
-            <LineChart n={n} tsReport={tsWorker.report} wasmReport={null} jsReport={null}/>
-            <AnalyseTable n={n} tsReport={tsWorker.report} jsReport={null} wasmReport={null}/>
+            <LineChart n={settings.n} tsReport={tsWorker.report} wasmReport={null} jsReport={null}/>
+            <AnalyseTable n={settings.n} tsReport={tsWorker.report} jsReport={null}
+                          wasmReport={null}/>
           </Stack>
         </Box>
       </Container>

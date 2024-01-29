@@ -3,6 +3,7 @@ import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 export function useCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const [offscreen, setOffscreen] = useState<OffscreenCanvas | null>(null)
+  const [hasContent, setHasContent] = useState(false)
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -11,6 +12,7 @@ export function useCanvas() {
   }, [canvasRef.current]);
 
   const drawBitmap = (bitmap: ImageBitmap) => {
+    setHasContent(true)
     if (canvasRef.current) {
       const ctx = canvasRef.current?.getContext("2d")
       window.requestAnimationFrame(() => {
@@ -29,6 +31,7 @@ export function useCanvas() {
     ref: canvasRef,
     offscreen,
     drawBitmap,
-    rebuildOffscreen
+    rebuildOffscreen,
+    hasContent
   }
 }

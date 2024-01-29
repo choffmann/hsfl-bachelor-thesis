@@ -2,16 +2,20 @@ import {Box, Paper, Typography} from "@mui/material";
 import React, {ForwardedRef, forwardRef, useCallback, useEffect, useMemo, useRef} from "react";
 
 export interface MandelbrotBitmapProps {
-  title: string
+  title: string,
+  hide: boolean
 }
 
-const MandelbrotBitmap = forwardRef(({title,}: MandelbrotBitmapProps, ref: ForwardedRef<HTMLCanvasElement>) => {
+const MandelbrotBitmap = forwardRef(({
+                                       title,
+                                       hide
+                                     }: MandelbrotBitmapProps, ref: ForwardedRef<HTMLCanvasElement>) => {
 
   return (
-      <Paper elevation={2} sx={{p: 2}}>
+      <Paper elevation={2} sx={{p: 2, display: hide ? "none" : "block"}}>
         <Typography variant="h6">{title}</Typography>
         <Box sx={{display: "flex", justifyContent: "center"}}>
-          <canvas style={{width: "300px", height: "150px"}} ref={ref}/>
+          <canvas style={{width: "100%", height: "100%"}} ref={ref}/>
         </Box>
       </Paper>
   )
