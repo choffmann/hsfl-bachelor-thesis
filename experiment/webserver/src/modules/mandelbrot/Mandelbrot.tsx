@@ -1,28 +1,42 @@
 import {Box, Container, Paper, Stack, TextField, Typography} from "@mui/material";
-import React, {useRef, useState} from "react";
-import TsMandelbrot from "./TsMandelbrot.tsx";
-import {MandelbrotMap} from "mandelbrot/mandelbrot-ts/dist";
+import React, {createRef, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import MandelbrotBitmap from "./MandelbrotBitmap.tsx";
-import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 import LineChart from "../analyse/LineChart.tsx";
 import AnalyseTable from "../analyse/AnalyseTable.tsx";
+import {useWorker} from "../../hooks/useWorker.ts";
+import BenchmarkModel from "../BenchmarkModel.tsx";
+import {useCanvas} from "../../hooks/useCanvas.ts";
 
 export interface MandelbrotProps {
 
 }
 
-const DEFAULT_N = 50
+const DEFAULT_N = 200
 
 const Mandelbrot = (props: MandelbrotProps) => {
   const [n, setN] = useState(DEFAULT_N)
-  const [tsBitMap, setTsBitMap] = useState<MandelbrotMap | null>(null)
-  const [tsReport, setTsReport] = useState<BenchmarkReport | null>(null)
-  const [jsReport, setJsReport] = useState<BenchmarkReport | null>(null)
-  const [wasmReport, setWasmReport] = useState<BenchmarkReport | null>(null)
+  const tsWorker = useWorker(new URL("./worker/TsMandelbrotWorker.ts", import.meta.url), n)
+  const tsCanvas = useCanvas()
+
+  useEffect(() => {
+    tsWorker.registerHandler(tsAppendWorkerHandler)
+  }, []);
+
+  useEffect(() => {
+    tsWorker.finished && tsCanvas.rebuildOffscreen()
+  }, [tsWorker.finished]);
 
   const handleSetNInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value)
     isNaN(value) ? setN(DEFAULT_N) : setN(value)
+  }
+
+  const tsAppendWorkerHandler = (event: MessageEvent<any>) => {
+    const {status} = event.data
+    if (status === "bitmap") {
+      const bitmap: ImageBitmap = event.data.bitmap
+      tsCanvas.drawBitmap(bitmap)
+    }
   }
 
   return (
@@ -45,18 +59,22 @@ const Mandelbrot = (props: MandelbrotProps) => {
 
             <Stack spacing={2} direction={{xs: "column", sm: "row"}} justifyContent="space-evenly">
               <Paper elevation={3} sx={{p: 2, width: "100%"}}>
-                <TsMandelbrot n={n} onCompleted={(report) => setTsReport(report)} onBitmapChanged={(map) => setTsBitMap(prev => prev !== null ? [...prev, ...map] : map)}/>
+                <BenchmarkModel title="TypeScript" n={n} estimatedTime={0}
+                                currentStep={tsWorker.step}
+                                onButtonClick={() => {
+                                  tsWorker.startWorker({canvas: tsCanvas.offscreen}, [tsCanvas.offscreen!!])
+                                }}/>
               </Paper>
             </Stack>
 
             <Stack spacing={2} direction={{xs: "column", sm: "row"}} justifyContent="space-evenly">
-              <MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"} map={tsBitMap} display={tsBitMap !== null && tsBitMap !== undefined}/>
+              <MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"} ref={tsCanvas.ref}/>
               {/*<MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"} map={tsBitMap} display={tsBitMap !== null && tsBitMap !== undefined}/>*/}
               {/*<MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"} map={tsBitMap} display={tsBitMap !== null && tsBitMap !== undefined}/>*/}
             </Stack>
 
-            <LineChart n={n} tsReport={tsReport} wasmReport={wasmReport} jsReport={jsReport}/>
-            <AnalyseTable n={n} tsReport={tsReport} jsReport={jsReport} wasmReport={wasmReport}/>
+            <LineChart n={n} tsReport={tsWorker.report} wasmReport={null} jsReport={null}/>
+            <AnalyseTable n={n} tsReport={tsWorker.report} jsReport={null} wasmReport={null}/>
           </Stack>
         </Box>
       </Container>

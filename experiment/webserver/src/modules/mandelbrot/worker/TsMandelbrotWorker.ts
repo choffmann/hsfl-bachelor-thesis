@@ -1,26 +1,24 @@
-import {WebWorkerReceiveData} from "../../matrix/worker";
 import {
   mandelbrotTs,
   MandelBrotOptions,
-  BenchmarkReport, MandelbrotMapItem, MandelbrotMap
+  MandelbrotMap
 } from "mandelbrot/mandelbrot-ts"
 
-export type TsMandelbrotWorkerStatus = "running" | "updateSteps" | "updateMap" | "completed"
-
-export interface TsMandelbrotWorkerMessage {
-  status: TsMandelbrotWorkerStatus
-  id: number,
-  report: BenchmarkReport,
-  step: number
-  map: MandelbrotMap
+const draw = (map: MandelbrotMap, ctx: OffscreenCanvasRenderingContext2D) => {
+  map.forEach(v => {
+    ctx.fillStyle = v.isMandelBrot ? "black" : "white"
+    ctx.fillRect(v.x, v.y, 1, 1)
+  })
 }
 
-self.addEventListener("message", async (event: MessageEvent<WebWorkerReceiveData>) => {
+self.addEventListener("message", async (event: MessageEvent<any>) => {
   const {n, id} = event.data
+  const canvas: OffscreenCanvas = event.data.canvas
+  const ctx = canvas.getContext("2d")
 
   const options: MandelBrotOptions = {
-    height: 150,
-    width: 300,
+    height: canvas.height,
+    width: canvas.width,
     xSet: {
       start: -2,
       end: 1
@@ -32,11 +30,15 @@ self.addEventListener("message", async (event: MessageEvent<WebWorkerReceiveData
   }
 
   const reportStatus = (value: number) => {
-    self.postMessage({id, step: value, status: "updateSteps"})
+    self.postMessage({id, step: value, status: "running"})
   }
 
   const reportMap = (map: MandelbrotMap) => {
-    self.postMessage({id, map, status: "updateMap"})
+    if (ctx) {
+      draw(map, ctx)
+      const bitmap = canvas.transferToImageBitmap()
+      self.postMessage({id, bitmap, status: "bitmap"})
+    }
   }
 
    mandelbrotTs(n, options, reportStatus, reportMap).then(report => {

@@ -73,11 +73,10 @@ export async function mandelbrotTs(n: number, options: MandelBrotOptions, report
     totalTime: 0,
     nthReport: []
   }
-  let map: MandelbrotMap = []
-
   const start = performance.now()
 
   for (let i = 1; i <= n; i++) {
+    let map: MandelbrotMap = []
     reportStatus(i)
     const startTime = performance.now()
 
@@ -93,12 +92,12 @@ export async function mandelbrotTs(n: number, options: MandelBrotOptions, report
     }
 
     const endTime = performance.now()
+    reportMap(map)
     report.nthReport.push({n: i, time: Math.round(endTime - startTime)})
   }
 
   const end = performance.now()
   console.log("[TS] Finished mandelbrot benchmark")
-  reportMap(map)
   report.totalTime = Math.round(end - start)
   return report
 }
