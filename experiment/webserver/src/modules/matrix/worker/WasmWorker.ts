@@ -1,6 +1,5 @@
-import {matrix_wasm} from "matrix-multiplication"
 import {WebWorkerReceiveData} from "./index.ts";
-import {BenchmarkReport, NthReport} from "matrix-multiplication/matrix-ts/dist";
+import {BenchmarkReport, matrixWasm, wasmModuleUrl} from "@benchmarks/impl";
 
 
 export interface WasmWebWorker extends WebWorkerReceiveData {
@@ -8,8 +7,8 @@ export interface WasmWebWorker extends WebWorkerReceiveData {
 
 self.addEventListener("message", async (event: MessageEvent<WasmWebWorker>) => {
   const {id, n} = event.data
-  matrix_wasm.default().then(() => {
-    const report: any = matrix_wasm.matrix_multi(n, (step: number) => {
+  matrixWasm.default(wasmModuleUrl("matrix")).then(() => {
+    const report: any = matrixWasm.matrix_multi(n, (step: number) => {
       self.postMessage({status: "running", step})
     }).to_json()
 

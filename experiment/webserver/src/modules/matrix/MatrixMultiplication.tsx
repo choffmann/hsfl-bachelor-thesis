@@ -1,12 +1,12 @@
 import {Box, Container, Paper, Stack, TextField, Typography} from "@mui/material";
 import MatrixDescription from "./MatrixDescription.tsx";
 import React, {useState} from "react";
-import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 import LineChart from "../analyse/LineChart.tsx";
 import MatrixTs from "./MatrixTs.tsx";
 import MatrixWasm from "./MatrixWasm.tsx";
 import MatrixJs from "./MatrixJs.tsx";
 import AnalyseTable from "../analyse/AnalyseTable.tsx";
+import {BenchmarkReport} from "@benchmarks/impl/dist";
 
 export interface MatrixMultiplicationProps {
 

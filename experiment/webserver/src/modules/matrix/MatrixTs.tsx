@@ -1,8 +1,8 @@
 import React, {useCallback, useState} from "react";
-import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 import BenchmarkModel from "../BenchmarkModel.tsx";
 import {useEstimatedTimeONPow3} from "../../hooks/useEstimatedTime.ts";
 import {WebWorkerSendData} from "./worker";
+import {BenchmarkReport} from "@benchmarks/impl";
 
 export interface MatrixTsProps {
   n: number

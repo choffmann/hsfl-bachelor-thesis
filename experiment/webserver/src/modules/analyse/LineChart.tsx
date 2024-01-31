@@ -8,7 +8,6 @@ import {
   PointElement,
   Title
 } from "chart.js";
-import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 import {
   Box,
   Paper, Tooltip,
@@ -16,6 +15,7 @@ import {
 } from "@mui/material";
 import {Line} from "react-chartjs-2";
 import React, {useMemo} from "react";
+import {BenchmarkReport} from "@benchmarks/impl/dist";
 
 export interface LineChartProps {
   n: number

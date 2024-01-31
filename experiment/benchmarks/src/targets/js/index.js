@@ -24,7 +24,7 @@ function generateEmptyMatrix(n) {
   return matrix
 }
 
-export async function matrixMultiJs(n, reportStatus) {
+export function matrixMultiJs(n, reportStatus) {
   let report = {
     totalTime: 0,
     nthReport: []

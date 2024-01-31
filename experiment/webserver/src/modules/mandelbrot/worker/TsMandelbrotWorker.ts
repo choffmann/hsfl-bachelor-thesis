@@ -1,8 +1,4 @@
-import {
-  mandelbrotTs,
-  MandelBrotOptions,
-  MandelbrotMap
-} from "mandelbrot/mandelbrot-ts"
+import {MandelbrotMap, MandelBrotOptions, mandelbrotTs} from "@benchmarks/impl/dist";
 
 const draw = (map: MandelbrotMap, ctx: OffscreenCanvasRenderingContext2D) => {
   map.forEach(v => {

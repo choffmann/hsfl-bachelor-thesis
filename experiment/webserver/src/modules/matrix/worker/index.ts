@@ -1,4 +1,4 @@
-import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
+import {BenchmarkReport} from "@benchmarks/impl";
 
 export interface WebWorkerReceiveData {
   id: string

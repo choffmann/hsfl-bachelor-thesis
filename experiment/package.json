@@ -3,16 +3,15 @@
   "private": true,
   "workspaces": [
     "webserver",
-    "matrix-multiplication",
-    "mandelbrot"
+    "benchmarks"
   ],
   "version": "1.0.0",
   "repository": "https://github.com/choffmann/hsfl-bachelor-thesis",
   "author": "Cedrik Hoffmann",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"yarn workspace webserver dev\" \"yarn workspace matrix-multiplication watch:ts\" ",
-    "build:matrix": "yarn workspace matrix-multiplication build",
+    "start": "yarn workspace @benchmarks/frontend dev",
+    "build:matrix": "yarn workspace benchmarks build:matrix",
     "build:mandelbrot": "yarn workspace mandelbrot build"
   }
 }

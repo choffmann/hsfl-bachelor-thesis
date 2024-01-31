@@ -1,14 +1,12 @@
 import {
   Box, Checkbox,
   Container, FormControlLabel,
-  IconButton,
   Paper,
   Stack,
   TextField,
-  Toolbar, Tooltip,
   Typography
 } from "@mui/material";
-import React, {createRef, useCallback, useEffect, useMemo, useRef, useState} from "react";
+import React, {useEffect} from "react";
 import MandelbrotBitmap from "./MandelbrotBitmap.tsx";
 import LineChart from "../analyse/LineChart.tsx";
 import AnalyseTable from "../analyse/AnalyseTable.tsx";

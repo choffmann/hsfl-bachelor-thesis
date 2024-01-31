@@ -1,4 +1,3 @@
-import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 import {
   IconButton,
   Paper,
@@ -12,6 +11,7 @@ import {
 import React, {useCallback} from "react";
 import Icon from "@mdi/react";
 import {mdiDownload} from "@mdi/js";
+import {BenchmarkReport} from "@benchmarks/impl/dist";
 
 export interface ChartTableProps {
   n: number

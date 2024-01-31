@@ -1,6 +1,6 @@
 import {useCallback, useMemo, useState} from "react";
-import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
 import {WebWorkerSendData} from "../modules/matrix/worker";
+import {BenchmarkReport} from "@benchmarks/impl";
 
 export function useWorker(
     url: URL | string,

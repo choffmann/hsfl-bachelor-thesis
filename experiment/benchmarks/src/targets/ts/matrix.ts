@@ -1,14 +1,6 @@
+import {BenchmarkReport} from "../../utils/BenchmakReport";
+
 export type Matrix = number[][]
-
-export interface NthReport {
-  n: number
-  time: number
-}
-
-export interface BenchmarkReport {
-  totalTime: number
-  nthReport: NthReport[]
-}
 
 function generateRandomMatrix(n: number) {
   let matrix: Matrix = Array.of(Array(n))
@@ -36,7 +28,7 @@ function generateEmptyMatrix(n: number) {
   return matrix
 }
 
-export async function matrixMulti(n: number, reportStatus: (n: number) => any) {
+export function matrixMultiTs(n: number, reportStatus: (n: number) => any) {
   let report: BenchmarkReport = {
     nthReport: [],
     totalTime: 0

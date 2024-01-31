@@ -1,6 +1,4 @@
 import {useState} from "react";
-import {Simulate} from "react-dom/test-utils";
-import input = Simulate.input;
 
 const DEFAULT_N = 200
 

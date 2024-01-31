@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {matrix_wasm} from "matrix-multiplication"
 
 import BenchmarkModel from "../BenchmarkModel.tsx";
 import {useEstimatedTimeONPow3} from "../../hooks/useEstimatedTime.ts";
 import {WebWorkerSendData} from "./worker";
-import {BenchmarkReport} from "matrix-multiplication/matrix-ts/dist";
+import {BenchmarkReport, wasmModuleUrl, matrixWasm} from "@benchmarks/impl";
 
 export interface MatrixWasmProps {
   n: number
@@ -20,7 +19,8 @@ const MatrixWasm = ({n, onCompleted}: MatrixWasmProps) => {
   }, n)
 
   useEffect(() => {
-    matrix_wasm.default().then(() => setReady(true))
+    const url = wasmModuleUrl("matrix")
+    matrixWasm.default(url).then(() => setReady(true))
   }, [])
 
   const handleOnClick = () => {
@@ -43,7 +43,9 @@ const MatrixWasm = ({n, onCompleted}: MatrixWasmProps) => {
   }
 
   return (
-      <BenchmarkModel title="WebAssembly" n={n} estimatedTime={estimatedTime} currentStep={currentStep} ready={ready} onButtonClick={() => handleOnClick()}/>
+      <BenchmarkModel title="WebAssembly" n={n} estimatedTime={estimatedTime}
+                      currentStep={currentStep} ready={ready}
+                      onButtonClick={() => handleOnClick()}/>
   )
 }
 

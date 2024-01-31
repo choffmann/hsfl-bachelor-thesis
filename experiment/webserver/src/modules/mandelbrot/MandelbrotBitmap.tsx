@@ -1,5 +1,5 @@
 import {Box, Paper, Typography} from "@mui/material";
-import React, {ForwardedRef, forwardRef, useCallback, useEffect, useMemo, useRef} from "react";
+import React, {ForwardedRef, forwardRef} from "react";
 
 export interface MandelbrotBitmapProps {
   title: string,

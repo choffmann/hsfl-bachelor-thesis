@@ -1,7 +1,7 @@
+import {BenchmarkReport} from "../../utils/BenchmakReport";
+
 export type MandelbrotMapItem = { x: number, y: number, z: number, isMandelBrot: boolean }
 export type MandelbrotMap = MandelbrotMapItem[]
-export type BenchmarkReport = { totalTime: number, nthReport: NthReport }
-export type NthReport = { n: number, time: number }[]
 
 export interface MandelBrotOptions {
   height: number,

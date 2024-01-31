@@ -1,5 +1,5 @@
 [package]
-name = "matrix-wasm"
+name = "matrix"
 version = "0.1.0"
 authors = ["Cedrik Hoffmann <cedrik.hoffmann@jgdperl.com>"]
 edition = "2018"

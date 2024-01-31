@@ -1,0 +1,23 @@
+{
+  "name": "@benchmarks/impl",
+  "version": "1.0.0",
+  "description": "Collection of Benchmarks",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "main:src": "src/index.ts",
+  "repository": "https://github.com/choffmann/hsfl-bachelor-thesis",
+  "author": "Cedrik Hoffmann",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "yarn build:wasm && tsc && yarn copy-wasm-files",
+    "build:wasm": "cd src/targets/wasm/matrix && wasm-pack build --profiling --no-pack --target web --out-dir ../dist/matrix",
+    "copy-wasm-files": "copyfiles -u 1 src/targets/wasm/dist/**/*_bg.wasm* dist/",
+    "clean": "rm -rf dist/"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "typescript": "^5.3.3"
+  }
+}
