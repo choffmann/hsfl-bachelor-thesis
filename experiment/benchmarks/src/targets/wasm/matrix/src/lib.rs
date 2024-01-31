@@ -10,7 +10,7 @@ use web_sys::js_sys::Function;
 #[wasm_bindgen]
 pub fn matrix_main(n: usize, reporter: Function) -> WasmBenchmarkReport {
     utils::set_panic_hook();
-    let mut benchmark = BenchmarkRunner::new("Matrix Multiplication", n, Matrix::new(n, reporter));
+    let mut benchmark = BenchmarkRunner::new(n, Matrix::new(n, reporter));
 
     return benchmark.run();
 }

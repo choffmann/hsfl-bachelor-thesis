@@ -7,3 +7,8 @@
 - Set vs. Array
 - localhost vs. server
 - esoliertes Testsystem
+
+
+- wasm file size analyse: `twiggy`
+- Vermeiden von `format!()`
+- `wasm-opt`
