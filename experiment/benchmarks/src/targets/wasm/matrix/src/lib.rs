@@ -1,38 +1,48 @@
 mod utils;
 
+use benchmark_utils::benchmark::runner::BenchmarkRunner;
+use benchmark_utils::benchmark::runner::Runner;
 use benchmark_utils::report::WasmBenchmarkReport;
 use wasm_bindgen::prelude::*;
-use web_sys::js_sys;
+use web_sys::js_sys::Function;
 
-type Matrix = Vec<Vec<usize>>;
+type MatrixType = Vec<Vec<usize>>;
 
-fn generate_random_matrix(n: usize) -> Matrix {
-    let mut matrix = vec![vec![0; n + 1]; n + 1];
-    for i in 0..=n {
-        for j in 0..=n {
-            matrix[i][j] = i * j * 20;
-        }
-    }
-    matrix
+#[wasm_bindgen]
+struct Matrix {
+    a_matrix: MatrixType,
+    b_matrix: MatrixType,
 }
 
 #[wasm_bindgen]
-pub fn matrix_multi(n: usize, report_status: &js_sys::Function) -> WasmBenchmarkReport {
-    utils::set_panic_hook();
-    console_log("[WASM] Starting Matrix multiplication");
-    let mut report = WasmBenchmarkReport::default();
-    let start = instant::Instant::now();
-    let this = JsValue::null();
+impl Matrix {
+    fn generate_random_matrix(n: usize) -> MatrixType {
+        let mut matrix = vec![vec![0; n + 1]; n + 1];
+        for i in 0..=n {
+            for j in 0..=n {
+                matrix[i][j] = i * j * 20;
+            }
+        }
+        matrix
+    }
 
-    for i in 1..=n {
-        let report_value = JsValue::from(i);
-        let _ = report_status.call1(&this, &report_value);
+    #[wasm_bindgen(constructor)]
+    pub fn new(n: usize) -> Self {
+        Self {
+            a_matrix: Matrix::generate_random_matrix(n),
+            b_matrix: Matrix::generate_random_matrix(n),
+        }
+    }
+}
 
-        let a_matrix = generate_random_matrix(i);
-        let b_matrix = generate_random_matrix(i);
+impl Runner for Matrix {
+    type Type = Self;
+
+    fn benchmark(&self, i: usize) {
+        let a_matrix = &self.a_matrix;
+        let b_matrix = &self.b_matrix;
         let mut result = vec![vec![0; i + 1]; i + 1];
 
-        let iter_start = instant::Instant::now();
         for row in 0..=i {
             for col in 0..=i {
                 for inner in 0..=i {
@@ -40,15 +50,15 @@ pub fn matrix_multi(n: usize, report_status: &js_sys::Function) -> WasmBenchmark
                 }
             }
         }
-        let iter_duration = iter_start.elapsed();
-        report.add_report(i, iter_duration.as_millis() as usize);
     }
-    let total_duration = start.elapsed();
-    report.add_total_time(total_duration.as_millis() as usize);
-    console_log("[WASM] Finished Matrix multiplication");
-    report
 }
 
-fn console_log(msg: &str) {
-    web_sys::console::log_1(&msg.into())
+#[wasm_bindgen]
+pub fn matrix_main(n: usize, reporter: Function) -> WasmBenchmarkReport {
+    utils::set_panic_hook();
+    let matrix = Matrix::new(n);
+    let mut benchmark = BenchmarkRunner::new("Matrix Multiplication", n, matrix);
+    benchmark.register_handler(reporter);
+
+    return benchmark.run();
 }

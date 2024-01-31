@@ -2,7 +2,7 @@ use serde::Serialize;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-#[derive(Debug, Copy, Clone, Serialize)]
+#[derive(Debug, Serialize)]
 pub struct NthReport {
     pub n: usize,
     pub time: usize,
