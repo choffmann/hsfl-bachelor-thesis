@@ -9,8 +9,8 @@ self.addEventListener("message", async (event: MessageEvent<WasmWebWorker>) => {
   const {n} = event.data
   matrixWasm.default(wasmModuleUrl("matrix")).then(() => {
 
-    const report = matrixWasm.matrix_main(n, (step: number) => {
-      self.postMessage({status: "running", step})
+    const report = matrixWasm.matrix_main(n, (step: matrixWasm.MatrixReport) => {
+      self.postMessage({status: "running", step: step.iter})
     }).to_json()
 
     let wasmReport: BenchmarkReport = {
