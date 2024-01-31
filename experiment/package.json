@@ -10,8 +10,7 @@
   "author": "Cedrik Hoffmann",
   "license": "MIT",
   "scripts": {
-    "start": "yarn workspace @benchmarks/frontend dev",
-    "build:matrix": "yarn workspace benchmarks build:matrix",
-    "build:mandelbrot": "yarn workspace mandelbrot build"
+    "start": "yarn build:benchmark && yarn workspace @benchmarks/frontend dev",
+    "build:benchmark": "yarn workspace @benchmarks/impl build"
   }
 }

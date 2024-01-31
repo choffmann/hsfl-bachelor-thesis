@@ -1,39 +1,8 @@
 mod utils;
 
+use benchmark_utils::report::WasmBenchmarkReport;
 use wasm_bindgen::prelude::*;
 use web_sys::js_sys;
-use serde::Serialize;
-
-#[wasm_bindgen]
-#[derive(Debug, Copy, Clone, Serialize)]
-pub struct NthReport {
-    pub n: usize,
-    pub time: usize,
-}
-
-#[wasm_bindgen]
-#[derive(Debug, Default, Serialize)]
-pub struct BenchmarkReport {
-    pub total_time: usize,
-    nth_report: Vec<NthReport>,
-}
-
-#[wasm_bindgen]
-impl BenchmarkReport {
-
-   fn add_report(&mut self, n: usize, time: usize) {
-        let report = NthReport { n, time };
-        self.nth_report.push(report);
-    }
-
-    fn add_total_time(&mut self, total_time: usize) {
-        self.total_time = total_time;
-    }
-
-    pub fn to_json(&self) -> Result<JsValue, JsValue> {
-        Ok(serde_wasm_bindgen::to_value(&self)?)
-    }
-}
 
 type Matrix = Vec<Vec<usize>>;
 
@@ -48,15 +17,14 @@ fn generate_random_matrix(n: usize) -> Matrix {
 }
 
 #[wasm_bindgen]
-pub fn matrix_multi(n: usize, report_status: &js_sys::Function) -> BenchmarkReport {
-    console_log("[WASM] Starting Matrix multiplication");
+pub fn matrix_multi(n: usize, report_status: &js_sys::Function) -> WasmBenchmarkReport {
     utils::set_panic_hook();
-    let mut report = BenchmarkReport::default();
+    console_log("[WASM] Starting Matrix multiplication");
+    let mut report = WasmBenchmarkReport::default();
     let start = instant::Instant::now();
     let this = JsValue::null();
 
     for i in 1..=n {
-
         let report_value = JsValue::from(i);
         let _ = report_status.call1(&this, &report_value);
 

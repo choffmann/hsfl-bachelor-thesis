@@ -11,13 +11,11 @@ crate-type = ["cdylib", "rlib"]
 default = ["console_error_panic_hook"]
 
 [dependencies]
+benchmark_utils = { path = "../utils" }
 wasm-bindgen = "0.2"
 web-sys = { version = "0.3", features = ["Window", "Performance", "console"] }
 console_error_panic_hook = { version = "0.1.7", optional = true }
 instant = { version = "0.1", features = [ "wasm-bindgen", "inaccurate" ] }
-serde = "1.0"
-serde_derive = "1.0"
-serde-wasm-bindgen = "0.6"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.34"

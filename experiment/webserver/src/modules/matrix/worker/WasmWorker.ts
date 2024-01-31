@@ -8,7 +8,7 @@ export interface WasmWebWorker extends WebWorkerReceiveData {
 self.addEventListener("message", async (event: MessageEvent<WasmWebWorker>) => {
   const {id, n} = event.data
   matrixWasm.default(wasmModuleUrl("matrix")).then(() => {
-    const report: any = matrixWasm.matrix_multi(n, (step: number) => {
+    const report = matrixWasm.matrix_multi(n, (step: number) => {
       self.postMessage({status: "running", step})
     }).to_json()
 
