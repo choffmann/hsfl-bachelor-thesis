@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import Icon from "@mdi/react";
 import {mdiBaguette, mdiCake, mdiChevronRight, mdiMatrix} from "@mdi/js";
+import {useMemo} from "react";
 
 export interface IndexPageProps {
 
@@ -22,20 +23,32 @@ const IndexPage = (props: IndexPageProps) => {
   const navigate = useNavigate();
   const theme = useTheme()
 
-  const randomColor = () => {
-    let hex = Math.floor(Math.random() * 0xFFFFFF);
-    return "#" + hex.toString(16);
-  }
-
   const navigateToBenchmark = (benchmark: string) => {
     navigate("benchmark/" + benchmark)
   }
+
+  const items = useMemo(() => {
+    return [
+      {
+        id: "matrix-multiplication",
+        name: "Matrizenmultiplikation",
+        icon: mdiMatrix,
+        color: "#E55812"
+      },
+      {
+        id: "mandelbrot",
+        name: "Mandelbrot",
+        icon: mdiBaguette,
+        color: "#31081F"
+      }
+    ]
+  }, [])
 
 
   return (
       <Container>
         <Stack sx={{mt: 3}} spacing={3}>
-          <Typography variant="h5">Benchmark Algorithmen</Typography>
+          <Typography variant="h4">Benchmark Algorithmen</Typography>
           <Box sx={{
             border: "solid 1px",
             borderRadius: "10px",
@@ -43,24 +56,17 @@ const IndexPage = (props: IndexPageProps) => {
             borderColor: theme.palette.grey.A200
           }}>
             <List disablePadding>
-              <ListItemButton onClick={() => navigateToBenchmark("matrix-multiplication")}>
-                <ListItemAvatar>
-                  <Avatar sx={{backgroundColor: randomColor()}}>
-                    <Icon path={mdiMatrix} size={1}/>
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Matrizenmultiplikation"/>
-                <Icon path={mdiChevronRight} size={1}/>
-              </ListItemButton>
-              <ListItemButton  onClick={() => navigateToBenchmark("mandelbrot")}>
-                <ListItemAvatar>
-                  <Avatar sx={{backgroundColor: randomColor()}}>
-                    <Icon path={mdiBaguette} size={1}/>
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Mandelbrot"/>
-                <Icon path={mdiChevronRight} size={1}/>
-              </ListItemButton>
+              {items.map(item => (
+                <ListItemButton onClick={() => navigateToBenchmark(item.id)}>
+                  <ListItemAvatar>
+                    <Avatar sx={{backgroundColor: item.color}}>
+                      <Icon path={item.icon} size={1}/>
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={item.name}/>
+                  <Icon path={mdiChevronRight} size={1}/>
+                </ListItemButton>
+              ))}
             </List>
           </Box>
         </Stack>
