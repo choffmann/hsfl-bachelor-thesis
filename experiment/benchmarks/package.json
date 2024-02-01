@@ -11,9 +11,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "yarn build:wasm && tsc && yarn copy-wasm-files",
-    "build:wasm": "cd src/targets/wasm/matrix && wasm-pack build --profiling --no-pack --target web --out-dir ../dist/matrix",
-    "copy-wasm-files": "copyfiles -u 1 src/targets/wasm/dist/**/*_bg.wasm* dist/",
+    "build": "yarn build:wasm && tsc && yarn copyfiles",
+    "build:wasm": "yarn build:wasm:matrix && yarn build:wasm:mandelbrot",
+    "build:wasm:matrix": "cd src/targets/wasm/matrix && wasm-pack build --profiling --no-pack --target web --out-dir ../dist/matrix",
+    "build:wasm:mandelbrot": "cd src/targets/wasm/mandelbrot && wasm-pack build --profiling --no-pack --target web --out-dir ../dist/mandelbrot",
+    "copyfiles": " yarn copyfiles:matrix && yarn copyfiles:mandelbrot",
+    "copyfiles:matrix": "copyfiles -u 1 src/targets/wasm/dist/**/*_bg.wasm* dist/",
+    "copyfiles:mandelbrot": "copyfiles -u 1 src/targets/mandelbrot/dist/**/*_bg.wasm* dist/",
     "clean": "rm -rf dist/"
   },
   "devDependencies": {

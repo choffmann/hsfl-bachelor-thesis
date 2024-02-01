@@ -23,22 +23,32 @@ export interface MandelbrotProps {
 const Mandelbrot = (props: MandelbrotProps) => {
   const settings = useMandelbrotSettings()
   const tsWorker = useWorker(new URL("./worker/TsMandelbrotWorker.ts", import.meta.url), settings.n)
+  const wasmWorker = useWorker(new URL("./worker/WasmMandelbrotWorker.ts", import.meta.url), settings.n)
   const tsCanvas = useCanvas()
+  const wasmCanvas = useCanvas()
 
   useEffect(() => {
-    tsWorker.registerHandler(tsAppendWorkerHandler)
+    tsWorker.registerHandler(appendCanvasHandler)
+    wasmWorker.registerHandler(appendCanvasHandler)
   }, []);
 
   useEffect(() => {
     tsWorker.finished && tsCanvas.rebuildOffscreen()
   }, [tsWorker.finished]);
 
+  useEffect(() => {
+    wasmWorker.finished && wasmCanvas.rebuildOffscreen()
+  }, [wasmWorker.finished]);
 
-  const tsAppendWorkerHandler = (event: MessageEvent<any>) => {
-    const {status} = event.data
+  const appendCanvasHandler = (event: MessageEvent<any>) => {
+    const {status, type} = event.data
     if (status === "bitmap") {
       const bitmap: ImageBitmap = event.data.bitmap
-      tsCanvas.drawBitmap(bitmap)
+      if (type === "ts") {
+        tsCanvas.drawBitmap(bitmap)
+      } else if (type === "wasm") {
+        wasmCanvas.drawBitmap(bitmap)
+      }
     }
   }
 
@@ -77,6 +87,16 @@ const Mandelbrot = (props: MandelbrotProps) => {
                                   }, [tsCanvas.offscreen!!])
                                 }}/>
               </Paper>
+              <Paper elevation={3} sx={{p: 2, width: "100%"}}>
+                <BenchmarkModel title="WebAssembly" n={settings.n} estimatedTime={0}
+                                currentStep={wasmWorker.step}
+                                onButtonClick={() => {
+                                  wasmWorker.startWorker({
+                                    canvas: wasmCanvas.offscreen,
+                                    render: settings.displayCanvas
+                                  }, [wasmCanvas.offscreen!!])
+                                }}/>
+              </Paper>
             </Stack>
 
             <Stack spacing={2} direction={{xs: "column", sm: "row"}}
@@ -84,13 +104,15 @@ const Mandelbrot = (props: MandelbrotProps) => {
               <MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"}
                                 hide={!settings.displayCanvas || !tsCanvas.hasContent}
                                 ref={tsCanvas.ref}/>
-              {/*<MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"} map={tsBitMap} display={tsBitMap !== null && tsBitMap !== undefined}/>*/}
+              <MandelbrotBitmap title={"Visuelle Darstellung (WebAssembly)"}
+                                hide={!settings.displayCanvas || !wasmCanvas.hasContent}
+                                ref={wasmCanvas.ref}/>
               {/*<MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"} map={tsBitMap} display={tsBitMap !== null && tsBitMap !== undefined}/>*/}
             </Stack>
 
-            <LineChart n={settings.n} tsReport={tsWorker.report} wasmReport={null} jsReport={null}/>
+            <LineChart n={settings.n} tsReport={tsWorker.report} wasmReport={wasmWorker.report} jsReport={null}/>
             <AnalyseTable n={settings.n} tsReport={tsWorker.report} jsReport={null}
-                          wasmReport={null}/>
+                          wasmReport={wasmWorker.report}/>
           </Stack>
         </Box>
       </Container>

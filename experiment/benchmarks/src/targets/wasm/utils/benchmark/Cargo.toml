@@ -4,6 +4,7 @@ version = "0.1.0"
 authors = ["Cedrik Hoffmann <cedrik.hoffmann@jgdperl.com>"]
 edition = "2021"
 
+
 [dependencies]
 wasm-bindgen = { version = "0.2" }
 serde = "1.0"

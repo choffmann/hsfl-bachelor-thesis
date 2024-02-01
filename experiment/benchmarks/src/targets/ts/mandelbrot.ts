@@ -67,7 +67,7 @@ function calcZ(c: Complex, n: number): [number, boolean] {
   return [i, abs <= 2]
 }
 
-export async function mandelbrotTs(n: number, options: MandelBrotOptions, reportStatus: (step: number) => any, reportMap: (map: MandelbrotMap) => any) {
+export async function mandelbrotTs(n: number, options: MandelBrotOptions, reportStatus: (step: number) => any, reportMap: (map: MandelbrotMap) => any, render: boolean) {
   console.log("[TS] Starting mandelbrot benchmark")
   let report: BenchmarkReport = {
     totalTime: 0,
@@ -92,7 +92,7 @@ export async function mandelbrotTs(n: number, options: MandelBrotOptions, report
     }
 
     const endTime = performance.now()
-    reportMap(map)
+    render && reportMap(map)
     report.nthReport.push({n: i, time: Math.round(endTime - startTime)})
   }
 

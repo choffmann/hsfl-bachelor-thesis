@@ -33,11 +33,11 @@ self.addEventListener("message", async (event: MessageEvent<any>) => {
     if (render && ctx) {
       draw(map, ctx)
       const bitmap = canvas.transferToImageBitmap()
-      self.postMessage({id, bitmap, status: "bitmap"})
+      self.postMessage({id, bitmap, status: "bitmap", type: "ts"})
     }
   }
 
-   mandelbrotTs(n, options, reportStatus, reportMap).then(report => {
-     self.postMessage({id, report, status: "completed"})
-   })
+  mandelbrotTs(n, options, reportStatus, reportMap, render).then(report => {
+    self.postMessage({id, report, status: "completed"})
+  })
 })
