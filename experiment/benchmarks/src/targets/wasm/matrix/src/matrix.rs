@@ -1,4 +1,3 @@
-use benchmark_utils::benchmark::reporter::Reporter;
 use benchmark_utils::benchmark::runner::Runner;
 use wasm_bindgen::prelude::*;
 use web_sys::js_sys::Function;
@@ -17,11 +16,11 @@ pub struct Matrix {
 impl Matrix {
     fn generate_random_matrix(n: usize) -> MatrixType {
         let mut matrix = vec![vec![0; n + 1]; n + 1];
-        for i in 0..=n {
-            for j in 0..=n {
+        (0..=n).for_each(|i| {
+            (0..=n).for_each(|j| {
                 matrix[i][j] = i * j * 20;
-            }
-        }
+            });
+        });
         matrix
     }
 
@@ -34,6 +33,12 @@ impl Matrix {
             report_func,
         }
     }
+
+    fn report(&self, report_value: MatrixReport) {
+        let this = JsValue::null();
+        let value = JsValue::from(report_value);
+        let _ = self.report_func.call1(&this, &value);
+    }
 }
 
 impl Runner for Matrix {
@@ -42,13 +47,13 @@ impl Runner for Matrix {
         let b_matrix = &self.b_matrix;
         let result = &mut self.result;
 
-        for row in 0..=i {
-            for col in 0..=i {
-                for inner in 0..=i {
+        (0..=i).for_each(|row| {
+            (0..=i).for_each(|col| {
+                (0..=i).for_each(|inner| {
                     result[row][col] += a_matrix[row][inner] * b_matrix[inner][col];
-                }
-            }
-        }
+                });
+            });
+        });
     }
 
     fn before_iter(&mut self, i: usize) {
@@ -62,14 +67,4 @@ impl Runner for Matrix {
 #[wasm_bindgen]
 pub struct MatrixReport {
     pub iter: usize,
-}
-
-impl Reporter for Matrix {
-    type ReportType = MatrixReport;
-
-    fn report(&self, report_value: Self::ReportType) {
-        let this = JsValue::null();
-        let value = JsValue::from(report_value);
-        let _ = self.report_func.call1(&this, &value);
-    }
 }

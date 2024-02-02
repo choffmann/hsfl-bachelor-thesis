@@ -19,5 +19,5 @@ pub fn mandelbrot_wasm(
     utils::set_panic_hook();
     let mut benchmark = BenchmarkRunner::new(n, Mandelbrot::new(n, opt, reporter, render));
 
-    return benchmark.run();
+    benchmark.run()
 }

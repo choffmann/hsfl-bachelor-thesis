@@ -61,6 +61,6 @@ impl Abs for Complex {
     type Output = f64;
 
     fn abs(&self) -> Self::Output {
-        ((self.x.powf(2.0) + self.y.powf(2.0)) as f64).sqrt()
+        (self.x.powf(2.0) + self.y.powf(2.0)).sqrt()
     }
 }

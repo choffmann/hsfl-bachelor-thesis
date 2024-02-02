@@ -42,6 +42,6 @@ where
         report.add_total_time(total_time as usize);
         self.runner.finished();
 
-        return report;
+        report
     }
 }

@@ -78,7 +78,7 @@ impl Mandelbrot {
         while abs <= 2.0 && i < n {
             z = z.pow2().add(&c);
             abs = z.abs();
-            i = i + 1;
+            i += 1;
         }
         (abs, abs <= 2.0)
     }
@@ -135,8 +135,4 @@ impl Runner for Mandelbrot {
     fn after_iter(&mut self, i: usize) {
         self.report_status(i)
     }
-}
-
-fn console_log(msg: &str) {
-    web_sys::console::log_1(&msg.into())
 }

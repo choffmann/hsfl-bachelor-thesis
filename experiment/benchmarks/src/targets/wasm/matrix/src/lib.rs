@@ -12,5 +12,5 @@ pub fn matrix_main(n: usize, reporter: Function) -> WasmBenchmarkReport {
     utils::set_panic_hook();
     let mut benchmark = BenchmarkRunner::new(n, Matrix::new(n, reporter));
 
-    return benchmark.run();
+    benchmark.run()
 }

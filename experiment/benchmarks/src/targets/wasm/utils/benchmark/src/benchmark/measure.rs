@@ -15,3 +15,9 @@ impl TimeMeasure {
         self.instant.elapsed().as_millis()
     }
 }
+
+impl Default for TimeMeasure {
+    fn default() -> Self {
+        Self::new()
+    }
+}
