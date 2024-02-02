@@ -1,30 +1,6 @@
-import { BenchmarkReport } from "../../utils/BenchmakReport";
-
-export type MandelbrotMapItem = { x: number, y: number, z: number, isMandelBrot: boolean }
-export type MandelbrotMap = MandelbrotMapItem[]
-
-export interface MandelBrotOptions {
-  height: number,
-  width: number,
-  xSet: {
-    start: number,
-    end: number
-  },
-  ySet: {
-    start: number,
-    end: number
-  }
-}
-
-interface ComplexNumber {
-  x: number,
-  y: number
-}
 
 class Complex {
-  public value: ComplexNumber
-
-  constructor(value: ComplexNumber) {
+  constructor(value) {
     this.value = value
   }
 
@@ -36,26 +12,26 @@ class Complex {
     return this.value.y
   }
 
-  add(other: Complex): Complex {
+  add(other) {
     return new Complex({
-      x: (this.x + other.x),
-      y: (this.y + other.y)
+      x: this.x + other.y,
+      y: this.y + other.y
     })
   }
 
-  pow2(): Complex {
+  pow2() {
     return new Complex({
       x: (Math.pow(this.x, 2) - Math.pow(this.y, 2)),
       y: ((this.x * this.y) + (this.x * this.y))
     })
   }
 
-  abs(): number {
+  abs() {
     return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
   }
 }
 
-function calcZ(c: Complex, n: number): [number, boolean] {
+function calcZ(c, n) {
   let z = new Complex({ x: 0, y: 0 })
   let i = 0
   let abs = 0
@@ -67,17 +43,16 @@ function calcZ(c: Complex, n: number): [number, boolean] {
   return [i, abs <= 2]
 }
 
-export async function mandelbrotTs(n: number, options: MandelBrotOptions, reportStatus: (step: number) => any, reportMap: (map: MandelbrotMap) => any, render: boolean) {
-  console.log("[TS] Starting mandelbrot benchmark")
-  let report: BenchmarkReport = {
+export function mandelbrotJs(n, options, reporter, render) {
+  console.log("[JS] Starting mandelbrot benchmark")
+  let report = {
     totalTime: 0,
     nthReport: []
   }
   const start = performance.now()
 
   for (let i = 1; i <= n; i++) {
-    let map: MandelbrotMap = []
-    reportStatus(i)
+    let map = []
     const startTime = performance.now()
 
     for (let yMap = 0; yMap <= options.height; yMap++) {
@@ -92,12 +67,12 @@ export async function mandelbrotTs(n: number, options: MandelBrotOptions, report
     }
 
     const endTime = performance.now()
-    render && reportMap(map)
+    render ? reporter(i, map) : reporter(i)
     report.nthReport.push({ n: i, time: Math.round(endTime - startTime) })
   }
 
   const end = performance.now()
-  console.log("[TS] Finished mandelbrot benchmark")
+  console.log("[JS] Finished mandelbrot benchmark")
   report.totalTime = Math.round(end - start)
   return report
 }
