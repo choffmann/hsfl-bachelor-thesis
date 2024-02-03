@@ -6,7 +6,7 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import MandelbrotBitmap from "./MandelbrotBitmap.tsx";
 import LineChart from "../analyse/LineChart.tsx";
 import AnalyseTable from "../analyse/AnalyseTable.tsx";
@@ -19,9 +19,10 @@ export interface MandelbrotProps {
 
 }
 
-
 const Mandelbrot = (props: MandelbrotProps) => {
   const settings = useMandelbrotSettings()
+  const tsVersions = useMemo(() => ["", "#2", "#3"], [])
+  const [tsVersionIndex, setTsVersionIndex] = useState(tsVersions.length - 1)
   const jsWorker = useWorker(new URL("./worker/JsMandelbrotWorker.ts", import.meta.url), settings.n)
   const tsWorker = useWorker(new URL("./worker/TsMandelbrotWorker.ts", import.meta.url), settings.n)
   const wasmWorker = useWorker(new URL("./worker/WasmMandelbrotWorker.ts", import.meta.url), settings.n)
@@ -53,6 +54,14 @@ const Mandelbrot = (props: MandelbrotProps) => {
       } else if (type === "js") {
         jsCanvas.drawBitmap(bitmap)
       }
+    }
+  }
+
+  const switchTsVersion = () => {
+    if (tsVersionIndex + 1 > tsVersions.length - 1) {
+      setTsVersionIndex(0)
+    } else {
+      setTsVersionIndex(prev => prev + 1)
     }
   }
 
@@ -91,12 +100,15 @@ const Mandelbrot = (props: MandelbrotProps) => {
                 }} />
             </Paper>
             <Paper elevation={3} sx={{ p: 2, width: "100%" }}>
-              <BenchmarkModel title="TypeScript" n={settings.n} estimatedTime={0}
+              <BenchmarkModel title={`TypeScript ${tsVersions[tsVersionIndex]}`} n={settings.n} estimatedTime={0}
+                versionSelection
+                onTitleClick={() => switchTsVersion()}
                 currentStep={tsWorker.step}
                 onButtonClick={() => {
                   tsWorker.startWorker({
                     canvas: tsCanvas.offscreen,
-                    render: settings.displayCanvas
+                    render: settings.displayCanvas,
+                    version: tsVersionIndex
                   }, [tsCanvas.offscreen!!])
                 }} />
             </Paper>

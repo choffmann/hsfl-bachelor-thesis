@@ -1,20 +1,6 @@
-import { BenchmarkReport } from "../../utils/BenchmakReport";
+import { MandelBrotOptions, MandelbrotMap } from ".";
+import { BenchmarkReport } from "../../../utils/BenchmakReport";
 
-export type MandelbrotMapItem = { x: number, y: number, z: number, isMandelBrot: boolean }
-export type MandelbrotMap = MandelbrotMapItem[]
-
-export interface MandelBrotOptions {
-  height: number,
-  width: number,
-  xSet: {
-    start: number,
-    end: number
-  },
-  ySet: {
-    start: number,
-    end: number
-  }
-}
 
 interface ComplexNumber {
   x: number,
@@ -67,7 +53,7 @@ function calcZ(c: Complex, n: number): [number, boolean] {
   return [i, abs <= 2]
 }
 
-export async function mandelbrotTs(n: number, options: MandelBrotOptions, reportStatus: (step: number) => any, reportMap: (map: MandelbrotMap) => any, render: boolean) {
+export function mandelbrotTs(n: number, options: MandelBrotOptions, reportStatus: (step: number) => any, reportMap: (map: MandelbrotMap) => any, render: boolean) {
   console.log("[TS] Starting mandelbrot benchmark")
   let report: BenchmarkReport = {
     totalTime: 0,
