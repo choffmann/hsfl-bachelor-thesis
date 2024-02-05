@@ -22,7 +22,9 @@ export interface MandelbrotProps {
 const Mandelbrot = (props: MandelbrotProps) => {
   const settings = useMandelbrotSettings()
   const tsVersions = useMemo(() => ["", "#2", "#3"], [])
+  const wasmVersions = useMemo(() => ["", "#2"], [])
   const [tsVersionIndex, setTsVersionIndex] = useState(tsVersions.length - 1)
+  const [wasmVersionIndex, setWasmVersionIndex] = useState(wasmVersions.length - 1)
   const jsWorker = useWorker(new URL("./worker/JsMandelbrotWorker.ts", import.meta.url), settings.n)
   const tsWorker = useWorker(new URL("./worker/TsMandelbrotWorker.ts", import.meta.url), settings.n)
   const wasmWorker = useWorker(new URL("./worker/WasmMandelbrotWorker.ts", import.meta.url), settings.n)
@@ -65,6 +67,13 @@ const Mandelbrot = (props: MandelbrotProps) => {
     }
   }
 
+  const switchWasmVersion = () => {
+    if (wasmVersionIndex + 1 > wasmVersions.length - 1) {
+      setWasmVersionIndex(0)
+    } else {
+      setWasmVersionIndex(prev => prev + 1)
+    }
+  }
   return (
     <Container>
       <Box sx={{ mt: 2 }}>
@@ -113,12 +122,15 @@ const Mandelbrot = (props: MandelbrotProps) => {
                 }} />
             </Paper>
             <Paper elevation={3} sx={{ p: 2, width: "100%" }}>
-              <BenchmarkModel title="WebAssembly" n={settings.n} estimatedTime={0}
+              <BenchmarkModel title={`WebAssembly ${wasmVersions[wasmVersionIndex]}`} n={settings.n} estimatedTime={0}
+                versionSelection
+                onTitleClick={() => switchWasmVersion()}
                 currentStep={wasmWorker.step}
                 onButtonClick={() => {
                   wasmWorker.startWorker({
                     canvas: wasmCanvas.offscreen,
-                    render: settings.displayCanvas
+                    render: settings.displayCanvas,
+                    version: wasmVersionIndex
                   }, [wasmCanvas.offscreen!!])
                 }} />
             </Paper>

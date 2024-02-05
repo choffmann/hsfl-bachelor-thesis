@@ -3,6 +3,7 @@ import { draw, workerUtility } from "."
 
 self.addEventListener("message", async (event: MessageEvent<any>) => {
   const { n, render, canvas, id } = workerUtility(event)
+  const version = event.data.version
   const ctx = canvas.getContext("2d")
 
 
@@ -24,7 +25,7 @@ self.addEventListener("message", async (event: MessageEvent<any>) => {
       self.postMessage({ id, step, status: "running" })
     }
 
-    const report = mandelbrotWasm.mandelbrot_wasm(n, opt, reporter, render).to_json()
+    const report = mandelbrotWasm.mandelbrot_wasm(n, opt, reporter, render, version).to_json()
 
     let wasmReport: BenchmarkReport = {
       totalTime: report.total_time,
