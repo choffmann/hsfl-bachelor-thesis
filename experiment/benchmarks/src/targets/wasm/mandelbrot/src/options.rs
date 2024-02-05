@@ -47,7 +47,7 @@ impl MandelbrotOptions {
 }
 
 #[wasm_bindgen]
-#[derive(Serialize)]
+#[derive(Serialize, Clone)]
 pub struct MandelbrotItem {
     pub x: i32,
     pub y: i32,
@@ -55,3 +55,13 @@ pub struct MandelbrotItem {
     pub is_mandelbrot: bool,
 }
 
+impl Default for MandelbrotItem {
+    fn default() -> Self {
+        Self {
+            x: Default::default(),
+            y: Default::default(),
+            z: Default::default(),
+            is_mandelbrot: Default::default(),
+        }
+    }
+}

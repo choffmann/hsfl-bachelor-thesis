@@ -11,6 +11,7 @@ mod utils;
 
 pub mod v1;
 pub mod v2;
+// pub mod v3;
 
 #[wasm_bindgen]
 pub enum MandelbrotVersion {

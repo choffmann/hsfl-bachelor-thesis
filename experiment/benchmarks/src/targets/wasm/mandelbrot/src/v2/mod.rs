@@ -1,12 +1,10 @@
-mod complex;
-
 use web_sys::js_sys::Function;
 
 use benchmark_utils::benchmark::runner::Runner;
 use wasm_bindgen::prelude::*;
 
 use crate::options::{MandelbrotItem, MandelbrotOptions};
-use complex::Complex;
+use num_complex::{Complex, ComplexFloat};
 
 #[wasm_bindgen]
 pub struct MandelbrotV2 {
@@ -29,14 +27,40 @@ impl MandelbrotV2 {
         }
     }
 
-    fn calc_z(&self, n: usize, c: &Complex) -> (f64, bool) {
-        let mut z = Complex::default();
+    fn run(&self, i: usize) -> Vec<MandelbrotItem> {
+        let width = self.opt.width;
+        let height = self.opt.height;
+
+        (0..=height)
+            .flat_map(|y| {
+                (0..=width).map(move |x| {
+                    let (z, is_mandelbrot) = self.calc_z(i, x, y);
+                    MandelbrotItem {
+                        x,
+                        y,
+                        z,
+                        is_mandelbrot,
+                    }
+                })
+            })
+            .collect()
+    }
+
+    fn calc_z(&self, n: usize, x: i32, y: i32) -> (f64, bool) {
+        let c = Complex::new(
+            f64::from(self.opt.get_x_start())
+                + (f64::from(x) / f64::from(self.opt.width))
+                    * f64::from(self.opt.get_x_end() - self.opt.get_x_start()),
+            f64::from(self.opt.get_y_start())
+                + (f64::from(y) / f64::from(self.opt.height))
+                    * f64::from(self.opt.get_y_end() - self.opt.get_y_start()),
+        );
+        let mut z = Complex::new(0.0, 0.0);
         let mut i = 0;
-        let mut abs = 0.0;
+        let mut abs = z.norm_sqr();
         while abs <= 2.0 && i < n {
-            z.pow2();
-            z.add(c);
-            abs = z.abs();
+            z = z.powi(2) + c;
+            abs = z.norm_sqr();
             i += 1;
         }
         (abs, abs <= 2.0)
@@ -69,37 +93,19 @@ impl Runner for MandelbrotV2 {
         ))
     }
 
-    fn before_iter(&mut self, _i: usize) {
-        self.map = vec![]
-    }
+    fn before_iter(&mut self, _i: usize) {}
 
     fn benchmark(&mut self, i: usize) {
-        let mut c = Complex::default();
-        for y_map in 0..=self.opt.height {
-            for x_map in 0..=self.opt.width {
-                let width = self.opt.width as f64;
-                let height = self.opt.height as f64;
-                let x_start = self.opt.get_x_start() as f64;
-                let x_end = self.opt.get_x_end() as f64;
-                let y_start = self.opt.get_y_start() as f64;
-                let y_end = self.opt.get_x_end() as f64;
-
-                let x = x_start + (x_map as f64 / width) * (x_end - x_start);
-                let y = y_start + (y_map as f64 / height) * (y_end - y_start);
-                c.x = x;
-                c.y = y;
-                let (z, is_mandelbrot) = self.calc_z(i, &c);
-                self.map.push(MandelbrotItem {
-                    x: x_map,
-                    y: y_map,
-                    z,
-                    is_mandelbrot,
-                })
-            }
-        }
+        self.map = self.run(i);
     }
 
     fn after_iter(&mut self, i: usize) {
         self.report_status(i)
+    }
+
+    fn finished(&mut self) {
+        web_sys::console::log_1(&JsValue::from_str(
+            "[WASM] Finished mandelbrot benchmark v2",
+        ))
     }
 }
