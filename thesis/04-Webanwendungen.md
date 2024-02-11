@@ -1,0 +1,4 @@
+## Webanwendungen
+Eine Webanwendung ist eine Software, welche im Webbrowser ausgeführt wird. Meistens ist die Programmiersprache in einer Webanwenung JavaScript oder TypeScript. 
+
+Zu Beginn des Internets bestand das Web aus statischen Dokumenten, die durch Links auf andere Seiten verwiesen. Entwickler erkannten früh die Vorteile des Client-Server-Modells. Es wurde schnell klar, dass der Webbrowser als Benutzeroberfläche für Anwendungen auf dem Server oder für lokale Anwendungen dienen kann. Durch die Entwicklung von JavaScript, war es nun möglich, nicht nur statische HTML-Dokumente anzuzeigen, sondern auch dynamisch mit ihnen zu interagieren. [@jazayeri_trends_2007]

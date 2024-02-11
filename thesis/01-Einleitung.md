@@ -1,5 +1,6 @@
 \newpage
 # Einleitung
+WebAssembly erfreut sich an immer größere Beliebtheit. 
 
 ## Hintergrund und Motivation
 

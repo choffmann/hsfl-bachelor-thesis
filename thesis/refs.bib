@@ -1,0 +1,355 @@
+
+@article{anderson_performing_1994,
+	title = {Performing Lisp analysis of the {FANNKUCH} benchmark},
+	volume = {{VII}},
+	issn = {1045-3563},
+	url = {https://dl.acm.org/doi/10.1145/382109.382124},
+	doi = {10.1145/382109.382124},
+	abstract = {This paper analyzes the {FANNKUCH} benchmark, that was discussed on the comp.lang.lisp internet newsgroup during September 1994, and reviews the performance issues underlying it. This benchmark involves operations on integers and vectors of integers so one might expect that Lisp and C versions could have comparable performance. However, the original benchmark suggested that the Lisp version was at least 10 times slower than the C version. While this version appeared to be optimized, several important improvements are possible.The improved version is between 24 and 116 percent slower than C when run on several Lisp implementations. This can be accounted for by differences in the quality of the compiled code of the inner loops of the benchmark, not by an essential difference between the two languages. The {GNU} C compiler, gcc, produces a loop with a larger overall size (footprint) but with a smaller loop body than the current Lisp compilers. In principle, a Lisp compiler can produce these loops with the same or fewer number of instructions.It is easy to write benchmarks that make Lisp appear slower than C. However, as with any highly tuned benchmark, a small change can have a profound effect on performance. even in C. For example, replacing / 2 by \&Gt;1 makes a 40\% improvement. Also changing the representation of integers and arrays of integers among C's built in types varies the performance by 80\%.},
+	pages = {2--12},
+	number = {4},
+	journaltitle = {{ACM} {SIGPLAN} Lisp Pointers},
+	shortjournal = {{SIGPLAN} Lisp Pointers},
+	author = {Anderson, Kenneth R. and Rettig, Duane},
+	urldate = {2024-01-23},
+	date = {1994-10},
+	langid = {english},
+	file = {Full Text PDF:/home/choffmann/Zotero/storage/HWH6VQ84/Anderson und Rettig - 1994 - Performing Lisp analysis of the FANNKUCH benchmark.pdf:application/pdf},
+}
+
+@inproceedings{pereira_energy_2017,
+	location = {Vancouver {BC} Canada},
+	title = {Energy efficiency across programming languages: how do energy, time, and memory relate?},
+	isbn = {978-1-4503-5525-4},
+	url = {https://dl.acm.org/doi/10.1145/3136014.3136031},
+	doi = {10.1145/3136014.3136031},
+	shorttitle = {Energy efficiency across programming languages},
+	eventtitle = {{SPLASH} '17: Conference on Systems, Programming, Languages, and Applications: Software for Humanity},
+	pages = {256--267},
+	booktitle = {Proceedings of the 10th {ACM} {SIGPLAN} International Conference on Software Language Engineering},
+	publisher = {{ACM}},
+	author = {Pereira, Rui and Couto, Marco and Ribeiro, Francisco and Rua, Rui and Cunha, Jácome and Fernandes, João Paulo and Saraiva, João},
+	urldate = {2024-01-23},
+	date = {2017-10-23},
+	langid = {english},
+	file = {Full Text PDF:/home/choffmann/Zotero/storage/XPBWHDVR/Pereira et al. - 2017 - Energy efficiency across programming languages ho.pdf:application/pdf},
+}
+
+@online{noauthor_fannkuch-redux_nodate,
+	title = {fannkuch-redux - Which programs are fastest? (Benchmarks Game)},
+	url = {https://benchmarksgame-team.pages.debian.net/benchmarksgame/performance/fannkuchredux.html},
+	urldate = {2024-01-23},
+	file = {fannkuch-redux - Which programs are fastest? (Benchmarks Game):/home/choffmann/Zotero/storage/8NN67TX6/fannkuchredux.html:text/html},
+}
+
+@online{noauthor_fannkuch-redux_nodate-1,
+	title = {fannkuch-redux description (Benchmarks Game)},
+	url = {https://benchmarksgame-team.pages.debian.net/benchmarksgame/description/fannkuchredux.html#fannkuchredux},
+	urldate = {2024-01-23},
+	file = {fannkuch-redux description (Benchmarks Game):/home/choffmann/Zotero/storage/BM9Z7WJD/fannkuchredux.html:text/html},
+}
+
+@online{gouy_computer_nodate,
+	title = {The Computer Language Benchmarks Game},
+	url = {https://benchmarksgame-team.pages.debian.net/benchmarksgame/},
+	author = {Gouy, Isaac},
+	urldate = {2024-01-23},
+	file = {Which programming language is fastest? (Benchmarks Game):/home/choffmann/Zotero/storage/LLXSU3BQ/benchmarksgame.html:text/html},
+}
+
+@online{noauthor_webassembly_nodate,
+	title = {{WebAssembly}},
+	url = {https://webassembly.org/},
+	urldate = {2024-01-23},
+	file = {WebAssembly:/home/choffmann/Zotero/storage/VS7HRINE/webassembly.org.html:text/html},
+}
+
+@unpublished{hinkelmann_speed_2019,
+	title = {Speed, Speed, Speed: {JavaScript} vs C++ vs {WebAssembly}},
+	url = {https://www.youtube.com/watch?v=81CECdKCJNc},
+	abstract = {Franziska Hinkelmann spoke at {CovalenceConf} 2019 about how {JavaScript} stacks up against C++ and {WebAssembly}, what kind of code is actually fast, and the performance considerations one should account for when building apps with web technologies.
+
+Franziska is a Software Engineer who's worked on V8 and Node.js for Google Cloud. You can find her on Twitter at   / fhinkel   and online at https://fhinkel.rocks/.
+
+{CovalenceConf} was sponsored and hosted by Slack with kind support from Microsoft, Axosoft, and Mozilla.},
+	note = {{CovalenceConf} 2019},
+	author = {Hinkelmann, Franziska},
+	urldate = {2024-01-23},
+	date = {2019-01-22},
+	langid = {english},
+}
+
+@online{noauthor_introduction_nodate,
+	title = {Introduction - Hello wasm-pack!},
+	url = {https://rustwasm.github.io/docs/wasm-pack/},
+	urldate = {2024-01-23},
+	file = {Introduction - Hello wasm-pack!:/home/choffmann/Zotero/storage/ZP3NDVMS/wasm-pack.html:text/html},
+}
+
+@online{noauthor_introduction_nodate-1,
+	title = {Introduction — {WebAssembly} 2.0 (Draft 2024-01-17)},
+	url = {https://webassembly.github.io/spec/core/intro/introduction.html},
+	urldate = {2024-01-25},
+	file = {Introduction — WebAssembly 2.0 (Draft 2024-01-17):/home/choffmann/Zotero/storage/M77VN3ZB/introduction.html:text/html},
+}
+
+@online{design_bit_2020,
+	title = {A Bit about Assembly Language},
+	url = {https://medium.com/computer-programming-languages/a-bit-about-assembly-language-e94fdf3bdb6b},
+	abstract = {Assembly was one of the first computer languages to be created. Before this language, the only way to program a computer before assembly…},
+	titleaddon = {computer programming languages},
+	author = {Design, Seattle Web},
+	urldate = {2024-01-25},
+	date = {2020-10-14},
+	langid = {english},
+	file = {Snapshot:/home/choffmann/Zotero/storage/Q82YSJK4/a-bit-about-assembly-language-e94fdf3bdb6b.html:text/html},
+}
+
+@article{group_webassembly_nodate,
+	title = {{WebAssembly} Specification},
+	author = {Group, {WebAssembly} Community and Rossberg, Andreas},
+	langid = {english},
+	file = {Group und Rossberg - WebAssembly Specification.pdf:/home/choffmann/Zotero/storage/NFRBQ936/Group und Rossberg - WebAssembly Specification.pdf:application/pdf},
+}
+
+@inproceedings{haas_bringing_2017,
+	location = {Barcelona Spain},
+	title = {Bringing the web up to speed with {WebAssembly}},
+	isbn = {978-1-4503-4988-8},
+	url = {https://dl.acm.org/doi/10.1145/3062341.3062363},
+	doi = {10.1145/3062341.3062363},
+	eventtitle = {{PLDI} '17: {ACM} {SIGPLAN} Conference on Programming Language Design and Implementation},
+	pages = {185--200},
+	booktitle = {Proceedings of the 38th {ACM} {SIGPLAN} Conference on Programming Language Design and Implementation},
+	publisher = {{ACM}},
+	author = {Haas, Andreas and Rossberg, Andreas and Schuff, Derek L. and Titzer, Ben L. and Holman, Michael and Gohman, Dan and Wagner, Luke and Zakai, Alon and Bastien, Jf},
+	urldate = {2024-01-25},
+	date = {2017-06-14},
+	langid = {english},
+	file = {Full Text PDF:/home/choffmann/Zotero/storage/Y9H93IYX/Haas et al. - 2017 - Bringing the web up to speed with WebAssembly.pdf:application/pdf},
+}
+
+@online{noauthor_instant_2021,
+	title = {instant - crates.io: Rust Package Registry},
+	url = {https://crates.io/crates/instant},
+	shorttitle = {instant - crates.io},
+	abstract = {A partial replacement for std::time::Instant that works on {WASM} too.},
+	urldate = {2024-01-26},
+	date = {2021-10-18},
+	langid = {english},
+	file = {Snapshot:/home/choffmann/Zotero/storage/X9VABVTK/instant.html:text/html},
+}
+
+@online{noauthor_introduction_nodate-2,
+	title = {Introduction - The `wasm-bindgen` Guide},
+	url = {https://rustwasm.github.io/wasm-bindgen/introduction.html},
+	urldate = {2024-01-26},
+	file = {Introduction - The `wasm-bindgen` Guide:/home/choffmann/Zotero/storage/2S78WX6S/introduction.html:text/html},
+}
+
+@online{noauthor_webassembly_2023,
+	title = {{WebAssembly} - {WebAssembly} {\textbar} {MDN}},
+	url = {https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface},
+	abstract = {The {WebAssembly} {JavaScript} object acts as the namespace for all {WebAssembly}-related functionality.},
+	urldate = {2024-01-27},
+	date = {2023-11-20},
+	langid = {american},
+	file = {Snapshot:/home/choffmann/Zotero/storage/MIGR22XN/JavaScript_interface.html:text/html},
+}
+
+@online{noauthor_mandelbrotmenge_nodate,
+	title = {Mandelbrotmenge},
+	url = {https://www.informatik.uni-leipzig.de/~meiler/Schuelerseiten.dir/DPlotzki/html/mndlbrt.htm},
+	urldate = {2024-01-27},
+	file = {Mandelbrotmenge:/home/choffmann/Zotero/storage/WFEWUKLD/mndlbrt.html:text/html},
+}
+
+@book{jazayeri_trends_2007,
+	title = {Some Trends in Web Application Development},
+	isbn = {978-0-7695-2829-8},
+	abstract = {A Web application is an application that is invoked with a Web browser over the Internet. Ever since 1994 when the Internet became available to the public and especially in 1995 when the World Wide Web put a usable face on the Internet, the Internet has become a platform of choice for a large number of ever-more sophisticated and innovative Web applications. In just one decade, the Web has evolved from being a repository of pages used primarily for accessing static, mostly scientific, information to a powerful platform for application development and deployment. New Web technologies, languages, and methodologies make it possible to create dynamic applications that represent a new model of cooperation and collaboration among large numbers of users. Web application development has been quick to adopt software engineering techniques of component orientation and standard components. For example, search, syndication, and tagging have become standard components of a new generation of collaborative applications and processes. Future developments in Web applications will be driven by advances in browser technology, Web Internet infrastructure, protocol standards, software engineering methods, and application trends.},
+	pagetotal = {199},
+	author = {Jazayeri, Mehdi},
+	date = {2007-06-23},
+	doi = {10.1109/FOSE.2007.26},
+	note = {Pages: 213},
+	file = {Full Text PDF:/home/choffmann/Zotero/storage/MIWFNJDF/Jazayeri - 2007 - Some Trends in Web Application Development.pdf:application/pdf},
+}
+
+@online{noauthor_javascript_2023,
+	title = {{JavaScript} {\textbar} {MDN}},
+	url = {https://developer.mozilla.org/en-US/docs/Web/JavaScript},
+	abstract = {{JavaScript} ({JS}) is a lightweight interpreted (or just-in-time compiled) programming language with first-class functions. While it is most well-known as the scripting language for Web pages, many non-browser environments also use it, such as Node.js, Apache {CouchDB} and Adobe Acrobat. {JavaScript} is a prototype-based, multi-paradigm, single-threaded, dynamic language, supporting object-oriented, imperative, and declarative (e.g. functional programming) styles.},
+	urldate = {2024-02-08},
+	date = {2023-09-25},
+	langid = {american},
+	file = {Snapshot:/home/choffmann/Zotero/storage/TJRS2V9C/JavaScript.html:text/html},
+}
+
+@online{noauthor_javascript_nodate,
+	title = {{JavaScript} History},
+	url = {https://www.w3schools.com/js/js_history.asp},
+	abstract = {W3Schools offers free online tutorials, references and exercises in all the major languages of the web. Covering popular subjects like {HTML}, {CSS}, {JavaScript}, Python, {SQL}, Java, and many, many more.},
+	urldate = {2024-02-08},
+	langid = {american},
+	file = {Snapshot:/home/choffmann/Zotero/storage/9T45HE64/js_history.html:text/html},
+}
+
+@online{noauthor_document_2023,
+	title = {Document Object Model ({DOM}) - Web {APIs} {\textbar} {MDN}},
+	url = {https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model},
+	abstract = {The Document Object Model ({DOM}) connects web pages to scripts or programming languages by representing the structure of a document—such as the {HTML} representing a web page—in memory. Usually it refers to {JavaScript}, even though modeling {HTML}, {SVG}, or {XML} documents as objects are not part of the core {JavaScript} language.},
+	urldate = {2024-02-08},
+	date = {2023-12-17},
+	langid = {american},
+	file = {Snapshot:/home/choffmann/Zotero/storage/TAATD525/Document_Object_Model.html:text/html},
+}
+
+@inproceedings{bierman_understanding_nodate,
+	title = {Understanding {TypeScript}},
+	url = {https://users.soe.ucsc.edu/~abadi/Papers/FTS-submitted.pdf},
+	author = {Bierman, Gavin and Abadi, Martin and Torgersen, Mads},
+	file = {FTS-submitted.pdf:/home/choffmann/Zotero/storage/2NBKZDM7/FTS-submitted.pdf:application/pdf},
+}
+
+@online{noauthor_documentation_nodate,
+	title = {Documentation - {TypeScript} for the New Programmer},
+	url = {https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html},
+	abstract = {Learn {TypeScript} from scratch},
+	urldate = {2024-02-08},
+	langid = {english},
+	file = {Snapshot:/home/choffmann/Zotero/storage/KSH79GGA/typescript-from-scratch.html:text/html},
+}
+
+@online{noauthor_javascript_nodate-1,
+	title = {{JavaScript} With Syntax For Types.},
+	url = {https://www.typescriptlang.org/},
+	abstract = {{TypeScript} extends {JavaScript} by adding types to the language. {TypeScript} speeds up your development experience by catching errors and providing fixes before you even run your code.},
+	urldate = {2024-02-08},
+	langid = {english},
+	file = {Snapshot:/home/choffmann/Zotero/storage/MX5Y8X2Y/www.typescriptlang.org.html:text/html},
+}
+
+@article{grosskurth_reference_2006,
+	title = {A reference architecture for web browsers},
+	issn = {1532060X, 15320618},
+	abstract = {A reference architecture for a domain captures the fundamental subsystems common to systems of that domain, as well as the relationships between these subsystems. The presence of a reference architecture can aid both during maintenance and at design time: it can improve understanding of a given system, it can aid in analyzing tradeoﬀs between diﬀerent design options, and it can serve as a template for designing new systems and reengineering existing ones. In this paper, we examine the history of the web browser domain and identify several underlying forces that have contributed to its evolution. We develop a reference architecture for web browsers based on two well known open source implementations, and we validate it against ﬁve additional implementations. We analyze the maintenance implications of diﬀerent strategies for code reuse, and we identify several underlying evolutionary phenomena in the web browser domain; namely, emergent domain boundaries, convergent evolution, and tension between open and closed source development approaches.},
+	journaltitle = {Journal of Software Maintenance and Evolution: Research and Practice},
+	shortjournal = {J. Softw. Maint. Evol.: Res. Pract.},
+	author = {Grosskurth, Alan and Godfrey, Michael},
+	date = {2006},
+	langid = {english},
+	file = {A reference architecture for web browsers.pdf:/home/choffmann/Zotero/storage/PT2VGNNI/[No title found].pdf:application/pdf},
+}
+
+@online{noauthor_was_nodate,
+	title = {Was macht ein Internet-Browser?},
+	url = {https://www.mozilla.org/de/firefox/browsers/what-is-a-browser/},
+	abstract = {Ein Internet-Browser bringt Sie im Internet überall hin und ermöglicht es Ihnen, Texte, Bilder und Videos aus der ganzen Welt zu sehen.},
+	titleaddon = {Mozilla},
+	urldate = {2024-02-11},
+	langid = {german},
+	file = {Snapshot:/home/choffmann/Zotero/storage/CUXMAVNV/what-is-a-browser.html:text/html},
+}
+
+@article{bizer_linked_2009,
+	title = {Linked Data - The Story So Far:},
+	volume = {5},
+	issn = {1552-6283, 1552-6291},
+	url = {https://services.igi-global.com/resolvedoi/resolve.aspx?doi=10.4018/jswis.2009081901},
+	doi = {10.4018/jswis.2009081901},
+	shorttitle = {Linked Data - The Story So Far},
+	abstract = {The term “Linked Data” refers to a set of best practices for publishing and connecting structured data on the Web. These best practices have been adopted by an increasing number of data providers over the last three years, leading to the creation of a global data space containing billions of assertions— the Web of Data. In this article, the authors present the concept and technical principles of Linked Data, and situate these within the broader context of related technological developments. They describe progress to date in publishing Linked Data on the Web, review applications that have been developed to exploit the Web of Data, and map out a research agenda for the Linked Data community as it moves forward.},
+	pages = {1--22},
+	number = {3},
+	journaltitle = {International Journal on Semantic Web and Information Systems},
+	author = {Bizer, Christian and Heath, Tom and Berners-Lee, Tim},
+	urldate = {2024-02-11},
+	date = {2009-07-01},
+	file = {Akzeptierte Version:/home/choffmann/Zotero/storage/7PXAVSVR/Bizer et al. - 2009 - Linked Data - The Story So Far.pdf:application/pdf},
+}
+
+@online{noauthor_geschichte_nodate,
+	title = {Geschichte der Internet-Browser: Die monumentalen Machtkämpfe, aus denen die Browser von heute entstanden},
+	url = {https://www.mozilla.org/de/firefox/browsers/browser-history/},
+	shorttitle = {Geschichte der Internet-Browser},
+	abstract = {Browser-Kriege, Underdogs gegen Giganten und Momente, die die Welt veränderten. Hier erfährst du mehr zur Geschichte der Internet-Browser.},
+	titleaddon = {Mozilla},
+	urldate = {2024-02-11},
+	langid = {german},
+	file = {Snapshot:/home/choffmann/Zotero/storage/J3M3P4BQ/browser-history.html:text/html},
+}
+
+@inproceedings{bernhard_jit-picking_2022,
+	location = {Los Angeles {CA} {USA}},
+	title = {{JIT}-Picking: Differential Fuzzing of {JavaScript} Engines},
+	isbn = {978-1-4503-9450-5},
+	url = {https://dl.acm.org/doi/10.1145/3548606.3560624},
+	doi = {10.1145/3548606.3560624},
+	shorttitle = {{JIT}-Picking},
+	eventtitle = {{CCS} '22: 2022 {ACM} {SIGSAC} Conference on Computer and Communications Security},
+	pages = {351--364},
+	booktitle = {Proceedings of the 2022 {ACM} {SIGSAC} Conference on Computer and Communications Security},
+	publisher = {{ACM}},
+	author = {Bernhard, Lukas and Scharnowski, Tobias and Schloegel, Moritz and Blazytko, Tim and Holz, Thorsten},
+	urldate = {2024-02-11},
+	date = {2022-11-07},
+	langid = {english},
+	file = {Full Text PDF:/home/choffmann/Zotero/storage/S9278A8L/Bernhard et al. - 2022 - JIT-Picking Differential Fuzzing of JavaScript En.pdf:application/pdf},
+}
+
+@online{noauthor_devopera_nodate,
+	title = {Dev.Opera — 300 Million Users and Move to {WebKit}},
+	url = {https://dev.opera.com/blog/300-million-users-and-move-to-webkit/},
+	urldate = {2024-02-11},
+	file = {Dev.Opera — 300 Million Users and Move to WebKit:/home/choffmann/Zotero/storage/5BILLL2G/300-million-users-and-move-to-webkit.html:text/html},
+}
+
+@online{noauthor_download_nodate,
+	title = {Download the new Microsoft Edge based on Chromium - Microsoft Support},
+	url = {https://support.microsoft.com/en-us/microsoft-edge/download-the-new-microsoft-edge-based-on-chromium-0f4a3dd7-55df-60f5-739f-00010dba52cf},
+	urldate = {2024-02-11},
+	file = {Download the new Microsoft Edge based on Chromium - Microsoft Support:/home/choffmann/Zotero/storage/D5REDBUE/download-the-new-microsoft-edge-based-on-chromium-0f4a3dd7-55df-60f5-739f-00010dba52cf.html:text/html},
+}
+
+@online{noauthor_spidermonkey_nodate,
+	title = {{SpiderMonkey} — Firefox Source Docs documentation},
+	url = {https://firefox-source-docs.mozilla.org/js/index.html#javascript-jits},
+	urldate = {2024-02-11},
+	file = {SpiderMonkey — Firefox Source Docs documentation:/home/choffmann/Zotero/storage/BZ7455JS/index.html:text/html},
+}
+
+@online{noauthor_javascriptcore_nodate,
+	title = {{JavaScriptCore} - {WebKit} Documentation},
+	url = {https://docs.webkit.org/Deep%20Dive/JSC/JavaScriptCore.html},
+	urldate = {2024-02-11},
+	file = {JavaScriptCore - WebKit Documentation:/home/choffmann/Zotero/storage/92TA3CIG/JavaScriptCore.html:text/html},
+}
+
+@online{noauthor_documentation_nodate-1,
+	title = {Documentation · V8},
+	url = {https://v8.dev/docs},
+	urldate = {2024-02-11},
+	file = {Documentation · V8:/home/choffmann/Zotero/storage/EMA52W6K/docs.html:text/html},
+}
+
+@online{noauthor_blazingly_nodate,
+	title = {Blazingly fast parsing, part 1: optimizing the scanner · V8},
+	url = {https://v8.dev/blog/scanner},
+	urldate = {2024-02-11},
+	file = {Blazingly fast parsing, part 1\: optimizing the scanner · V8:/home/choffmann/Zotero/storage/73PSR8NQ/scanner.html:text/html},
+}
+
+@online{noauthor_blazingly_nodate-1,
+	title = {Blazingly fast parsing, part 2: lazy parsing · V8},
+	url = {https://v8.dev/blog/preparser},
+	urldate = {2024-02-11},
+	file = {Blazingly fast parsing, part 2\: lazy parsing · V8:/home/choffmann/Zotero/storage/SWNQQ48S/preparser.html:text/html},
+}
+
+@online{noauthor_trash_nodate,
+	title = {Trash talk: the Orinoco garbage collector · V8},
+	url = {https://v8.dev/blog/trash-talk},
+	urldate = {2024-02-11},
+	file = {Trash talk\: the Orinoco garbage collector · V8:/home/choffmann/Zotero/storage/CP99LWAS/trash-talk.html:text/html},
+}
