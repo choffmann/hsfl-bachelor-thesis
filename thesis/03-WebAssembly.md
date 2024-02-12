@@ -4,4 +4,4 @@ WebAssembly, kurz WASM, ist eine Low-Level-Programmiersprache, die sich auf Sich
 
 ## Zielsetzung
 
-### Rust für WebAssembly
+## Rust für WebAssembly
