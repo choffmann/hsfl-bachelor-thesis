@@ -11,12 +11,6 @@ Aber was ist der Unterschied zwischen statischen und dynamischen Inhalten in Web
 ### Dynamische Typisierung
 JavaScript ist eine dynamische Programmiersprache. Das bedeutet, dass Variablen während des Programmablaufs einem anderen Datentyp zugewiesen werden können. Der folgende Ausschnitt zeigt einen fehlerfreien JavaScript-Code, der eine Variable `foo` deklariert und mit der Nummer `42` initialisiert. Die Variable `foo` kann jedoch auch einen String speichern. Nummern und Strings zwei verschiedene Datentypen sind.  In einer statisch typisierten Programmiersprache ist die Variable von Anfang an einem festen Datentypen zugewiesen. 
 
-```js
-let foo = 42
-foo = "bar"
-console.log(foo) // Output: "bar"
-```
-
 ## TypeScript
 JavaScript hat in der Webentwicklung einen großen Fortschritt gebracht, da es nun möglich ist, dynamische Webseiten darzustellen. Obwohl die Sprache ursprünglich für das Schreiben von kurzen Skripten entwickelt wurde, wurden im Laufe der Zeit immer größere Projekte mit dieser Sprache entwickelt. Heutzutage wird JavaScript sogar außerhalb des Webbrowsers eingesetzt. Node.js hat es für Entwickler immer attraktiver gemacht, diese Sprache als Cross-Platform zu nutzen. Durch die dynamische Sprache und fehlender Typisierung kommen viele, schnell zu übersehende Fehler auf. Ein Beispiel von einem Code Ausschnitt soll dies verdeutlichen, welche in JavaScript ohne Probleme ausgeführt werden kann. Dabei ist die Variable `area` beim ausführen `NaN`. Warum? 
 

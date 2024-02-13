@@ -6,6 +6,7 @@ linestretch: 1.15
 fontsize: 12pt
 ---
 
+\pagenumbering{gobble}
 \addcontentsline{toc}{section}{Inhaltsverzeichnis}
 \renewcommand{\contentsname}{Inhaltsverzeichnis}
 \tableofcontents

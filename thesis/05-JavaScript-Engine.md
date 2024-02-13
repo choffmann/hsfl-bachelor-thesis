@@ -64,6 +64,9 @@ Es gibt hier 7 Schritte, die im Bytecode ausgeführt werden. Ignition besteht au
 Durch Ignition wird der JavaScript Code nicht mehr benötigt. Alle Informationen sind im Bytecode enthalten und werden bei Bedarf von `Turbofan` noch weiter optimiert. Dadurch muss der JavaScript Code nicht erneut geparst werden. Zudem benötigt der gesamte Bytecode weniger Speicher als ein kompilierter Maschinencode, was zu einer Reduzierung des Arbeitsspeichers führt. [@v8_firing_2016]
 
 ### TurboFan
+TurboFan ist der Optimierungskompiler von V8. Er basiert auf dem Konzept `Sea of Nodes`. 
+
+[@titzer_digging_2015; @indutny_sea_2015]
 
 ### Optimization und Deoptimization
 V8 überprüft, ob eine Funktion häufiger ausgeführt wird. Ist dies der Fall, wird diese Funktion als 'hot' markiert und von TurboFan in optimierten Maschinencode kompiliert, der dann ausgeführt wird. Dieser Schritt wird Optimierung genannt. Es kann jedoch auch vorkommen, dass eine Funktion wieder deoptimiert wird. Aber warum sollte man eine optimierte Funktion wieder deoptimieren? Dies hat wieder mit der Eigenschaft von JavaScript und dessen dynamischer Typisierung zu tun. TurboFan führt den Code nur aus, wenn der Datentyp bekannt ist. Wenn sich der Datentyp im Programmcode ändert, was in JavaScript der Fall sein kann, kann TurboFan nicht weiterarbeiten und greift auf den unoptimierten Bytecode von Ignition zurück. Wird dieser Code erneut ausgeführt und als hot markiert, optimiert TurboFan ihn erneut.  [@hinkelmann_speed_2019; @hinkelmann_understanding_2017]
