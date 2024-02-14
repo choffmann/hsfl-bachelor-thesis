@@ -27,9 +27,9 @@ jobs:
   create_release:
     runs-on: ubuntu-latest
     needs: prepare_release
+    if: ${{ needs.prepare_release.outputs.current_version != needs.prepare_release.outputs.next_version }}
     steps:
       - name: Create release
-        if: ${{needs.prepare_release.outputs.current_version != needs.prepare_release.outputs.next_version}}
         id: create_release
         uses: actions/create-release@v1
         env:
