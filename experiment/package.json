@@ -12,7 +12,7 @@
   "scripts": {
     "start": "yarn build:benchmark && yarn workspace @benchmarks/frontend dev",
     "build": "yarn build:benchmark && yarn build:frontend",
-    "build:frontend": "yarn workspace @benchmarks/frontend build",
+    "build:frontend": "yarn workspace @benchmarks/frontend build:release",
     "build:benchmark": "yarn workspace @benchmarks/impl build"
   }
 }
