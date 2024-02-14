@@ -15,12 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Get current version
-        id: current_version
-        run: |
-          echo "version=`echo $(git describe --tags --abbrev=0)`"
-          echo "version=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_OUTPUT
-
       - name: Get next version
         id: next_version
         run: |
@@ -28,7 +22,7 @@ jobs:
           echo "version=v$(node -p "require('./experiment/package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Create GitHub release
-        if: '${{ steps.current_version.outputs.version != steps.next_version.outputs.version }}'
+        continue-on-error: true
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.next_version.outputs.version }}
