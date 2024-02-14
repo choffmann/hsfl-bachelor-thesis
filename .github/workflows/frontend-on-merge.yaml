@@ -14,7 +14,7 @@ jobs:
 
       - name: Get current version
         id: get_version
-        run: echo "::set-output name=version::$(node -p "require('./experiment/package.json').version")"
+        run: echo "version=$(node -p "require('./experiment/package.json').version")" >> $GITHUB_OUTPUT
 
       - name: Create release
         id: create_release
