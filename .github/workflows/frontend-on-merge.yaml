@@ -2,8 +2,8 @@ name: Create Release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'
 
 jobs:
   create_release:
@@ -17,7 +17,9 @@ jobs:
 
       - name: Get current version
         id: current_version
-        uses: battila7/get-version-action@v2.2.1
+        run: |
+          echo "version=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+          echo "version=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
       - name: Get next version
         id: next_version
