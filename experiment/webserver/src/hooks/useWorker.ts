@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { WebWorkerSendData } from "../modules/matrix/worker";
 import { BenchmarkReport } from "@benchmarks/impl";
 import { useTheme } from "@mui/material";
 
-export function useWorker(url: URL | string, n: number) {
+export function useWorker(worker: Worker, n: number) {
   const [step, setStep] = useState(0);
   const [report, setReport] = useState<BenchmarkReport | null>(null);
   const [finished, setFinished] = useState(false);
@@ -16,7 +16,6 @@ export function useWorker(url: URL | string, n: number) {
       setFinished(false);
       setStep(0);
 
-      const worker = new Worker(url, { type: "module" });
       const defaultHandler = (event: MessageEvent<WebWorkerSendData>) => {
         const { status, step, report } = event.data;
         switch (status) {

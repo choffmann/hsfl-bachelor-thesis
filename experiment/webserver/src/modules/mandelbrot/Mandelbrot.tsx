@@ -28,15 +28,25 @@ const Mandelbrot = (props: MandelbrotProps) => {
     wasmVersions.length - 1,
   );
   const jsWorker = useWorker(
-    new URL("./worker/JsMandelbrotWorker.ts", import.meta.url),
+    new Worker(
+      new URL("./worker/JsMandelbrotWorker.ts?worker", import.meta.url),
+      { type: "module" },
+    ),
     settings.n,
   );
   const tsWorker = useWorker(
-    new URL("./worker/TsMandelbrotWorker.ts", import.meta.url),
+    new Worker(
+      new URL("./worker/TsMandelbrotWorker.ts?worker", import.meta.url),
+      { type: "module" },
+    ),
     settings.n,
   );
   const wasmWorker = useWorker(
-    new URL("./worker/WasmMandelbrotWorker.ts", import.meta.url),
+    new Worker(
+      new URL("./worker/WasmMandelbrotWorker.ts?worker", import.meta.url),
+      { type: "module" },
+    ),
+
     settings.n,
   );
   const jsCanvas = useCanvas();
