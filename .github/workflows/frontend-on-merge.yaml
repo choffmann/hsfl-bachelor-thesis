@@ -6,11 +6,11 @@ on:
       - main
 
 jobs:
-  prepare_release:
+  create_release:
     runs-on: ubuntu-latest
     outputs:
-      current_version: ${{ steps.current_version.outputs.version }}
-      next_version: ${{ steps.next_version.outputs.version }}
+      version: ${{ steps.next_version.outputs.version }}
+      commit: ${{ steps.commit.outputs.short }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -22,20 +22,31 @@ jobs:
       - name: Get next version
         id: next_version
         run: echo "version=v$(node -p "require('./experiment/package.json').version")" >> $GITHUB_OUTPUT
-
-
-  create_release:
-    runs-on: ubuntu-latest
-    needs: prepare_release
-    if: ${{ runner.os == 'Windows' && steps.prepare_release.outputs.current_version != steps.prepare_release.outputs.next_version }}
-    steps:
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create GitHub release
+        if: '${{ steps.current_version.outputs.version != steps.next_version.outputs.version }}'
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ needs.prepare_release.outputs.next_version }}
-          release_name: Release ${{ needs.prepare_release.outputs.next_version }}
-          draft: false
-          prerelease: false
+          tag: ${{ steps.next_version.outputs.version }}
+          name: Release ${{ steps.next_version.outputs.version }}
+
+      - name: Commit hash
+        id: commit
+        uses: prompt/actions-commit-hash@v3
+
+  build: 
+    runs-on: ubuntu-latest
+    needs: create_release
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build release
+        run: cd ./experiment && yarn install && yarn build
+        env:
+          VITE_APP_URL: "https://wasm.choffmann.io"
+          VITE_AUTHOR: "Cedrik Hoffmann"
+          VITE_APP_VERSION: ${{ needs.create_release.outputs.version }}
+          VITE_CURRENT_BRANCH: main
+          VITE_LAST_COMMIT: ${{ needs.create_release.outputs.version }}
+
