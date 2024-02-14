@@ -17,12 +17,16 @@ jobs:
 
       - name: Get current version
         id: current_version
-        run: echo "version=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+        run: |
+          echo "version=${GITHUB_REF#refs/*/}"
+          echo "version=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
       - name: Get next version
         id: next_version
-        run: echo "version=v$(node -p "require('./experiment/package.json').version")" >> $GITHUB_OUTPUT
-      
+        run: |
+          echo "version=v$(node -p "require('./experiment/package.json').version")"
+          echo "version=v$(node -p "require('./experiment/package.json').version")" >> $GITHUB_OUTPUT
+
       - name: Create GitHub release
         if: '${{ steps.current_version.outputs.version != steps.next_version.outputs.version }}'
         uses: ncipollo/release-action@v1
