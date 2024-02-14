@@ -2,8 +2,6 @@ name: Create Release
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
     branches:
       - main
 
@@ -20,8 +18,8 @@ jobs:
       - name: Get current version
         id: current_version
         run: |
-          echo "version=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-          echo "version=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+          echo "version=`echo $(git describe --tags --abbrev=0)`"
+          echo "version=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_OUTPUT
 
       - name: Get next version
         id: next_version
