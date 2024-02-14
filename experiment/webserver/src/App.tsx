@@ -1,26 +1,55 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import IndexPage from "./pages/IndexPage";
-import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import {
+  Box,
+  Container,
+  createTheme,
+  CssBaseline,
+  Paper,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import MatrixMultiplication from "./modules/matrix/MatrixMultiplication.tsx";
 import Mandelbrot from "./modules/mandelbrot/Mandelbrot.tsx";
+import NBodySystem from "./modules/nbody/NBodySystem.tsx";
+import Footer from "./modules/Footer.tsx";
+import { useMemo, useState } from "react";
+import { ColorModeContext } from "./modules/ColorModeSwitch.tsx";
 
 function App() {
-  const theme = createTheme()
+  const [mode, setMode] = useState<"light" | "dark">("light");
+  const colorMode = useMemo(
+    () => ({
+      mode,
+      toggleColorMode: () => {
+        setMode((prev) => (prev === "light" ? "dark" : "light"));
+      },
+    }),
+    [],
+  );
+  const theme = useMemo(() => createTheme({ palette: { mode } }), [mode]);
 
   return (
-      <>
-        <CssBaseline/>
+    <>
+      <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<IndexPage/>}/>
-              <Route path="benchmark/matrix-multiplication" element={<MatrixMultiplication/>}/>
-              <Route path="benchmark/mandelbrot" element={<Mandelbrot/>}/>
+              <Route path="/" element={<IndexPage />} />
+              <Route
+                path="benchmark/matrix-multiplication"
+                element={<MatrixMultiplication />}
+              />
+              <Route path="benchmark/mandelbrot" element={<Mandelbrot />} />
+              <Route path="benchmark/nbody" element={<NBodySystem />} />
             </Routes>
           </BrowserRouter>
+          <Footer />
         </ThemeProvider>
-      </>
-  )
+      </ColorModeContext.Provider>
+    </>
+  );
 }
 
-export default App
+export default App;

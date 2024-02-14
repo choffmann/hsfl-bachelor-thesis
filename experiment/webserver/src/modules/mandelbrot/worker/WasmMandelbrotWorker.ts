@@ -2,7 +2,7 @@ import { BenchmarkReport, MandelbrotMap, mandelbrotWasm, wasmModuleUrl } from "@
 import { draw, workerUtility } from "."
 
 self.addEventListener("message", async (event: MessageEvent<any>) => {
-  const { n, render, canvas, id } = workerUtility(event)
+  const { n, render, canvas, id, colorMode } = workerUtility(event)
   const version = event.data.version
   const ctx = canvas.getContext("2d")
 
@@ -17,7 +17,7 @@ self.addEventListener("message", async (event: MessageEvent<any>) => {
     const reporter = (step: number, map: any) => {
       if (render && ctx) {
         const mandelMap: MandelbrotMap = map.map((item: any) => ({ x: item.x, y: item.y, z: item.z, isMandelBrot: item.is_mandelbrot }))
-        draw(mandelMap, ctx)
+        draw(mandelMap, ctx, colorMode)
         const bitmap = canvas.transferToImageBitmap()
         self.postMessage({ id, bitmap, status: "bitmap", type: "wasm" })
       }

@@ -1,4 +1,4 @@
-import {BenchmarkReport} from "../../utils/BenchmakReport";
+import { BenchmarkReport } from "../../utils/BenchmakReport";
 
 export type Matrix = number[][]
 
@@ -52,7 +52,7 @@ export function matrixMultiTs(n: number, reportStatus: (n: number) => any) {
     }
 
     const endTime = performance.now()
-    report.nthReport.push({n: i, time: Math.round(endTime - startTime)})
+    report.nthReport.push({ n: i, time: Math.round(endTime - startTime) })
   }
   const end = performance.now()
   console.log("[TS] Finished matrix multiplication")

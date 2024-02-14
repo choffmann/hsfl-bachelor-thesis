@@ -1,10 +1,12 @@
 import {
-  Box, Checkbox,
-  Container, FormControlLabel,
+  Box,
+  Checkbox,
+  Container,
+  FormControlLabel,
   Paper,
   Stack,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import MandelbrotBitmap from "./MandelbrotBitmap.tsx";
@@ -15,65 +17,73 @@ import BenchmarkModel from "../BenchmarkModel.tsx";
 import { useCanvas } from "../../hooks/useCanvas.ts";
 import { useMandelbrotSettings } from "../../hooks/useSettings.ts";
 
-export interface MandelbrotProps {
-
-}
+export interface MandelbrotProps { }
 
 const Mandelbrot = (props: MandelbrotProps) => {
-  const settings = useMandelbrotSettings()
-  const tsVersions = useMemo(() => ["", "#2", "#3"], [])
-  const wasmVersions = useMemo(() => ["", "#2"], [])
-  const [tsVersionIndex, setTsVersionIndex] = useState(tsVersions.length - 1)
-  const [wasmVersionIndex, setWasmVersionIndex] = useState(wasmVersions.length - 1)
-  const jsWorker = useWorker(new URL("./worker/JsMandelbrotWorker.ts", import.meta.url), settings.n)
-  const tsWorker = useWorker(new URL("./worker/TsMandelbrotWorker.ts", import.meta.url), settings.n)
-  const wasmWorker = useWorker(new URL("./worker/WasmMandelbrotWorker.ts", import.meta.url), settings.n)
-  const jsCanvas = useCanvas()
-  const tsCanvas = useCanvas()
-  const wasmCanvas = useCanvas()
+  const settings = useMandelbrotSettings();
+  const tsVersions = useMemo(() => ["", "#2", "#3"], []);
+  const wasmVersions = useMemo(() => ["", "#2"], []);
+  const [tsVersionIndex, setTsVersionIndex] = useState(tsVersions.length - 1);
+  const [wasmVersionIndex, setWasmVersionIndex] = useState(
+    wasmVersions.length - 1,
+  );
+  const jsWorker = useWorker(
+    new URL("./worker/JsMandelbrotWorker.ts", import.meta.url),
+    settings.n,
+  );
+  const tsWorker = useWorker(
+    new URL("./worker/TsMandelbrotWorker.ts", import.meta.url),
+    settings.n,
+  );
+  const wasmWorker = useWorker(
+    new URL("./worker/WasmMandelbrotWorker.ts", import.meta.url),
+    settings.n,
+  );
+  const jsCanvas = useCanvas();
+  const tsCanvas = useCanvas();
+  const wasmCanvas = useCanvas();
 
   useEffect(() => {
-    tsWorker.registerHandler(appendCanvasHandler)
-    wasmWorker.registerHandler(appendCanvasHandler)
-    jsWorker.registerHandler(appendCanvasHandler)
+    tsWorker.registerHandler(appendCanvasHandler);
+    wasmWorker.registerHandler(appendCanvasHandler);
+    jsWorker.registerHandler(appendCanvasHandler);
   }, []);
 
   useEffect(() => {
-    tsWorker.finished && tsCanvas.rebuildOffscreen()
-    wasmWorker.finished && wasmCanvas.rebuildOffscreen()
-    jsWorker.finished && jsCanvas.rebuildOffscreen()
+    tsWorker.finished && tsCanvas.rebuildOffscreen();
+    wasmWorker.finished && wasmCanvas.rebuildOffscreen();
+    jsWorker.finished && jsCanvas.rebuildOffscreen();
   }, [jsWorker.finished, tsWorker.finished, wasmWorker.finished]);
 
-
   const appendCanvasHandler = (event: MessageEvent<any>) => {
-    const { status, type } = event.data
+    const { status, type } = event.data;
     if (status === "bitmap") {
-      const bitmap: ImageBitmap = event.data.bitmap
+      const bitmap: ImageBitmap = event.data.bitmap;
       if (type === "ts") {
-        tsCanvas.drawBitmap(bitmap)
+        tsCanvas.drawBitmap(bitmap);
       } else if (type === "wasm") {
-        wasmCanvas.drawBitmap(bitmap)
+        wasmCanvas.drawBitmap(bitmap);
       } else if (type === "js") {
-        jsCanvas.drawBitmap(bitmap)
+        jsCanvas.drawBitmap(bitmap);
       }
     }
-  }
+  };
 
   const switchTsVersion = () => {
     if (tsVersionIndex + 1 > tsVersions.length - 1) {
-      setTsVersionIndex(0)
+      setTsVersionIndex(0);
     } else {
-      setTsVersionIndex(prev => prev + 1)
+      setTsVersionIndex((prev) => prev + 1);
     }
-  }
+  };
 
   const switchWasmVersion = () => {
     if (wasmVersionIndex + 1 > wasmVersions.length - 1) {
-      setWasmVersionIndex(0)
+      setWasmVersionIndex(0);
     } else {
-      setWasmVersionIndex(prev => prev + 1)
+      setWasmVersionIndex((prev) => prev + 1);
     }
-  }
+  };
   return (
     <Container>
       <Box sx={{ mt: 2 }}>
@@ -81,9 +91,9 @@ const Mandelbrot = (props: MandelbrotProps) => {
           <Stack spacing={1}>
             <Typography variant="h4">Mandelbrot</Typography>
             <Typography>
-              Dieser Algorithmus berechnet die Mandelbrot Menge. Die Mandelbrot Menge
-              ist eine Menge der komplexen Zahlen, wo eine Folge beschränkt ist. Diese Menge
-              kann als Fraktal visualisiert werden.
+              Dieser Algorithmus berechnet die Mandelbrot Menge. Die Mandelbrot
+              Menge ist eine Menge der komplexen Zahlen, wo eine Folge
+              beschränkt ist. Diese Menge kann als Fraktal visualisiert werden.
             </Typography>
             <TextField
               label={"Wähle eine N"}
@@ -91,70 +101,115 @@ const Mandelbrot = (props: MandelbrotProps) => {
               onChange={(e) => settings.setN(e.target.value)}
             />
 
-            <FormControlLabel control={<Checkbox checked={settings.displayCanvas} />}
+            <FormControlLabel
+              control={<Checkbox checked={settings.displayCanvas} />}
               label={"Benchmark visualisieren"}
-              onChange={(_, checked) => settings.setDisplayCanvas(checked)} />
+              onChange={(_, checked) => settings.setDisplayCanvas(checked)}
+            />
           </Stack>
 
-          <Stack spacing={2} direction={{ xs: "column", sm: "row" }}
-            justifyContent="space-evenly">
+          <Stack
+            spacing={2}
+            direction={{ xs: "column", sm: "row" }}
+            justifyContent="space-evenly"
+          >
             <Paper elevation={3} sx={{ p: 2, width: "100%" }}>
-              <BenchmarkModel title="JavaScript" n={settings.n} estimatedTime={0}
+              <BenchmarkModel
+                title="JavaScript"
+                n={settings.n}
+                estimatedTime={0}
                 currentStep={jsWorker.step}
                 onButtonClick={() => {
-                  jsWorker.startWorker({
-                    canvas: jsCanvas.offscreen,
-                    render: settings.displayCanvas
-                  }, [jsCanvas.offscreen!!])
-                }} />
+                  jsWorker.startWorker(
+                    {
+                      canvas: jsCanvas.offscreen,
+                      render: settings.displayCanvas,
+                    },
+                    [jsCanvas.offscreen!!],
+                  );
+                }}
+              />
             </Paper>
             <Paper elevation={3} sx={{ p: 2, width: "100%" }}>
-              <BenchmarkModel title={`TypeScript ${tsVersions[tsVersionIndex]}`} n={settings.n} estimatedTime={0}
+              <BenchmarkModel
+                title={`TypeScript ${tsVersions[tsVersionIndex]}`}
+                n={settings.n}
+                estimatedTime={0}
                 versionSelection
                 onTitleClick={() => switchTsVersion()}
                 currentStep={tsWorker.step}
                 onButtonClick={() => {
-                  tsWorker.startWorker({
-                    canvas: tsCanvas.offscreen,
-                    render: settings.displayCanvas,
-                    version: tsVersionIndex
-                  }, [tsCanvas.offscreen!!])
-                }} />
+                  tsWorker.startWorker(
+                    {
+                      canvas: tsCanvas.offscreen,
+                      render: settings.displayCanvas,
+                      version: tsVersionIndex,
+                    },
+                    [tsCanvas.offscreen!!],
+                  );
+                }}
+              />
             </Paper>
             <Paper elevation={3} sx={{ p: 2, width: "100%" }}>
-              <BenchmarkModel title={`WebAssembly ${wasmVersions[wasmVersionIndex]}`} n={settings.n} estimatedTime={0}
+              <BenchmarkModel
+                title={`WebAssembly ${wasmVersions[wasmVersionIndex]}`}
+                n={settings.n}
+                estimatedTime={0}
                 versionSelection
                 onTitleClick={() => switchWasmVersion()}
                 currentStep={wasmWorker.step}
                 onButtonClick={() => {
-                  wasmWorker.startWorker({
-                    canvas: wasmCanvas.offscreen,
-                    render: settings.displayCanvas,
-                    version: wasmVersionIndex
-                  }, [wasmCanvas.offscreen!!])
-                }} />
+                  wasmWorker.startWorker(
+                    {
+                      canvas: wasmCanvas.offscreen,
+                      render: settings.displayCanvas,
+                      version: wasmVersionIndex,
+                    },
+                    [wasmCanvas.offscreen!!],
+                  );
+                }}
+              />
             </Paper>
           </Stack>
 
-          <Stack spacing={2} direction={{ xs: "column", sm: "row" }}
-            justifyContent="space-evenly">
-            <MandelbrotBitmap title={"Visuelle Darstellung (JavaScript)"}
+          <Stack
+            spacing={2}
+            direction={{ xs: "column", sm: "row" }}
+            justifyContent="space-evenly"
+          >
+            <MandelbrotBitmap
+              title={"Visuelle Darstellung (JavaScript)"}
               hide={!settings.displayCanvas || !jsCanvas.hasContent}
-              ref={jsCanvas.ref} />
-            <MandelbrotBitmap title={"Visuelle Darstellung (TypeScript)"}
+              ref={jsCanvas.ref}
+            />
+            <MandelbrotBitmap
+              title={"Visuelle Darstellung (TypeScript)"}
               hide={!settings.displayCanvas || !tsCanvas.hasContent}
-              ref={tsCanvas.ref} />
-            <MandelbrotBitmap title={"Visuelle Darstellung (WebAssembly)"}
+              ref={tsCanvas.ref}
+            />
+            <MandelbrotBitmap
+              title={"Visuelle Darstellung (WebAssembly)"}
               hide={!settings.displayCanvas || !wasmCanvas.hasContent}
-              ref={wasmCanvas.ref} />
+              ref={wasmCanvas.ref}
+            />
           </Stack>
 
-          <LineChart n={settings.n} tsReport={tsWorker.report} wasmReport={wasmWorker.report} jsReport={jsWorker.report} />
-          <AnalyseTable n={settings.n} tsReport={tsWorker.report} jsReport={jsWorker.report} wasmReport={wasmWorker.report} />
+          <LineChart
+            n={settings.n}
+            tsReport={tsWorker.report}
+            wasmReport={wasmWorker.report}
+            jsReport={jsWorker.report}
+          />
+          <AnalyseTable
+            n={settings.n}
+            tsReport={tsWorker.report}
+            jsReport={jsWorker.report}
+            wasmReport={wasmWorker.report}
+          />
         </Stack>
       </Box>
     </Container>
-  )
-}
+  );
+};
 
-export default Mandelbrot
+export default Mandelbrot;
