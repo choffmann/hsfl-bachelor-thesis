@@ -1,6 +1,8 @@
 name: Create and publish Docker image
 
 on:
+  release:
+    types: [created]
   push:
     tags: [ 'v*.*.*' ]
 
