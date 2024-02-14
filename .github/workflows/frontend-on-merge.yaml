@@ -18,8 +18,8 @@ jobs:
       - name: Get current version
         id: current_version
         run: |
-          echo "version=${GITHUB_REF#refs/*/}"
-          echo "version=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+          echo "version=v${GITHUB_REF#refs/tags/*/}"
+          echo "version=v${GITHUB_REF#refs/tags/*/}" >> $GITHUB_OUTPUT
 
       - name: Get next version
         id: next_version
