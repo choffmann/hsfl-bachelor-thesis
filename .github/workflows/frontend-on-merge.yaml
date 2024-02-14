@@ -6,8 +6,11 @@ on:
       - main
 
 jobs:
-  create_release:
+  prepare_release:
     runs-on: ubuntu-latest
+    outputs:
+      current_version: ${{ steps.current_version.outputs.version }}
+      next_version: ${{ steps.next_version.outputs.version }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,10 +23,15 @@ jobs:
         id: next_version
         run: echo "version=$(node -p "require('./experiment/package.json').version")" >> $GITHUB_OUTPUT
 
+
+  create_release:
+    runs_on: ubuntu-latest
+    needs: prepare_release
+    if: ${{needs.prepare_release.outputs.current_version != needs.prepare_release.outputs.next_version}}
+    steps:
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
-        if: steps.current_version.outputs.version != steps.next_version.outputs.version 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
