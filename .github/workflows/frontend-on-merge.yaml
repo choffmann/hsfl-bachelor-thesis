@@ -28,6 +28,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ steps.next_version.outputs.version }}
-          release_name: Release ${{ steps.next_version.outputs.version }}
+          release_name: Release v${{ steps.next_version.outputs.version }}
           draft: false
           prerelease: false
