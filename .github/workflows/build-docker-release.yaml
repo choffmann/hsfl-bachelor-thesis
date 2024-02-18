@@ -53,8 +53,8 @@ jobs:
         uses: docker/build-push-action@v5.1.0
         with:
           build-args: |
-            APP_URL="https://wasm.choffmann.io"
-            AUTHOR="Cedrik Hoffmann"
+            APP_URL=https://wasm.choffmann.io
+            AUTHOR=Cedrik Hoffmann
             CURRENT_BRANCH=main
             APP_VERSION=${{ env.RELEASE_VERSION }}
             LAST_COMMIT=${{ steps.commit.outputs.short }}
