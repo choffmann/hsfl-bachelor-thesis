@@ -1,4 +1,6 @@
+
 \newpage
+
 # Webbrowser
 Das Internet besteht aus verschiedenen Ressourcen, die über eine `Uniform Resource Identifier` (URI) abgerufen werden können. Diese Ressourcen bestehen aus Dokumenten, die in `HyperText Markup Language` (HTML) geschrieben sind. HTML erlaubt es, Texte anzuzeigen oder in einem Dokument auf weitere HTML-Dokumente zu verweisen. Neben HTML-Dokumenten können auch andere Ressourcen wie Bilder, Audio- und Videoclips sowie JavaScript- und CSS-Dateien geladen werden. Ein Webbrowser ist ein Programm, das Ressourcen von einem Server über eine URI abruft und das HTML-Dokument darstellt. Die Datenübertragung erfolgt über das `HyperText Transfer Protocol` (HTTP). Wenn im HTML-Dokument JavaScript-Dateien definiert sind, werden diese im Webbrowser interpretiert und in Echtzeit kompiliert (Just-in-Time-Kompilierung). [@grosskurth_reference_2006, Seite 1 - 2]
 
@@ -16,4 +18,6 @@ Eine Webanwendung ist eine Software, welche im Webbrowser ausgeführt wird. Meis
 
 Zu Beginn des Internets bestand das Web aus statischen Dokumenten, die durch Links auf andere Seiten verwiesen. Entwickler erkannten früh die Vorteile des Client-Server-Modells. Es wurde schnell klar, dass der Webbrowser als Benutzeroberfläche für Anwendungen auf dem Server oder für lokale Anwendungen dienen kann. Durch die Entwicklung von JavaScript, war es nun möglich, nicht nur statische HTML-Dokumente anzuzeigen, sondern auch dynamisch mit ihnen zu interagieren. [@jazayeri_trends_2007]
 
-Beispiele wie Figma...
+### WebAssembly in Webanwendungen
+Mehrere Webanwendungen, wie beispielsweise Figma, haben bereits auf WebAssembly umgestellt. Figma ist eine Anwendung, die im Webbrowser läuft und ein Tool zur Entwicklung von Prototypen ist. Zuvor nutzte Figma eine Kompilierung von C++ mit `asm.js`. Figma berichtet von einer dreifach besseren Performance in der Ladezeit mit WebAssembly im Vergleich zu `asm.js`. Dabei nennt Figma mehrere Vorteile der Kompilierung von C++ zu WebAssembly im Gegensatz zu C++ zu `asm.js`. [@figma]
+

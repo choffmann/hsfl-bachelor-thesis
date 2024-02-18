@@ -1,17 +1,7 @@
 \newpage    
 
 # WebAssembly
-WebAssembly, kurz WASM, ist eine Low-Level-Programmiersprache, die innerhalb des World Wide Web Consortiums (W3C) entwickelt und 2018 zum ersten Mal veröffentlicht wurde. Sie gleicht dem Bytecode und ist daher für Menschen schwer zu lesen und zu pflegen. Obwohl es nicht vorgesehen ist, dass WebAssembly von Hand geschrieben wird, ist dies durchaus möglich. WebAssembly bietet eine Textdarstellung (`.wat`), die den kompilierten Code in Textform anzeigt. WebAssembly ist ein Kompilierungsziel für verschiedene Sprachen wie Rust, C, C++, Kotlin, Java und viele mehr. Der Programmcode wird in eine `.wasm` Datei kompiliert, die jedoch vom Browser nicht direkt ausgeführt werden kann. Zur Ausführung von WebAssembly wird weiterhin JavaScript benötigt, um die `.wasm` Datei zu laden und auszuführen. Es ist nicht beabsichtigt, dass WebAssembly JavaScript ersetzt. Stattdessen sollen die beiden Technologien Hand in Hand arbeiten. [@group_webassembly_nodate; @haas_bringing_2017]
-
-## Zielsetzung
-WebAssembly beschreibt diese vier Ziele, welche WebAssembly verfolt.
-
-- Efficient and fast
-- Safe
-- Open and debuggable
-- Part of the open web platform
-
-[@haas_bringing_2017]
+WebAssembly, kurz WASM, ist eine Low-Level-Programmiersprache, die innerhalb des World Wide Web Consortiums (W3C) entwickelt und 2018 zum ersten Mal veröffentlicht wurde. Sie gleicht dem Bytecode und ist daher für Menschen schwer zu lesen und zu pflegen. Obwohl es nicht vorgesehen ist, dass WebAssembly von Hand geschrieben wird, ist dies durchaus möglich. WebAssembly bietet eine Textdarstellung (`.wat`), die den kompilierten Code in Textform anzeigt. WebAssembly ist ein Kompilierungsziel für verschiedene Sprachen wie Rust, C, C++, Kotlin, Java und viele mehr. Der Programmcode wird in eine `.wasm` Datei kompiliert, die jedoch vom Browser nicht direkt ausgeführt werden kann. Zur Ausführung von WebAssembly wird weiterhin JavaScript benötigt, um die `.wasm` Datei zu laden und auszuführen. Es ist nicht beabsichtigt, dass WebAssembly JavaScript ersetzt. Stattdessen sollen die beiden Technologien Hand in Hand arbeiten. WebAssembly ist mittlerweile ein Standard, welche von allen vier wichtigen Webbrowser wie `Chrome, Safari, Mozilla Firefox` und `Microsoft Edge` unterschützt werden. [@group_webassembly_nodate; @haas_bringing_2017]
 
 ## Frühere Versuche von Low-Level Code im Internet
 WebAssembly ist nicht der erste Versuch, Low-Level-Code im Web zu ermöglichen, um die Performance- oder Sicherheitsvorteile zu nutzen. Eine vergangene Technologie, Microsoft ActiveX, erlaubte es, selbstsignierte x64-Binärdateien im Webbrowser auszuführen. Das Modell scheiterte jedoch daran, dass die Sicherheit nicht auf einem technischen Konstrukt, sondern auf einem Vertrauensmodell beruhte. Native Client war die erste Technologie, die im Web eine Sandboxing-Technik für Maschinencode eingeführt hat. Das System wurde aus technischer Sicht als sicher angesehen, da der Codegenerator das Einhalten spezieller Muster verlangte. Allerdings konnte Native Client nicht auf JavaScript oder der Web-API zugreifen. Emscripten ist ein weiteres Framework, mit dem Anwendungen in C/C++ in JavaScript umgewandelt werden können. Im Laufe der Zeit wurde dies zu `asm.js` weiterentwickelt. Da `asm.js` in JavaScript kompiliert wird, kann es überall dort ausgeführt werden, wo JavaScript läuft (z.B. in Webbrowsern oder Node.js). Allerdings ist `asm.js` von Natur aus an die spezifische Semantik von JavaScript gebunden. Wenn eine neue Funktion in `asm.js` hinzugefügt werden soll, muss auch JavaScript angepasst werden. Java und Flash ermöglichten die Ausführung von Code im Web und waren bereits früh integriert. Allerdings unterstützten sie nicht die gleiche Leistung wie Low-Level-Code und werden aufgrund von Sicherheits- und Performanceproblemen nicht mehr verwendet. [@haas_bringing_2017, Seite 186]
@@ -53,5 +43,18 @@ WebAssembly ist eine stackbasierte Programmiersprache. Alle Befehle werden vom S
 )
 ```
 
+## Zielsetzung
+WebAssembly beschreibt verschiedene Ziele, welche hier aufgelistet werden. Wir werden uns anschauen, warum diese Ziele wichtig sind und wie WebAssembly diese erfüllt. [@group_webassembly_nodate, Seite 1 - 2]
+
+- Fast, safe, and portable semantics
+- Efficient and portable representation
+
+
+[@haas_bringing_2017]
+
 ## Rust für WebAssembly
+Mehrere Programmiersprachen können zu WebAssembly kompiliert werden. Rust ist eine beliebte Sprache für WebAssembly. Dies geht aus einer Studie von Scott Logic hervor [@eberhardt_state_2023]. Auch andere Quellen empfehlen die Nutzung von Rust für WebAssembly [@noauthor_webassembly_2022; @noauthor_webassembly_nodate-1; @fitzgerald_oxidizing_2018]. 
+
+![Trends in der WebAssmebly Nutzung @eberhardt_state_2023](./img/wasm-language-usage-trends.png){width=80%}
+
 
