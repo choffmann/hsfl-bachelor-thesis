@@ -1,4 +1,4 @@
-FROM node:20-bookworm as builder
+FROM --platform=linux/amd64 node:20-bookworm as builder
 ARG APP_URL
 ARG AUTHOR
 ARG CURRENT_BRANCH
