@@ -11,7 +11,10 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-andpush-image:
+  build:
+    runs-on
+
+  build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -38,6 +41,13 @@ jobs:
           VITE_CURRENT_BRANCH: main
           VITE_APP_VERSION: ${{ env.RELEASE_VERSION }}
           VITE_LAST_COMMIT: ${{ steps.commit.outputs.short }}
+
+      - name: Create GitHub release
+        continue-on-error: true
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.RELEASE_VERSION }}
+          name: Release ${{ steps.next_version.outputs.version }}
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
