@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { WebWorkerSendData } from "../modules/matrix/worker";
 import { BenchmarkReport } from "@benchmarks/impl";
 import { useTheme } from "@mui/material";
@@ -8,6 +8,12 @@ export function useWorker(worker: Worker, n: number) {
   const [report, setReport] = useState<BenchmarkReport | null>(null);
   const [finished, setFinished] = useState(false);
   const theme = useTheme();
+
+  useEffect(() => {
+    return () => {
+      worker.terminate();
+    }
+  }, [])
 
   const handlers = new Set<(event: MessageEvent<any>) => any>();
 
