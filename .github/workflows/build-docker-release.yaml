@@ -48,15 +48,14 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
-        build-args: |
-          APP_URL: "https://wasm.choffmann.io"
-          AUTHOR: "Cedrik Hoffmann"
-          CURRENT_BRANCH: main
-          APP_VERSION: ${{ env.RELEASE_VERSION }}
-          LAST_COMMIT: ${{ steps.commit.outputs.short }}
+        uses: docker/build-push-action@v5.1.0
         with:
-          context: .
+          build-args: |
+            APP_URL: "https://wasm.choffmann.io"
+            AUTHOR: "Cedrik Hoffmann"
+            CURRENT_BRANCH: main
+            APP_VERSION: ${{ env.RELEASE_VERSION }}
+            LAST_COMMIT: ${{ steps.commit.outputs.short }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
