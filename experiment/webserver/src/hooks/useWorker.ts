@@ -9,12 +9,6 @@ export function useWorker(worker: Worker, n: number) {
   const [finished, setFinished] = useState(false);
   const theme = useTheme();
 
-  useEffect(() => {
-    return () => {
-      worker.terminate();
-    }
-  }, [])
-
   const handlers = new Set<(event: MessageEvent<any>) => any>();
 
   const startWorker = useCallback(
@@ -32,7 +26,6 @@ export function useWorker(worker: Worker, n: number) {
             setReport(report!!);
             setStep(n);
             setFinished(true);
-            worker.terminate();
             break;
         }
       };

@@ -27,28 +27,39 @@ const Mandelbrot = (props: MandelbrotProps) => {
   const [wasmVersionIndex, setWasmVersionIndex] = useState(
     wasmVersions.length - 1,
   );
-  const jsWorker = useWorker(
-    new Worker(
-      new URL("./worker/JsMandelbrotWorker.ts?worker", import.meta.url),
-      { type: "module" },
-    ),
-    settings.n,
-  );
-  const tsWorker = useWorker(
-    new Worker(
-      new URL("./worker/TsMandelbrotWorker.ts?worker", import.meta.url),
-      { type: "module" },
-    ),
-    settings.n,
-  );
-  const wasmWorker = useWorker(
-    new Worker(
-      new URL("./worker/WasmMandelbrotWorker.ts?worker", import.meta.url),
-      { type: "module" },
-    ),
 
-    settings.n,
+  const workers = useMemo(
+    () =>
+      new Map([
+        [
+          "jsWorker",
+          new Worker(
+            new URL("./worker/JsMandelbrotWorker.ts", import.meta.url),
+            { type: "module" },
+          ),
+        ],
+        [
+          "tsWorker",
+          new Worker(
+            new URL("./worker/TsMandelbrotWorker.ts", import.meta.url),
+            { type: "module" },
+          ),
+        ],
+        [
+          "wasmWorker",
+          new Worker(
+            new URL("./worker/WasmMandelbrotWorker.ts", import.meta.url),
+            { type: "module" },
+          ),
+        ],
+      ]),
+    [],
   );
+
+  const jsWorker = useWorker(workers.get("jsWorker")!!,settings.n);
+  const tsWorker = useWorker(workers.get("tsWorker")!!,settings.n);
+  const wasmWorker = useWorker(workers.get("wasmWorker")!!,settings.n);
+
   const jsCanvas = useCanvas();
   const tsCanvas = useCanvas();
   const wasmCanvas = useCanvas();
