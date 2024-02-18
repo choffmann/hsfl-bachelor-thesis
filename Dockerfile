@@ -22,11 +22,8 @@ RUN curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
 WORKDIR /app
 
-COPY experiment/package*.json /app
-RUN yarn install
-
 COPY experiment/ /app
-RUN yarn build
+RUN yarn install && yarn build
 
 FROM nginx:alpine
 COPY --from=builder /app/webserver/dist /usr/share/nginx/html
