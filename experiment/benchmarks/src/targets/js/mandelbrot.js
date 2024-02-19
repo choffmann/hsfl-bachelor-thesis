@@ -14,7 +14,7 @@ class Complex {
 
   add(other) {
     return new Complex({
-      x: this.x + other.y,
+      x: this.x + other.x,
       y: this.y + other.y
     })
   }

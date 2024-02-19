@@ -7,7 +7,7 @@ export interface BenchmarkModelProps {
   n: number
   ready?: boolean
   currentStep: number
-  estimatedTime: number
+  estimatedTime?: number
   onButtonClick: () => any,
   versionSelection?: boolean
   onTitleClick?: () => any
@@ -16,7 +16,6 @@ export interface BenchmarkModelProps {
 const BenchmarkModel = ({ versionSelection, onTitleClick, title, n, onButtonClick, currentStep, ready, estimatedTime }: BenchmarkModelProps) => {
   const theme = useTheme()
   const [running, setRunning] = useState(false)
-
 
   useEffect(() => {
     if (n === currentStep) {
@@ -61,7 +60,7 @@ const BenchmarkModel = ({ versionSelection, onTitleClick, title, n, onButtonClic
         <ModelTitel />
         <Button variant="contained" disabled={disableButton} onClick={() => handleButtonClick()}>Starten</Button>
       </Stack>
-      <Typography variant="subtitle2" color="text.secondary">Geschätzte Zeit: {Math.round(estimatedTime)} Sekunden</Typography>
+      <Typography variant="subtitle2" color="text.secondary">Geschätzte Zeit: {estimatedTime ? Math.round(estimatedTime) : "-"} Sekunden</Typography>
       {running &&
         <Box sx={{ mt: 1 }}>
           <LinearProgress variant="determinate" value={progress} />

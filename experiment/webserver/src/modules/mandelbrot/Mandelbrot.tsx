@@ -21,8 +21,10 @@ export interface MandelbrotProps { }
 
 const Mandelbrot = (props: MandelbrotProps) => {
   const settings = useMandelbrotSettings();
+  const jsVersions = useMemo(() => ["", "#2"], []);
   const tsVersions = useMemo(() => ["", "#2", "#3", "#4"], []);
   const wasmVersions = useMemo(() => ["", "#2"], []);
+  const [jsVersionIndex, setJsVersionIndex] = useState(jsVersions.length - 1);
   const [tsVersionIndex, setTsVersionIndex] = useState(tsVersions.length - 1);
   const [wasmVersionIndex, setWasmVersionIndex] = useState(
     wasmVersions.length - 1,
@@ -105,6 +107,15 @@ const Mandelbrot = (props: MandelbrotProps) => {
       setWasmVersionIndex((prev) => prev + 1);
     }
   };
+
+  const switchJsVersion = () => {
+    if (jsVersionIndex + 1 > jsVersions.length - 1) {
+      setJsVersionIndex(0);
+    } else {
+      setJsVersionIndex((prev) => prev + 1);
+    }
+  };
+
   return (
     <Container>
       <Box sx={{ mt: 2 }}>
@@ -136,15 +147,17 @@ const Mandelbrot = (props: MandelbrotProps) => {
           >
             <Paper elevation={3} sx={{ p: 2, width: "100%" }}>
               <BenchmarkModel
-                title="JavaScript"
+                title={`JavaScript ${jsVersions[jsVersionIndex]}`}
                 n={settings.n}
-                estimatedTime={0}
                 currentStep={jsWorker.step}
+                versionSelection
+                onTitleClick={() => switchJsVersion()}
                 onButtonClick={() => {
                   jsWorker.startWorker(
                     {
                       canvas: jsCanvas.offscreen,
                       render: settings.displayCanvas,
+                      version: jsVersionIndex,
                     },
                     [jsCanvas.offscreen!!],
                   );
@@ -155,7 +168,6 @@ const Mandelbrot = (props: MandelbrotProps) => {
               <BenchmarkModel
                 title={`TypeScript ${tsVersions[tsVersionIndex]}`}
                 n={settings.n}
-                estimatedTime={0}
                 versionSelection
                 onTitleClick={() => switchTsVersion()}
                 currentStep={tsWorker.step}
@@ -175,7 +187,6 @@ const Mandelbrot = (props: MandelbrotProps) => {
               <BenchmarkModel
                 title={`WebAssembly ${wasmVersions[wasmVersionIndex]}`}
                 n={settings.n}
-                estimatedTime={0}
                 versionSelection
                 onTitleClick={() => switchWasmVersion()}
                 currentStep={wasmWorker.step}
