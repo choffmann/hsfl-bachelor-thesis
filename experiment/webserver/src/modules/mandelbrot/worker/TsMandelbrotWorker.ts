@@ -1,6 +1,7 @@
 import { mandelbrotTs } from "@benchmarks/impl/dist/targets/ts/mandelbrot/mandelbrot"
 import { mandelbrotTsVersion2 } from "@benchmarks/impl/dist/targets/ts/mandelbrot/mandelbrotV2"
 import { mandelbrotTsVersion3 } from "@benchmarks/impl/dist/targets/ts/mandelbrot/mandelbrotV3"
+import { mandelbrotTsVersion4 } from "@benchmarks/impl/dist/targets/ts/mandelbrot/mandelbrotV4"
 import { BenchmarkReport, MandelbrotMap } from "@benchmarks/impl/dist";
 import { draw, workerUtility } from ".";
 
@@ -34,6 +35,10 @@ self.addEventListener("message", async (event: MessageEvent<any>) => {
 
   if (version === 2) {
     report = mandelbrotTsVersion3(n, options, reportStatus, reportMap, render)
+  }
+
+  if (version === 3) {
+    report = mandelbrotTsVersion4(n, options, reportStatus, reportMap, render)
   }
   self.postMessage({ id, report, status: "completed" })
 })

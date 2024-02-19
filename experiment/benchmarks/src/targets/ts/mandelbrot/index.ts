@@ -1,19 +1,25 @@
-export * from "./mandelbrot"
-export * from "./mandelbrotV2"
-export * from "./mandelbrotV3"
+export * from "./mandelbrot";
+export * from "./mandelbrotV2";
+export * from "./mandelbrotV3";
+export * from "./mandelbrotV4";
 
-export type MandelbrotMapItem = { x: number, y: number, z: number, isMandelBrot: boolean }
-export type MandelbrotMap = MandelbrotMapItem[]
+export type MandelbrotMapItem = {
+  x: number;
+  y: number;
+  z: number;
+  isMandelBrot: boolean;
+};
+export type MandelbrotMap = MandelbrotMapItem[];
 
 export interface MandelBrotOptions {
-  height: number,
-  width: number,
+  height: number;
+  width: number;
   xSet: {
-    start: number,
-    end: number
-  },
+    start: number;
+    end: number;
+  };
   ySet: {
-    start: number,
-    end: number
+    start: number;
+    end: number;
+  };
   }
-}

@@ -21,7 +21,7 @@ export interface MandelbrotProps { }
 
 const Mandelbrot = (props: MandelbrotProps) => {
   const settings = useMandelbrotSettings();
-  const tsVersions = useMemo(() => ["", "#2", "#3"], []);
+  const tsVersions = useMemo(() => ["", "#2", "#3", "#4"], []);
   const wasmVersions = useMemo(() => ["", "#2"], []);
   const [tsVersionIndex, setTsVersionIndex] = useState(tsVersions.length - 1);
   const [wasmVersionIndex, setWasmVersionIndex] = useState(
