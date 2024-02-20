@@ -1,29 +1,21 @@
-import { DarkMode } from "@mui/icons-material";
-import { Box, Stack, Typography, Link, Paper, IconButton } from "@mui/material";
+import { Box, Stack, Typography, Link, Paper } from "@mui/material";
+import { forwardRef } from "react";
 import ColorModeSwitch from "./ColorModeSwitch";
 
-const Footer = () => {
+const Footer = forwardRef((_, ref) => {
   return (
     <Box
+      ref={ref}
       component="footer"
       sx={{
+        display: "flex",
+        justifyContent: "center",
+        mb: 2,
+        mt: 2,
         width: "100%",
-        position: "fixed",
-        bottom: 0,
       }}
     >
-      <Paper sx={{ py: 2 }}>
-        <Box
-          sx={{
-            position: "absolute",
-            right: 0,
-            top: "50%",
-            transform: "translate(0, -50%)",
-            mr: 2,
-          }}
-        >
-          <ColorModeSwitch />
-        </Box>
+      <Stack direction="row" spacing={2}>
         <Stack alignItems="center" justifyContent="center">
           <Typography color="text.secondary">
             {import.meta.env.VITE_APP_VERSION} &#x2022;{" "}
@@ -40,9 +32,10 @@ const Footer = () => {
             </Link>
           </Stack>
         </Stack>
-      </Paper>
+        <ColorModeSwitch />
+      </Stack>
     </Box>
   );
-};
+});
 
 export default Footer;
