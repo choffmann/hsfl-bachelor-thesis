@@ -6,6 +6,15 @@ WebAssembly, kurz WASM, ist eine Low-Level-Programmiersprache, die innerhalb des
 ## Frühere Versuche von Low-Level Code im Internet
 WebAssembly ist nicht der erste Versuch, Low-Level-Code im Web zu ermöglichen, um die Performance- oder Sicherheitsvorteile zu nutzen. Eine vergangene Technologie, Microsoft ActiveX, erlaubte es, selbstsignierte x64-Binärdateien im Webbrowser auszuführen. Das Modell scheiterte jedoch daran, dass die Sicherheit nicht auf einem technischen Konstrukt, sondern auf einem Vertrauensmodell beruhte. Native Client war die erste Technologie, die im Web eine Sandboxing-Technik für Maschinencode eingeführt hat. Das System wurde aus technischer Sicht als sicher angesehen, da der Codegenerator das Einhalten spezieller Muster verlangte. Allerdings konnte Native Client nicht auf JavaScript oder der Web-API zugreifen. Emscripten ist ein weiteres Framework, mit dem Anwendungen in C/C++ in JavaScript umgewandelt werden können. Im Laufe der Zeit wurde dies zu `asm.js` weiterentwickelt. Da `asm.js` in JavaScript kompiliert wird, kann es überall dort ausgeführt werden, wo JavaScript läuft (z.B. in Webbrowsern oder Node.js). Allerdings ist `asm.js` von Natur aus an die spezifische Semantik von JavaScript gebunden. Wenn eine neue Funktion in `asm.js` hinzugefügt werden soll, muss auch JavaScript angepasst werden. Java und Flash ermöglichten die Ausführung von Code im Web und waren bereits früh integriert. Allerdings unterstützten sie nicht die gleiche Leistung wie Low-Level-Code und werden aufgrund von Sicherheits- und Performanceproblemen nicht mehr verwendet. [@haas_bringing_2017, Seite 186]
 
+## Zielsetzung
+WebAssembly beschreibt verschiedene Ziele, welche hier aufgelistet werden. Wir werden uns anschauen, warum diese Ziele wichtig sind und wie WebAssembly diese erfüllt. [@group_webassembly_nodate, Seite 1 - 2]
+
+- Fast, safe, and portable semantics
+- Efficient and portable representation
+
+
+[@haas_bringing_2017]
+
 ## WebAssembly anhand eines Beispiels
 Obwohl WebAssembly nicht dazu gedacht ist, von Hand zu programmieren, schreiben wir eine kleine Funktion, um zu verstehen, wie WebAssembly aufgebaut ist. Die Funktion erhält zwei Argumente, `x` und `y`. Danach wird eine neue Variable `z` deklariert und mit dem Ergebnis der Multiplikation von `x` und `y` initialisiert. Anschließend wird `x` zurückgegeben, wenn `x` größer als `z` ist, ansonsten wird der Wert `z` zurückgegeben. In JavaScript würde eine solche Funktion wie folgt aussehen.
 
@@ -42,15 +51,6 @@ WebAssembly ist eine stackbasierte Programmiersprache. Alle Befehle werden vom S
   )
 )
 ```
-
-## Zielsetzung
-WebAssembly beschreibt verschiedene Ziele, welche hier aufgelistet werden. Wir werden uns anschauen, warum diese Ziele wichtig sind und wie WebAssembly diese erfüllt. [@group_webassembly_nodate, Seite 1 - 2]
-
-- Fast, safe, and portable semantics
-- Efficient and portable representation
-
-
-[@haas_bringing_2017]
 
 ## Rust für WebAssembly
 Mehrere Programmiersprachen können zu WebAssembly kompiliert werden. Rust ist eine beliebte Sprache für WebAssembly. Dies geht aus einer Studie von Scott Logic hervor [@eberhardt_state_2023]. Auch andere Quellen empfehlen die Nutzung von Rust für WebAssembly [@noauthor_webassembly_2022; @noauthor_webassembly_nodate-1; @fitzgerald_oxidizing_2018]. 
