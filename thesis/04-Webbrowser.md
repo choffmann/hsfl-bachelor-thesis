@@ -17,3 +17,4 @@ Zu Beginn des Internets bestand das Web aus statischen Dokumenten, die durch Lin
 ### WebAssembly in Webanwendungen
 Mehrere Webanwendungen, wie beispielsweise Figma, haben bereits auf WebAssembly umgestellt. Figma ist eine Anwendung, die im Webbrowser läuft und ein Tool zur Entwicklung von Prototypen ist. Zuvor nutzte Figma eine Kompilierung von C++ mit `asm.js`. Figma berichtet von einer dreifach besseren Performance in der Ladezeit mit WebAssembly im Vergleich zu `asm.js`. Dabei nennt Figma mehrere Vorteile der Kompilierung von C++ zu WebAssembly im Gegensatz zu C++ zu `asm.js`. [@figma]
 
+
