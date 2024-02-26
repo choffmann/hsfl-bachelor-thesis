@@ -18,7 +18,7 @@ WebAssembly beschreibt verschiedene Ziele, welche hier aufgelistet werden. Wir w
 ## WebAssembly anhand eines Beispiels
 Obwohl WebAssembly nicht dazu gedacht ist, von Hand zu programmieren, schreiben wir eine kleine Funktion, um zu verstehen, wie WebAssembly aufgebaut ist. Die Funktion erhält zwei Argumente, `x` und `y`. Danach wird eine neue Variable `z` deklariert und mit dem Ergebnis der Multiplikation von `x` und `y` initialisiert. Anschließend wird `x` zurückgegeben, wenn `x` größer als `z` ist, ansonsten wird der Wert `z` zurückgegeben. In JavaScript würde eine solche Funktion wie folgt aussehen.
 
-``` {.js caption="Foo Bar"}
+```js
 function foo(x, y) {
   const z = x * y
   if (x > z) { return x } else { return z }  
@@ -53,8 +53,8 @@ WebAssembly ist eine stackbasierte Programmiersprache. Alle Befehle werden vom S
 ```
 
 ## Rust für WebAssembly
-Mehrere Programmiersprachen können zu WebAssembly kompiliert werden. Rust ist eine beliebte Sprache für WebAssembly. Dies geht aus einer Studie von Scott Logic hervor [@eberhardt_state_2023]. Auch andere Quellen empfehlen die Nutzung von Rust für WebAssembly [@noauthor_webassembly_2022; @noauthor_webassembly_nodate-1; @fitzgerald_oxidizing_2018]. 
+Mehrere Programmiersprachen können zu WebAssembly kompiliert werden. Unter diesen ist Rust besonders beliebt für die Entwicklung von WebAssembly-Anwendungen. Dies wird durch eine Studie von Scott Logic bestätigt [@eberhardt_state_2023]. Auch andere Quellen empfehlen die Nutzung von Rust für WebAssembly [@noauthor_webassembly_2022; @noauthor_webassembly_nodate-1; @fitzgerald_oxidizing_2018]. Rust ist eine attraktive Wahl für die Entwicklung von WebAssembly-Anwendungen aufgrund seiner Kombination aus Leistung und Sicherheit. Abbildung \ref{fig:wasm-lang-trends} zeigt den Trend der Beliebtheit von Programmiersprachen für WebAssembly, wobei Rust zunehmend an Bedeutung gewinnt. Rust minimiert potenzielle Fehler und Sicherheitslücken bei der Entwicklung von WebAssembly-Anwendungen durch seine strikten Typsysteme und die Fähigkeit, Speicherzugriffe sicher zu verwalten [@ernerfeldt_why_2023]. (eventuell erweitern?). Rust ist eine bevorzugte Sprache für die Erstellung von performanten und sicheren WebAssembly-Anwendungen aufgrund ihrer Merkmale. In dieser Arbeit werden die Vergleichsalgorithmen mit Rust für WebAssembly implementiert.
 
-![Trends in der WebAssmebly Nutzung @eberhardt_state_2023](./img/wasm-language-usage-trends.png){width=80%}
+![Trends in der WebAssmebly Nutzung @eberhardt_state_2023 \label{fig:wasm-lang-trends}](./img/wasm-language-usage-trends.png){width=80%}
 
 
