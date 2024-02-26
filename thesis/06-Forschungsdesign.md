@@ -3,18 +3,18 @@
 # Forschungsdesign
 Das Ziel dieser Arbeit ist es, einen Leistungsvergleich zwischen WebAssembly und TypeScript durchzuführen. Hierfür werden spezifische Algorithmen verwendet, um die Laufzeit der Anwendung zu messen. Insgesamt wurden zwei Algorithmen in TypeScript, JavaScript und Rust für Webassembly entwickelt, um einen Leistungsvergleich beider Technologien durchzuführen. 
 
-## Forschungsfrage und Hypothesen
+## Forschungsfragen und Hypothesen
 Die Hauptforschungsfrage dieser Arbeit lautet: "Welchen messbaren Einfluss hat der Einsatz von WebAssembly im Vergleich zu JavaScript und TypeScript auf die Leistung einer Webanwendung in Bezug auf die Ausführungsgeschwindigkeit?" Aus dieser Frage ergeben sich folgende Unterfragen:
 
-1. "Ist WebAssembly immer in der Ausführungszeit schneller als JavaScript und TypeScript?"
-2.  "Weist WebAssembly eine gleichschnelle Ausführungszeit in unterschiedlichen Webbrowser auf?"
+1. "Ist WebAssembly in Bezug auf die Ausführungsgeschwindigkeit immer schneller als JavaScript und TypeScript?"
+2. "Ist die Ausführungsgeschwindigkeit von WebAssembly in verschiedenen Webbrowsern gleich?"
 
 Die Forschungsfragen führen zu folgenden Hypothesen, welche in Tabelle \ref{table:hypothese} aufgelistet werden:
 
 | Name | Beschreibung |
 | -- | ------------ |
 | H1 | Es wird erwartet, dass WebAssembly im Vergleich zu JavaScript und TypeScript eine signifikant schnellere Ausführungszeit aufweist. |
-| H2 | Es wird erwartet, dass WebAssembly in unterschiedlichen Webbrowsern eine gleichschnelle Ausführungszeit aufweist. |
+| H2 | Es wird erwartet, dass WebAssembly in unterschiedlichen Webbrowsern keine signifikant schnellere Ausführungszeit aufweist. |
 | H3 | Es wird davon ausgegangen, dass es keinen signifikanten Leistungsunterschied zwischen JavaScript und TypeScript gibt. |
 
 : Aufstellung der Hypothesen \label{table:hypothese}
