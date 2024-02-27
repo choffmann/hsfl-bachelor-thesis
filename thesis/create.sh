@@ -5,6 +5,7 @@ FILE_PATH=/home/choffmann/Dokumente/hsfl-bachelor-thesis/thesis/
 
 filenames=$(ls | grep -E "[0-9][0-9].*.md")
 
+
 docker run --rm --volume "$FILE_PATH:/data" --user $(id -u):$(id -g) \
 	akatranlp/pandoc $filenames --defaults ./defaults.yaml
 

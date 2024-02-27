@@ -1,18 +1,15 @@
----
-# https://pandoc.org/MANUAL.html#variables-for-latex
-papersize: a4
-documentclass: scrartcl
-linestretch: 1.15
-fontsize: 12pt
----
-
 \pagenumbering{gobble}
 \addcontentsline{toc}{section}{Inhaltsverzeichnis}
 \renewcommand{\contentsname}{Inhaltsverzeichnis}
+
 \tableofcontents
 
 \newpage
-\renewcommand{\listfigurename}{Abbildungsverzeichnis}
-\renewcommand{\figurename}{Abb.}
+\addcontentsline{toc}{section}{Abbildungsverzeichnis}
 \listoffigures
-\addcontentsline{toc}{section}{\listfigurename}
+
+\addcontentsline{toc}{section}{Tabellenverzeichnis}
+\listoftables
+
+\addcontentsline{toc}{section}{Quellcodeverzeichnis}
+\listoflistings

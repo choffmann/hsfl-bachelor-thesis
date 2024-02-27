@@ -1,6 +1,6 @@
 \newpage 
 
-# JavaScript Engine
+# JavaScript Engine {#sec:javascript-engine}
 Die JavaScript-Engine ist Bestandteil jedes modernen Browsers. Da JavaScript eine dynamische Programmiersprache ist, werden Variablen, Typen und andere Elemente in Echtzeit interpretiert. Programme, die zur Laufzeit interpretiert werden müssen, sind von Natur aus langsamer als Programme, die im Voraus kompiliert wurden. Eine JavaScript Engine enthält einen Just-In-Time-Compiler (JIT-Compiler), der den JavaScript Code in Echtzeit kompiliert. Zusätzlich enthält eine JavaScript Engine weitere Komponenten wie Parser, Garbage Collector und WebAssembly Compiler. Derzeit gibt es drei verschiedene JavaScript-Engines, die in gängigen Webbrowsern zum Einsatz kommen. 
 
 - v8 von Google
@@ -40,7 +40,9 @@ Um JavaScript ausführen zu können, muss der in JavaScript geschriebene Code zu
 
 Da nicht alle Funktionen im Quellcode direkt beim Start benötigt werden, kommt hier ein `Lazy Parser` zum Einsatz. Somit wird nicht der komplette Quellcode als AST geparst, sondern nur die zum Start benötigten Funktionen. Der `Lazy Parser` entscheidet, ob eine Funktion übersprungen werden kann. Wird eine Funktion übersprungen, wird sie vorbereitet, damit sie bei Bedarf vollständig geparst werden kann. Nach erfolgreichem Parsen des Quellcodes wird der AST an Ignition weitergegeben. [@noauthor_blazingly_nodate-1]
 
-Der AST, der aus der oben genannten Funktion entsteht, hat ungefähr eine Form, die in Abbildung x gezeigt wird. Diese Darstellung wurde mit dem npm Paket `acorn`^[https://www.npmjs.com/package/acorn] analysiert. Acorn ist ein JavaScript Parser. Obwohl Acorn nicht in der V8 Engine verwendet wird, bietet es einen guten Überblick darüber, wie der AST aufgebaut ist. **AST image**
+Der AST, der aus der oben genannten Funktion entsteht, hat ungefähr eine Form, die in Abbildung \ref{fig:ast} gezeigt wird. Diese Darstellung wurde mit dem npm Paket `acorn`^[https://www.npmjs.com/package/acorn] analysiert. Acorn ist ein JavaScript Parser. Obwohl Acorn nicht in der V8 Engine verwendet wird, bietet es einen guten Überblick darüber, wie der AST aufgebaut ist. 
+
+![Ansicht eines Abstact Syntax Tree \label{fig:ast}](./img/v8-ast.png){width=80%}
 
 ### Ignition
 Ignition ist ein Interpreter, der aus den Informationen des AST Bytecode erzeugt und wurde Mai 2017 in die V8 Engine integriet. Bytecode ist eine Abstraktion von Maschinencode und wird von einem High-Performance-Interpreter ausgeführt. Es handelt sich dabei um eine Ansammlung von Operationen, die ausgeführt werden. Obwohl der Bytecode für sich optimiert ist, ist seine Ausführung naturgemäß langsamer als die von Maschinencode. V8 überprüft, ob eine Funktion häufig ausgeführt wird. Wenn dies der Fall ist, übernimmt `TurboFan` die Kompilierung und gibt optimierten Maschinencode aus, der performanter als der Bytecode ist. Dieser Schritt ist in Abbildung 

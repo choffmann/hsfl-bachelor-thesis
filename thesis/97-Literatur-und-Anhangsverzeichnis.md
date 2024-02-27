@@ -4,6 +4,7 @@
 ::: {#refs}
 :::
 
+\pagenumbering{gobble}
 \newpage
 \renewcommand{\listtablename}{Anhangsverzeichnis}
 \renewcommand{\tablename}{Anhang}

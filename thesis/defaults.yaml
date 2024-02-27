@@ -2,9 +2,26 @@ output-file: Thesis.pdf
 dpi: 300
 columns: 72
 toc-depth: 3
-citeproc: true
 number-sections: true
+filters:
+  - pandoc-crossref
+  - citeproc
 metadata:
+  papersize: a4
+  documentclass: scrartcl
+  linestretch: 1.15
+  fontsize: 12pt
+  codeBlockCaptions: true
   bibliography: refs.bib
   csl: https://raw.githubusercontent.com/citation-style-language/styles/master/elsevier-harvard.csl
   # csl: https://raw.githubusercontent.com/citation-style-language/styles/master/ieee.csl
+  figureTitle: Abbildung
+  figPrefix: Abb.
+  tableTitle: Tabelle
+  tblPrefix: Tabelle
+  lstPrefix: Listing
+  secPrefix: Kapitel
+  lofTitle: Abbildungsverzeichnis
+  lotTitle: Tabellenverzeichnis
+  lolTitle: Quellcodeverzeichnis
+

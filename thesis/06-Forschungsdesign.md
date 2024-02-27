@@ -9,7 +9,7 @@ Die Hauptforschungsfrage dieser Arbeit lautet: "Welchen messbaren Einfluss hat d
 1. "Ist WebAssembly in Bezug auf die Ausführungsgeschwindigkeit immer schneller als JavaScript und TypeScript?"
 2. "Ist die Ausführungsgeschwindigkeit von WebAssembly in verschiedenen Webbrowsern gleich?"
 
-Die Forschungsfragen führen zu folgenden Hypothesen, welche in Tabelle \ref{table:hypothese} aufgelistet werden:
+Die Forschungsfragen führen zu folgenden Hypothesen, welche in [@tbl:hypothese] aufgelistet werden:
 
 | Name | Beschreibung |
 | -- | ------------ |
@@ -17,12 +17,12 @@ Die Forschungsfragen führen zu folgenden Hypothesen, welche in Tabelle \ref{tab
 | H2 | Es wird erwartet, dass WebAssembly in unterschiedlichen Webbrowsern keine signifikant schnellere Ausführungszeit aufweist. |
 | H3 | Es wird davon ausgegangen, dass es keinen signifikanten Leistungsunterschied zwischen JavaScript und TypeScript gibt. |
 
-: Aufstellung der Hypothesen \label{table:hypothese}
+: Aufstellung der Hypothesen {#tbl:hypothese}
 
 ## Auswahl der Stichproben
 Ein Leistungsvergleich kann effektiv durch Benchmark-Algorithmen gemessen werden. "Benchmarking eines Software-Systems zielt auf die Bestimmung von Software-Produktmetriken um Systeme vergleichbar zu machen, Leistungsverbesserungen aufzuzeigen, etc." [@schmid_benchmarking_2016]. Dabei ist es von entscheidender Bedeutung, dass die Ergebnisse des Benchmarkings wiederholbar und reproduzierbar sind. Durch die Auswahl geeigneter Benchmark-Algorithmen und die sorgfältige Durchführung von Benchmarks können präzise Leistungsmetriken erfasst werden, die es ermöglichen, die Leistungsfähigkeit verschiedener Technologien objektiv zu bewerten und miteinander zu vergleichen. In diesem Zusammenhang werden in dieser Arbeit die Matrizenmultiplikation und die Mandelbrot-Menge als Benchmark-Algorithmen ausgewählt, um die Leistungsunterschiede zwischen WebAssembly, JavaScript und TypeScript zu untersuchen.
 
-### Auswahl der Leistungsmetriken
+### Auswahl der Vergleichsmetriken
 In dieser Arbeit wird die Laufzeit der Implementierungen als Vergleichsmetrik verwendet. Eine weitere Metrik, die bei der Durchführung eines Benchmarks erfasst werden kann, ist der Speicherverbrauch einer Anwendung. Allerdings sind die verfügbaren Methoden zur Messung des Speicherverbrauchs in Webbrowsern nicht standardisiert und weisen einige Einschränkungen auf. Zum Beispiel ist die Verwendung von `performance.memory` veraltet und wird von den meisten Webbrowsern nicht mehr unterstützt. Eine weitere Möglichkeit wäre die Verwendung von `performance.measureUserAgentSpecificMemory()` [@noauthor_performance_2023; @noauthor_performance_2023-1]. Allerdings befindet sich diese Funktion im experimentellen Zustand und wird auch nicht von allen Browsern unterstützt. Obwohl der Speicherverbrauch auch über die Developer Tools des Webbrowsers analysiert werden könnte, besteht das Problem darin, dass dabei nicht nur der Speicherverbrauch der Implementierung des Benchmarks erfasst wird, sondern auch zusätzliche Berechnungen, die im Hintergrund zur Ausführung des Benchmarks oder zur Speicherung der gemessenen Zeit durchgeführt werden. Aufgrund der genannten Einschränkungen und der fehlenden Standardisierung wird in dieser Arbeit auf die Analyse des Speicherverbrauchs verzichtet. Stattdessen wird ausschließlich die Laufzeit der Implementierungen als Vergleichsgrundlage verwendet. Dadurch ist eine konsistente und vergleichbare Bewertung der Leistung zwischen WebAssembly und JavaScript möglich.
 
 ### Auswahl der geeigneten Bechmark Algotithmen
@@ -114,7 +114,7 @@ Das Tool wasm-pack^[https://rustwasm.github.io/docs/wasm-pack/introduction.html]
 Um die verschiedenen Benchmark Implementierungen leicht ausführen zu können, wurde ein Frontend entwickelt. Dieses führt die Benchmarks aus und wurde in TypeScript mit React entwickelt. Die verschiedenen Benchmark Implementierungen werden über Module in das Frontend geladen und durch einen Web Worker ausgeführt. Ein Web Worker ermöglicht es JavaScript, Anwendungen in einem anderen Thread auszuführen, da JavaScript eine Single-Thread-Sprache ist. Dadurch können aufwendige Berechnungen im Hintergrund ausgeführt werden, ohne den Main Thread des Frontends zu blockieren. Die Ausführung des Benchmarks im Web Worker hat zudem den Vorteil, dass der Benchmark in einer eigenen Umgebung ausgeführt wird, ohne Einmischung von Berechnungen des Frontends, wie zum Beispiel dem Garbage Collector oder anderen Berechnungen. Ein Web Worker kann über einen `MessageBus` mit dem Main-Thread kommunizieren [@noauthor_web_2023]. Im Frontend kann die Konstante $N$ angegeben werden. Diese beschreibt, wie oft eine Benchmark wiederholt werden soll. Die Konstante wird an die Benchmarkmodule weitergegeben. Jeder Benchmark hat einen `reporter`-Callback, um Parameter an den ausgeführten Web Worker zu übergeben. Diese Daten können dann an das Frontend weitergegeben werden. Das Frontend zeigt eine Übersicht über den aktuellen Benchmark bei Status $N$ an. Außerdem werden ein Diagramm und eine Tabelle mit den Ergebnissen angezeigt. Der Benchmark Report, der von den Benchmark Implementierungen erstellt wird, kann heruntergeladen werden, um weitere Analysen durchzuführen.
 
 ## Laboraufbau
-Die Vergleichsalgorithmen werden in drei verschiedenen Webbrowsern ausgeführt, die jeweils die wichtigsten bereits aufgelisteten JavaScript-Engines
+Die Vergleichsalgorithmen werden in drei verschiedenen Webbrowsern ausgeführt, die jeweils die wichtigsten, bereits in der Arbeit aufgelisteten JavaScript-Engines
 (V8, SpiderMonkey und JavaScriptCore) implementieren. Dabei stehen zwei Testcomputer zur Verfügung. Um das Experiment bestmöglich reproduzieren zu können,
 werden im Folgenden die verwendeten Systeme und Webbrowser der Testcomputer beschrieben.
 
@@ -136,7 +136,7 @@ Der Leistungsvergleich wird in drei Webbrowsern mit den drei aufgeführten JavaS
 der JavaScript-Engine JavaScriptCore hauptsächlich im Safari-Browser für Apple macOS und iOS zur Verfügung steht, kann dieser Leistungsvergleich nur auf dem
 Testrechner MacBook durchgeführt werden. Die Tabelle \ref{table:labor_browser} gibt einen Überblick über die verwendeten Webbrowser und deren Versionen.
 
-| Testcomputer | Browser    | JavaScript Engine | Version |
+| Testcomputer | Browser    | JS Engine | Version |
 | ------------ | --------------- | -------------- | -------------------------------- |
 | Linux   | Chromium        | V8             | Version 122.0.6261.39            |
 | Linux   | Mozilla Firefox | SpiderMonkey   | Version 122.0.1                  |
@@ -149,10 +149,11 @@ Testrechner MacBook durchgeführt werden. Die Tabelle \ref{table:labor_browser} 
 ### Webserver
 Die Anwendung für den Leistungsvergleich wird nicht direkt auf dem Testrechner ausgeführt, sondern von einem Webserver gehostet. Trotzdem erfolgt die Ausführung des Codes durch den Browser des Clients, wie bereits in der Arbeit diskutiert wurde. Eine serverseitige Kompilierung würde in Anwendungen wie Node.js stattfinden, die jedoch in diesem Kontext nicht verwendet werden. Der Webserver ist entweder im lokalen Netzwerk der Testumgebung erreichbar oder über eine URL^[https://benchmark.choffmann.io/] im Internet zugänglich.
 
-## Aufbereitung und Auswertung der Daten
-
 ## Versuchsdurchführung
-Die Benchmarks werden für jede Implementierung (JavaScript, TypeScript und WebAssembly) auf allen Testrechnern dreimal durchgeführt, um mögliche im Hintergrund laufende Berechnungen von anderen Programmen auszuschließen. 
+Die Benchmarks werden für jede Implementierung (JavaScript, TypeScript und WebAssembly) auf allen Testrechnern dreimal durchgeführt, um mögliche im Hintergrund laufende Berechnungen von anderen Programmen auszuschließen. Nach jeder vollständigen Durchführung von JavaScript, TypeScript und WebAssembly wird der Bericht heruntergeladen. Anschließend wird das Browserfenster neu geladen, der Browsercache geleert und der Benchmark erneut durchgeführt. Bei der Implementierung der Mandelbrotmenge werden die verschiedenen Versionen jeweils einzeln ausgeführt und wie separate Benchmarks behandelt.
+
+## Aufbereitung und Auswertung der Daten
+Zur Aufbereitung und Auswertung der Daten werden die Zeitmessungen für jede Implementierung in den Berichten für jeden Benchmarkwert $n$ erfasst. Dabei werden die Benchmarks dreimal ausgeführt, sodass jede Implementierung drei Zeitmessungen für jedes $n$ erhält. Anschließend wird aus diesen drei Zeitmessungen der Median berechnet, um einen Durchschnittswert für jedes $n$ einer Implementierung zu erhalten. Nachdem die Durchschnittswerte für jede Implementierung ermittelt wurden, werden diese verglichen und ausgewertet. Hierbei wird der Median der gesamten Zeitmessungen bestimmt und miteinander verglichen. Der Median bietet eine robuste Schätzung der zentralen Tendenz der Daten und ist weniger anfällig für Ausreißerwerte als der Mittelwert. Durch den Vergleich beider Werte können potenzielle Abweichungen und Ungleichmäßigkeiten in den Daten identifiziert werden. Zudem wird der Gesamtdurchschnitt der Ausführungszeiten für jede Implementierung über alle Werte von $n$ berechnet. Dadurch ist eine umfassende Bewertung der Leistung jeder Implementierung über den gesamten Benchmark hinweg möglich. Durch diesen Vergleich und die Auswertung der Durchschnittswerte lässt sich die relative Leistungsfähigkeit jeder Implementierung ermitteln. So kann festgestellt werden, welche Implementierung in Bezug auf die Ausführungsgeschwindigkeit am effizientesten ist. [Quelle für Median]
 
 ## Gütekriterien
 
