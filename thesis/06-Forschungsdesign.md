@@ -20,6 +20,14 @@ Die Forschungsfragen führen zu folgenden Hypothesen, welche in [@tbl:hypothese]
 : Aufstellung der Hypothesen {#tbl:hypothese}
 
 ## Auswahl der Stichproben
+Der Leistungsvergleich dieser Arbeit wird durch Benchmark-Algorithmen erfasst. "A benchmark is a tool coupled with a methodology for the evaluation and comparison of systems or components with respect to specific characteristics such as performance, reliability or security." [@kutz_art_2021, Seite 124]. Durch diese Definition werden Benchmarks in drei verschiedene Aspekte unterteilt:
+
+- Metriken (metrics)
+- Arbeitslast (workload)
+- Messmethodik (measurement technology)
+
+Die Metriken bestimmen, welche Werte der Messungen abgeleitet werden sollen, um das Ergebniss des Benchmarkes zu erzielen. 
+
 Ein Leistungsvergleich kann effektiv durch Benchmark-Algorithmen gemessen werden. "Benchmarking eines Software-Systems zielt auf die Bestimmung von Software-Produktmetriken um Systeme vergleichbar zu machen, Leistungsverbesserungen aufzuzeigen, etc." [@schmid_benchmarking_2016]. Dabei ist es von entscheidender Bedeutung, dass die Ergebnisse des Benchmarkings wiederholbar und reproduzierbar sind. Durch die Auswahl geeigneter Benchmark-Algorithmen und die sorgfältige Durchführung von Benchmarks können präzise Leistungsmetriken erfasst werden, die es ermöglichen, die Leistungsfähigkeit verschiedener Technologien objektiv zu bewerten und miteinander zu vergleichen. In diesem Zusammenhang werden in dieser Arbeit die Matrizenmultiplikation und die Mandelbrot-Menge als Benchmark-Algorithmen ausgewählt, um die Leistungsunterschiede zwischen WebAssembly, JavaScript und TypeScript zu untersuchen.
 
 ### Auswahl der Vergleichsmetriken
@@ -157,7 +165,20 @@ Die Anwendung für den Leistungsvergleich wird nicht direkt auf dem Testrechner 
 Die Benchmarks werden für jede Implementierung (JavaScript, TypeScript und WebAssembly) auf allen Testrechnern dreimal durchgeführt, um mögliche im Hintergrund laufende Berechnungen von anderen Programmen auszuschließen. Nach jeder vollständigen Durchführung von JavaScript, TypeScript und WebAssembly wird der Bericht heruntergeladen. Anschließend wird das Browserfenster neu geladen, der Browsercache geleert und der Benchmark erneut durchgeführt. Bei der Implementierung der Mandelbrotmenge werden die verschiedenen Versionen jeweils einzeln ausgeführt und wie separate Benchmarks behandelt.
 
 ## Aufbereitung und Auswertung der Daten
-Zur Aufbereitung und Auswertung der Daten werden die Zeitmessungen für jede Implementierung in den Berichten für jeden Benchmarkwert $n$ erfasst. Dabei werden die Benchmarks dreimal ausgeführt, sodass jede Implementierung drei Zeitmessungen für jedes $n$ erhält. Anschließend wird aus diesen drei Zeitmessungen der Median berechnet, um einen Durchschnittswert für jedes $n$ einer Implementierung zu erhalten. Nachdem die Durchschnittswerte für jede Implementierung ermittelt wurden, werden diese verglichen und ausgewertet. Hierbei wird der Median der gesamten Zeitmessungen bestimmt und miteinander verglichen. Der Median bietet eine robuste Schätzung der zentralen Tendenz der Daten und ist weniger anfällig für Ausreißerwerte als der Mittelwert. Durch den Vergleich beider Werte können potenzielle Abweichungen und Ungleichmäßigkeiten in den Daten identifiziert werden. Zudem wird der Gesamtdurchschnitt der Ausführungszeiten für jede Implementierung über alle Werte von $n$ berechnet. Dadurch ist eine umfassende Bewertung der Leistung jeder Implementierung über den gesamten Benchmark hinweg möglich. Durch diesen Vergleich und die Auswertung der Durchschnittswerte lässt sich die relative Leistungsfähigkeit jeder Implementierung ermitteln. So kann festgestellt werden, welche Implementierung in Bezug auf die Ausführungsgeschwindigkeit am effizientesten ist. [Quelle für Median]
+Zur Aufbereitung und Auswertung der Daten werden die Zeitmessungen für jede Implementierung in den Berichten für jeden Benchmarkwert $n$ erfasst. Dabei werden die Benchmarks dreimal ausgeführt $k$, sodass jede Implementierung drei Zeitmessungen für jedes $n$ erhält. Anschließend wird aus diesen drei Zeitmessungen der Mittelwert berechnet, um einen Durchschnittswert $\bar{x}_n$ für jedes $n$ einer Implementierung zu erhalten.
+
+$$
+\bar{x}_n = \frac{\sum_{i=1}^k x_i}{k}
+$$
+
+Nachdem die Durchschnittswerte $\bar{x}_n$ für jede Implementierung ermittelt wurden, werden diese verglichen und ausgewertet. Hierbei wird der Median $Md_b$ der gesamten Zeitmessungen bestimmt und miteinander verglichen.  
+
+$$
+Md_b = \begin{cases}
+x_{\frac{n+1}{2}} & \text{falls } n \text{ ungerade} \\
+(x_{\frac{n}{2}}+x_{\frac{n}{2}+1})/2 & \text{falls } n \text{ gerade}
+\end{cases}
+$$
 
 ## Gütekriterien
 

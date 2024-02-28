@@ -20,11 +20,11 @@ Alle modernen JavaScript-Engines verfügen über mindestens zwei JIT-Compiler: e
 Alle drei Engines haben neben einem JIT-Compiler auch einen WebAssembly-Kompilierer, um WebAssembly auszuführen. In V8 übernimmt dies `Liftoff`, in SpiderMonkey `RabaldrMonkey` und `BaldrMonkey` und in Webkits JavaScriptCore `BBQ (Build Bytecode Quickly)` und `OMG (Optimized Machine-code Generator)`. [@noauthor_documentation_nodate-1; @noauthor_spidermonkey_nodate; @bastien_assembling_2017]
 
 ## Detaillierter Aufbau der V8 JavaScript Engine
-Abbildung \ref{fig:v8-pipeline} zeigt die V8 Kompilierungspipeline. Der JavaScript Code wird zuerst vom Parser in einen `Abstract Syntax Tree` umgewandelt. Dieser `Abstract Syntax Tree` wird vom Interpreter `Ignition` in Bytecode umgewandelt. Der Bytecode wird bei Bedarf von `TurboFan` in optimierten Maschinencode umgewandelt. 
+[@fig:v8-pipeline] zeigt die V8 Kompilierungspipeline. Der JavaScript Code wird zuerst vom Parser in einen `Abstract Syntax Tree` umgewandelt. Dieser `Abstract Syntax Tree` wird vom Interpreter `Ignition` in Bytecode umgewandelt. Der Bytecode wird bei Bedarf von `TurboFan` in optimierten Maschinencode umgewandelt. 
 
-![V8 Compiler Pipeline @hinkelmann_understanding_2017 \label{fig:v8-pipeline}](./img/v8_compiler_pipeline.jpg){width=80%}
+![V8 Compiler Pipeline @hinkelmann_understanding_2017](./img/v8_compiler_pipeline.jpg){#fig:v8-pipeline width=80%}
 
-In diesem Kapitel wird die Funktionsweise der JavaScript Engine V8 vorgestellt, um ein besseres Verständnis dafür zu vermitteln, wie ein Webbrowser JavaScript-Code verarbeitet und optimiert, um die Performance zwischen JavaScript und WebAssembly zu analysieren. Es wird der JavaScript Code analysiert, wie er durch die JavaScript Engine V8 durchläuft.
+In diesem Kapitel wird die Funktionsweise der JavaScript Engine V8 vorgestellt, um ein besseres Verständnis dafür zu vermitteln, wie ein Webbrowser JavaScript-Code verarbeitet und optimiert, um die Performance zwischen JavaScript und WebAssembly zu analysieren. Es wird der JavaScript Code analysiert, wie er durch die JavaScript Engine V8 durchläuft, welcher in [@lst:v8_demo_code] einzusehen ist.
 
 ```js
 function foo(a, b, c) {
@@ -32,23 +32,24 @@ function foo(a, b, c) {
 	return a + b * d;
 }
 
-foo(5, 2, 150)
+foo(5, 2, 150) // Aufruf
 ```
+: Beispiel Funktion für V8 {#lst:v8_demo_code}
 
 ### Parser
 Um JavaScript ausführen zu können, muss der in JavaScript geschriebene Code zunächst geparst werden, damit v8 ihn verstehen kann. Der Parser ist die erste Anlaufstelle, wenn eine JavaScript Datei im Webbrowser ausgeführt wird. Zu Beginn wird der JavaScript Code in einen `Abstract Syntax Tree` (AST) umgewandelt. Ein AST ist eine syntaktische Struktur vom JavaScript Quellcode. Anschließend wird der AST von der Komponente Ignition in Bytecode umgewandelt. Es ist wichtig, dass das Parsen schnell und performant verläuft, da v8 erst nach der Kompilierung des JavaScript Codes gestartet werden kann und das AST für die Kompilierung des Codes benötigt wird.  [@noauthor_blazingly_nodate]
 
 Da nicht alle Funktionen im Quellcode direkt beim Start benötigt werden, kommt hier ein `Lazy Parser` zum Einsatz. Somit wird nicht der komplette Quellcode als AST geparst, sondern nur die zum Start benötigten Funktionen. Der `Lazy Parser` entscheidet, ob eine Funktion übersprungen werden kann. Wird eine Funktion übersprungen, wird sie vorbereitet, damit sie bei Bedarf vollständig geparst werden kann. Nach erfolgreichem Parsen des Quellcodes wird der AST an Ignition weitergegeben. [@noauthor_blazingly_nodate-1]
 
-Der AST, der aus der oben genannten Funktion entsteht, hat ungefähr eine Form, die in Abbildung \ref{fig:ast} gezeigt wird. Diese Darstellung wurde mit dem npm Paket `acorn`^[https://www.npmjs.com/package/acorn] analysiert. Acorn ist ein JavaScript Parser. Obwohl Acorn nicht in der V8 Engine verwendet wird, bietet es einen guten Überblick darüber, wie der AST aufgebaut ist. 
+Der AST, der aus der oben genannten Funktion [@lst:v8_demo_code] entsteht, hat ungefähr eine Form, die in [@fig:ast] gezeigt wird. Diese Darstellung wurde mit dem npm Paket `acorn`^[https://www.npmjs.com/package/acorn] analysiert. Acorn ist ein JavaScript Parser. Obwohl Acorn nicht in der V8 Engine verwendet wird, bietet es einen guten Überblick darüber, wie der AST aufgebaut ist. 
 
-![Ansicht eines Abstact Syntax Tree \label{fig:ast}](./img/v8-ast.png){width=80%}
+![Ansicht eines Abstact Syntax Tree](./img/v8-ast.png){#fig:ast width=80%}
 
 ### Ignition
 Ignition ist ein Interpreter, der aus den Informationen des AST Bytecode erzeugt und wurde Mai 2017 in die V8 Engine integriet. Bytecode ist eine Abstraktion von Maschinencode und wird von einem High-Performance-Interpreter ausgeführt. Es handelt sich dabei um eine Ansammlung von Operationen, die ausgeführt werden. Obwohl der Bytecode für sich optimiert ist, ist seine Ausführung naturgemäß langsamer als die von Maschinencode. V8 überprüft, ob eine Funktion häufig ausgeführt wird. Wenn dies der Fall ist, übernimmt `TurboFan` die Kompilierung und gibt optimierten Maschinencode aus, der performanter als der Bytecode ist. Dieser Schritt ist in Abbildung 
 \ref{fig:v8-pipeline} mit einem grünen Pfeil markiert. [@hinkelmann_understanding_2017; @v8_firing_2016]
 
-Der Bytecode aus der oben genannten Funktion kann mittels Node.js, Chromium oder den Developertool `d8`^[https://v8.dev/docs/d8] extrahiert werden. Mit dem Tag `--print-bytecode` kann der generierte Bytecode von Ignition ausgegeben werden. Die hier dargestellte Ausgabe enthält lediglich den Bytecode der Funktion `foo()`. Die Komplette Ausgabe ist im Anhang \ref{anhang:v8-ignition-bytecode} zu sehen.
+Der Bytecode aus der oben genannten Funktion kann mittels Node.js, Chromium oder den Developertool `d8`^[https://v8.dev/docs/d8] extrahiert werden. Mit dem Tag `--print-bytecode` kann der generierte Bytecode von Ignition ausgegeben werden. Die hier dargestellte Ausgabe in [@lst:ignition_bytecode] enthält lediglich den Bytecode der Funktion `foo()`. Die Komplette Ausgabe ist im Anhang \ref{anhang:v8-ignition-bytecode} zu sehen.
 
 ```bash
 $ d8 --print-bytecode demo.js
@@ -61,6 +62,7 @@ $ d8 --print-bytecode demo.js
 56 E> 0x3cd1000421df @   11 : 38 03 01          Add a0, [1]
 64 S> 0x3cd1000421e2 @   14 : ab                Return
 ```
+: Ignition Bytecode {#lst:ignition_bytecode}
 
 Es gibt hier 7 Schritte, die im Bytecode ausgeführt werden. Ignition besteht aus mehreren Registern, wie `r0, r1, r2, ...`, in denen Werte abgespeichert werden können, sowie einem Akkumulator. Der Akkumulator ist wie ein normales Register, in dem ein Wert abgespeichert wird. Der Bytecode nennt dieses Register jedoch bei einer Operation oft nicht explizit. Zum Beispiel wird im Bytecode `Add a0` der Wert von `a0` mit dem Wert im Akkumulator addiert. Die Parameter, die der Funktion übergeben werden, sind auch in Registern gespeichert, die hier als `a0, a1, a2` bezeichnet werden. Zunächst wird der Wert aus dem Register `a2` durch den Befehl `Ldar` in den Akkumulator geladen. Anschließend wird der Wert im Akkumulator durch `SubSmi [100]` um 100 subtrahiert und erneut im Akkumulator gespeichert. `SubSmi` steht dabei für `Substract small integer`. Anschließend speichert `Star0` den Wert im Akkumulator im Register `r0`. Register `r0` repräsentiert somit die Variable `d` aus dem JavaScript Code. Der Wert wird durch `Ldar r0` wieder in den Akkumulator geladen. Zunächst wird `Mul a1` ausgeführt, wobei der Wert im Akkumulator mit dem Wert aus dem Register `a1` multipliziert wird. Anschließend wird `Add a0` ausgeführt, wobei der Wert im Akkumulator mit dem Wert von `a0` addiert wird. Schließlich wird `Return` aufgerufen. Dadurch wird der Wert im Akkumulator zurückgegeben und die Funktion beendet. [@hinkelmann_understanding_2017]
 

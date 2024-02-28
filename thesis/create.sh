@@ -1,7 +1,7 @@
 DECKBLATT_FILE=./Deckblatt-BA.pdf
 RAW_THESIS_FILE=./Thesis.pdf
 THESIS_FILE=./Bachelorthesis.pdf
-FILE_PATH=/home/choffmann/Dokumente/hsfl-bachelor-thesis/thesis/
+FILE_PATH=$(pwd)
 
 filenames=$(ls | grep -E "[0-9][0-9].*.md")
 
