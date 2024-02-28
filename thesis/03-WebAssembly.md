@@ -1,6 +1,6 @@
 \newpage    
 
-# WebAssembly
+# WebAssembly {#sec:webassembly}
 WebAssembly, kurz WASM, ist eine Low-Level-Programmiersprache, die innerhalb des World Wide Web Consortiums (W3C) entwickelt und 2018 zum ersten Mal veröffentlicht wurde. WebAssembly wird in Bytecode dargestellt und ist daher für Menschen schwer zu lesen. Obwohl es nicht vorgesehen ist, dass WebAssembly von Hand geschrieben wird, ist dies durchaus möglich. WebAssembly bietet eine Textdarstellung (`.wat`), die den kompilierten Code in Textform anzeigt. WebAssembly ist ein Kompilierungsziel für verschiedene Sprachen wie Rust, C, C++, Kotlin, Java und viele mehr. Der Programmcode wird in eine `.wasm` Datei kompiliert, die jedoch vom Browser nicht direkt ausgeführt werden kann. Zur Ausführung von WebAssembly wird weiterhin JavaScript benötigt, um die `.wasm` Datei zu laden und auszuführen. Es ist nicht vorgesehen, dass WebAssembly JavaScript ersetzt. Stattdessen sollen die beiden Technologien Hand in Hand arbeiten. WebAssembly ist mittlerweile ein Standard, welche von allen vier wichtigen Webbrowser wie `Chrome, Safari, Mozilla Firefox` und `Microsoft Edge` unterschützt werden. [@group_webassembly_nodate; @haas_bringing_2017]
 
 ## Frühere Versuche von Low-Level Code im Internet
@@ -16,7 +16,7 @@ WebAssembly beschreibt verschiedene Ziele, welche hier aufgelistet werden. Wir w
 [@haas_bringing_2017]
 
 ## WebAssembly anhand eines Beispiels
-Obwohl WebAssembly nicht dazu gedacht ist, von Hand zu programmieren, schreiben wir eine kleine Funktion, um zu verstehen, wie WebAssembly aufgebaut ist. Die Funktion erhält zwei Argumente, `x` und `y`. Danach wird eine neue Variable `z` deklariert und mit dem Ergebnis der Multiplikation von `x` und `y` initialisiert. Anschließend wird `x` zurückgegeben, wenn `x` größer als `z` ist, ansonsten wird der Wert `z` zurückgegeben. In JavaScript würde eine solche Funktion wie in @lst:wasm_example_code aussehen.
+Obwohl WebAssembly nicht dazu gedacht ist, von Hand zu programmieren, schreiben wir eine kleine Funktion, um zu verstehen, wie WebAssembly aufgebaut ist. Die Funktion erhält zwei Argumente, `x` und `y`. Danach wird eine neue Variable `z` deklariert und mit dem Ergebnis der Multiplikation von `x` und `y` initialisiert. Anschließend wird `x` zurückgegeben, wenn `x` größer als `z` ist, ansonsten wird der Wert `z` zurückgegeben. In JavaScript würde eine solche Funktion wie in [@lst:wasm_example_code] aussehen.
 
 ```js
 function foo(x, y) {
@@ -55,7 +55,17 @@ WebAssembly ist eine stackbasierte Programmiersprache. Alle Befehle werden vom S
 : WebAssmebly Code in Textformat {#lst:wasm_wat_code}
 
 ## Rust für WebAssembly
-Mehrere Programmiersprachen können zu WebAssembly kompiliert werden. Unter diesen ist Rust besonders beliebt für die Entwicklung von WebAssembly-Anwendungen. Dies wird durch eine Studie von Scott Logic bestätigt [@eberhardt_state_2023]. Auch andere Quellen empfehlen die Nutzung von Rust für WebAssembly [@noauthor_webassembly_2022; @noauthor_webassembly_nodate-1; @fitzgerald_oxidizing_2018]. Rust ist eine attraktive Wahl für die Entwicklung von WebAssembly-Anwendungen aufgrund seiner Kombination aus Leistung und Sicherheit. @fig:wasm-lang-trends zeigt den Trend der Beliebtheit von Programmiersprachen für WebAssembly, wobei Rust zunehmend an Bedeutung gewinnt. Rust minimiert potenzielle Fehler und Sicherheitslücken bei der Entwicklung von WebAssembly-Anwendungen durch seine strikten Typsysteme und die Fähigkeit, Speicherzugriffe sicher zu verwalten [@ernerfeldt_why_2023]. (eventuell erweitern?). Rust ist eine bevorzugte Sprache für die Erstellung von performanten und sicheren WebAssembly-Anwendungen aufgrund ihrer Merkmale. In dieser Arbeit werden die Vergleichsalgorithmen mit Rust für WebAssembly implementiert.
+Mehrere Programmiersprachen können zu WebAssembly kompiliert werden. Unter diesen ist Rust besonders beliebt für die Entwicklung von WebAssembly-Anwendungen. Dies wird durch eine Studie von Scott Logic bestätigt [@eberhardt_state_2023]. Auch andere Quellen empfehlen die Nutzung von Rust für WebAssembly [@noauthor_webassembly_2022; @noauthor_webassembly_nodate-1; @fitzgerald_oxidizing_2018]. 
+
+
+
+
+
+Rust ist eine attraktive Wahl für die Entwicklung von WebAssembly-Anwendungen aufgrund seiner Kombination aus Leistung und Sicherheit. [@fig:wasm-lang-trends] zeigt den Trend der Beliebtheit von Programmiersprachen für WebAssembly, wobei Rust zunehmend an Bedeutung gewinnt. Rust minimiert potenzielle Fehler und Sicherheitslücken bei der Entwicklung von WebAssembly-Anwendungen durch seine strikten Typsysteme und die Fähigkeit, Speicherzugriffe sicher zu verwalten [@ernerfeldt_why_2023]. (eventuell erweitern?). 
+
+
+
+Da Rust so populär in der für die verwendung von WebAssembly ist, wird in dieser Arbeit die Vergleichsalgorithmen mit Rust für WebAssembly implementiert.
 
 ![Trends in der WebAssmebly Nutzung @eberhardt_state_2023](./img/wasm-language-usage-trends.png){#fig:wasm-lang-trends width=80%}
 

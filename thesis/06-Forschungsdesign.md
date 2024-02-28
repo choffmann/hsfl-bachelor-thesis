@@ -94,6 +94,8 @@ function benchmark(n: Number, reporter: (...args) => void): BenchmarkReport {
 ### JavaScript und TypeScript
 Die Implementierungen von JavaScript und TypeScript unterscheiden sich nur durch die Typisierung von TypeScript. Aus diesem Grund werden die beiden Implementierungen hier zusammen beschrieben. Die Zeit wird durch die Methode `performance.now()` ermittelt.
 
+`tsconfig.json` kram    
+
 #### Matrizenmultiplikation {-}
 Zu Beginn des Benchmarks werden zwei Matrizen mit der Größe von $N \times N$ erstellt. Dabei entspricht $N$ dem aktuellen Index der laufenden Iteration. Die Matrizen werden mit zufälligen Werten befüllt. Zusätzlich zu den beiden Matrizen, die miteinander multipliziert werden, wird eine leere Matrix erstellt, in der das Ergebnis gespeichert wird. Die Erstellung der Matrizen findet in jeder Iteration statt, jedoch noch bevor die Zeit gemessen wird. Die Multiplikation der Matrizen wurde gemäß dem Kapitel [Theoretischer Aufbau des Matrizenalgorithmus](#matrizenmultiplikation) implementiert.
 
@@ -105,6 +107,8 @@ TypeScript Version 1, 2, 3, 4
 In Rust wurde ein `trait` namens `Runner` erstellt, welches mehrere Methoden wie `init(), before_iter(), benchmark(), ...` enthält. Dazu gibt es eine Klasse namens `BenchmarkRunner`, welche die Funktionen des `Runner` ausführt. Der Aufbau des `BenchmarkRunner` ist ähnlich zu dem, der oben bereits beschrieben wurde. Jede Benchmark-Implementierung in Rust muss jetzt nur noch `Runner` implementieren und angeben, wie die Benchmark-Funktion aufgerufen werden soll. Die Zeitmessung erfolgt mit dem Paket `instant`^[https://crates.io/crates/instant/0.1.12]. Es ist möglich, auch hier `performance.now()` zu verwenden. Allerdings gab es Schwierigkeiten, da die Benchmarks in einem Web Worker aufgerufen werden. Deshalb wurde hier auf ein externes Paket zurückgegriffen, welches die Zeitmessung in WebAssembly ermöglicht.
 
 Das Tool wasm-pack^[https://rustwasm.github.io/docs/wasm-pack/introduction.html] wird in dieser Arbeit verwendet, um den Rust-Code für WebAssembly zu kompilieren. `wasm-pack` bietet eine Schnittstelle, um Rust-Code in WebAssembly umzuwandeln. Es automatisiert den Prozess des Bauens der entsprechenden WebAssembly-Dateien sowie das Bereitstellen von zugehörigen JavaScript-Dateien. 
+
+Kompilierungsoptimierungs kram...
 
 #### Matrizenmultiplikation {-}
 
