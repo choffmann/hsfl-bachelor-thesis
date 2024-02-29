@@ -9,3 +9,5 @@
 \label{anhang:v8-ignition-bytecode}
 ![](./img/d8-print-bytecode.png)
 
+\captionof{table}{Ergebnisse MacBook Safari Matrizenmultiplikation Diagramm}
+![](./img/macbook_safari_total_run.png)
