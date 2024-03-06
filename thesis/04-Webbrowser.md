@@ -13,10 +13,5 @@ Eine Webanwendung ist eine Software, welche im Webbrowser ausgeführt wird. Meis
 (Erklärung Client vs. Serverseitige Webanwendungen)
 
 ## WebAssembly in Webanwendungen
-Einige Webanwendungen wie Figam haben bereits auf WebAssembly umgestellt. Figma ist eine Anwednung, welche im Webbrowser ausgeführt wird und 
-
-
-
-Einige Webanwendungen, wie zum Beispiel Figma, haben bereits auf WebAssembly umgestellt. Figma ist eine Anwendung, die im Webbrowser läuft und ein Tool zur Entwicklung von Prototypen bietet. Zuvor nutzte Figma eine Kompilierung von C++ mit `asm.js`. Figma berichtet von einer dreifach besseren Performance in der Ladezeit mit WebAssembly im Vergleich zu `asm.js`. Dabei nennt Figma mehrere Vorteile der Kompilierung von C++ zu WebAssembly im Gegensatz zu C++ zu `asm.js`. WebAssembly ermöglicht eine schnellere Ausführung von komplexem Code, da moderne Browser eine bessere Optimierung ermöglichen. Außerdem ist die Darstellung des Maschinencodes im Vergleich zu asm.js kompakter, was zu schnelleren Ladezeiten führt. Die Möglichkeit, bestehenden Code nahtlos in Webanwendungen zu integrieren und gleichzeitig von den Performancevorteilen zu profitieren, macht WebAssembly für Entwickler äußerst attraktiv. Figma ist ein Beispiel dafür, wie WebAssembly erfolgreich in eine bestehende Webanwendung integriert wurde und zu einer signifikanten Verbesserung der Leistung beigetragen hat. [@wallace_figma_2017]
-
+Einige Webanwendungen wie Figam haben bereits auf WebAssembly umgestellt. Figma ist eine Anwednung, welche im Webbrowser ausgeführt wird und bietet ein Tool zur erstellung von Prototypen für Benutzeroberflächen. Zuvor nutzte Figma eine Kompilierung von C++ mit `asm.js`. Figma berichtet von einer dreifach besseren Performance in der Ladezeit mit WebAssembly im Vergleich zu `asm.js`. Dabei nennt Figma mehrere Vorteile der Kompilierung von C++ zu WebAssembly im Gegensatz zu C++ zu `asm.js`. WebAssembly ermöglicht eine schnellere Ausführung von komplexem Code, da moderne Browser eine bessere Optimierung ermöglichen. Außerdem ist die Darstellung des Maschinencodes im Vergleich zu asm.js kompakter, was zu schnelleren Ladezeiten führt. [@wallace_figma_2017]
 

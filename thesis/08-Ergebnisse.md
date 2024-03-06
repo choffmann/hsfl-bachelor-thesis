@@ -6,33 +6,12 @@
 
 ### Matrizenmultiplikation
 
-| Testcomputer | Browser | Durchlauf | Gesamt | Mittelwert | Median |
-| --------- | ------- |---- | -------| --------- | ------ |
-| Linux | Chrome | 1 | ... | ... |
-| Linux | Chrome | 2 | ... | ... |
-| Linux | Chrome | 3 | ... | ... |
-| Linux | Firefox | 1 | ... | ... |
-| Linux | Firefox | 2 | ... | ... |
-| Linux | Firefox | 3 | ... | ... |
-| MacBook | Safari | 1 | ... | ... |
-| MacBook | Safari | 2 | ... | ... |
-| MacBook | Safari | 3 | ... | ... |
-| MacBook | Chrome | 1 | ... | ... |
-| MacBook | Chrome | 2 | ... | ... |
-| MacBook | Chrome | 3 | ... | ... |
-| MacBook | Firefox | 1 | ... | ... |
-| MacBook | Firefox | 2 | ... | ... |
-| MacBook | Firefox | 3 | ... | ... |
+| Testcomputer| Browser|     Sprache|     Gesamt| Median|        Mean|
+|-------------|--------|------------|-----------|-------|------------|
+|      MacBook|  Safari|  JavaScript| 1131522 ms| 805 ms| 1618.361 ms|
+|      MacBook|  Safari|  TypeScript| 1126574 ms| 735 ms| 1612.347 ms|
+|      MacBook|  Safari| WebAssembly|  422386 ms| 273 ms|  610.692 ms|
 : Ergebnisse Matrizenmultiplikation
-
-| Testcomputer | Browser | Mittelwert | Median |
-| --------- | ----------- | --------- | ------ |
-| Linux | Chrome | ... | ... |
-| Linux | Firefox | ... | ... |
-| MacBook | Chrome | ... | ... |
-| MacBook | Firefox | ... | ... |
-| MacBook | Safari | ... | ... |
-: Ergebnisse Matrizenmultiplikation zusammengefasst
 
 ### Mandelbrotmenge
 

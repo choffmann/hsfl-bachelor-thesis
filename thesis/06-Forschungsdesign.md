@@ -26,7 +26,7 @@ Der Leistungsvergleich dieser Arbeit wird durch Benchmark-Algorithmen erfasst. "
 - Arbeitslast (workload)
 - Messmethodik (measurement technology)
 
-Die Metriken bestimmen, welche Werte der Messungen abgeleitet werden sollen, um das Ergebniss des Benchmarkes zu erzielen. 
+Die Metriken bestimmen, welche Werte der Messungen abgeleitet werden sollen, um das Ergebniss des Benchmarkes zu erzielen. [Weiter wenn Buch da ist...]
 
 Ein Leistungsvergleich kann effektiv durch Benchmark-Algorithmen gemessen werden. "Benchmarking eines Software-Systems zielt auf die Bestimmung von Software-Produktmetriken um Systeme vergleichbar zu machen, Leistungsverbesserungen aufzuzeigen, etc." [@schmid_benchmarking_2016]. Dabei ist es von entscheidender Bedeutung, dass die Ergebnisse des Benchmarkings wiederholbar und reproduzierbar sind. Durch die Auswahl geeigneter Benchmark-Algorithmen und die sorgfältige Durchführung von Benchmarks können präzise Leistungsmetriken erfasst werden, die es ermöglichen, die Leistungsfähigkeit verschiedener Technologien objektiv zu bewerten und miteinander zu vergleichen. In diesem Zusammenhang werden in dieser Arbeit die Matrizenmultiplikation und die Mandelbrot-Menge als Benchmark-Algorithmen ausgewählt, um die Leistungsunterschiede zwischen WebAssembly, JavaScript und TypeScript zu untersuchen.
 
@@ -50,7 +50,7 @@ A \times B = C(c_{ij}) \text{  mit  }
 c_{ij} := \sum_{k=1}^{n} a_{ik} \times b_{jk}
 $$
 
-Im Benchmark Algorithmus werden ausschließlich Matrizen der Größe $N \times N$ betrachtet. Eine mögliche Implementierung der Formel in Pseudocode könnte wie folgt aussehen.
+Im Benchmark Algorithmus werden ausschließlich Matrizen der Größe $N \times N$ betrachtet. Eine mögliche Implementierung der Formel in Pseudocode ist in [@#lst:matrix_pseudo] abgebildet.
 
 ```
 Data: S[A][B], P[G][H]
@@ -63,6 +63,7 @@ for m = 0; m < A; m++ do
   end
 end
 ```
+: Pseudocode der Matrizenmultiplikation {#lst:matrix_pseudo}
 
 Die Matrizenmultiplikation ist ein aufwendiger Algorithmus mit einer Laufzeitkomplexität von $O(n^3)$ aufgrund der verschachtelten `for`-Schleifen. Es gibt jedoch auch weitere Implementierungen wie den Solvay-Strassen-Algorithmus, der die Laufzeit auf $O(n^{2.8074})$ reduziert. In dieser Arbeit wird jedoch der übliche Algorithmus wie oben gezeigt implementiert.
 [@datta_matrix_2020]
@@ -81,7 +82,7 @@ Diese Iteration wird solange ausgeführt, bis der Wert $n$ erreicht ist. Wenn de
 ![Mandelbrot Ansicht in Koordinatensystem @noauthor_mandelbrotmenge_nodate \label{fig:mandelbrot_kooridnat}](./img/mandelbrot_dia.gif)
 
 ## Benchmark Implementierung
-Jeder der oben genannten Benchmarks wird in einer Funktion definiert und in einer Schleife von 1 bis zur Konstante $n$ ausgeführt. Die benötigte Ausführungszeit wird in jeder Iteration gemessen und in einem `BenchmarkReport` gespeichert. Während der Iteration wird ausschließlich die benötigte Zeit für den Algorithmus gemessen. Zeiten wie das Befüllen der `BenchmarkReport`-Liste oder weitere Operationen, die zum Ausführen des Benchmarks benötigt werden, werden nicht erfasst. Stattdessen wird die Gesamtzeit aufgenommen, die diese Operationen enthält. Der grobe Aufbau eines Benchmark-Moduls sieht in etwa wie folgt aus.
+Jeder der oben genannten Benchmarks wird in einer Funktion definiert und in einer Schleife von 1 bis zur Konstante $n$ ausgeführt. Die benötigte Ausführungszeit wird in jeder Iteration gemessen und in einem `BenchmarkReport` gespeichert. Während der Iteration wird ausschließlich die benötigte Zeit für den Algorithmus gemessen. Zeiten wie das Befüllen der `BenchmarkReport`-Liste oder weitere Operationen, die zum Ausführen des Benchmarks benötigt werden, werden nicht erfasst. Stattdessen wird die Gesamtzeit aufgenommen, die diese Operationen enthält. Der grobe Aufbau eines Benchmark-Moduls wird in [@lst:benchmark_impl] abgebildet.
 
 ```
 function benchmark(n: Number, reporter: (...args) => void): BenchmarkReport {
@@ -98,6 +99,7 @@ function benchmark(n: Number, reporter: (...args) => void): BenchmarkReport {
   return result
 }
 ```
+: Benchmark implementierung {#lst:benchmark_impl}
 
 ### JavaScript und TypeScript
 Die Implementierungen von JavaScript und TypeScript unterscheiden sich nur durch die Typisierung von TypeScript. Aus diesem Grund werden die beiden Implementierungen hier zusammen beschrieben. Die Zeit wird durch die Methode `performance.now()` ermittelt.
@@ -133,7 +135,7 @@ werden im Folgenden die verwendeten Systeme und Webbrowser der Testcomputer besc
 ### Versuchscomputer
 Für die Ausführung der Algorithmen stehen zwei Testrechner zur Verfügung. Um sicherzustellen, dass auf den Testrechnern keine Programme im Hintergrund laufen,
 die das Ergebnis verfälschen könnten, werden alle Testrechner mit einem frisch installierten Betriebssystem neu installiert.
-Die Tabelle \ref{table:labor_computer} gibt einen Überblick über die Testcomputer. Um die Leistung des MacBooks nicht zu beeinträchtigen, wird das MacBook
+Die Tabelle [@tbl:labor_computer] gibt einen Überblick über die Testcomputer. Um die Leistung des MacBooks nicht zu beeinträchtigen, wird das MacBook
 während des Experiments ständig an die Stromversorgung angeschlossen sein.
 
 | Name    | Betriebssystem | CPU | RAM |
@@ -141,12 +143,12 @@ während des Experiments ständig an die Stromversorgung angeschlossen sein.
 | Linux   | Arch Linux mit GNOME 45.4   | AMD FX(tm)-4130 Quad-Core       | 4GB DDR3 1600 MHz    |
 | MacBook | macOS Sonoma 14.3.1 (23D60) | 2,4 GHz Quad-Core Intel Core i5 | 16GB 2133 MHz LPDDR3 |
 
-: Übersicht der Testcomputer \label{table:labor_computer}
+: Übersicht der Testcomputer {#tbl:labor_computer}
 
 ### Webbrowser
 Der Leistungsvergleich wird in drei Webbrowsern mit den drei aufgeführten JavaScript Engines (V8, SpiderMonkey und JavaScriptCore) durchgeführt. Da Webkit mit 
 der JavaScript-Engine JavaScriptCore hauptsächlich im Safari-Browser für Apple macOS und iOS zur Verfügung steht, kann dieser Leistungsvergleich nur auf dem
-Testrechner MacBook durchgeführt werden. Die Tabelle \ref{table:labor_browser} gibt einen Überblick über die verwendeten Webbrowser und deren Versionen.
+Testrechner MacBook durchgeführt werden. Die [@tbl:labor_browser] gibt einen Überblick über die verwendeten Webbrowser und deren Versionen.
 
 | Testcomputer | Browser    | JS Engine | Version |
 | ------------ | --------------- | -------------- | -------------------------------- |
@@ -156,7 +158,7 @@ Testrechner MacBook durchgeführt werden. Die Tabelle \ref{table:labor_browser} 
 | MacBook | Mozilla Firefox | SpiderMonkey   | Version 123.0                    |
 | MacBook | Safari          | JavaScriptCore | Version 17.3.1 (19617.2.4.11.12) |
 
-: Übersicht der Webbrowser \label{table:labor_browser}
+: Übersicht der Webbrowser {#tbl:labor_browser}
 
 ### Webserver
 Die Anwendung für den Leistungsvergleich wird nicht direkt auf dem Testrechner ausgeführt, sondern von einem Webserver gehostet. Trotzdem erfolgt die Ausführung des Codes durch den Browser des Clients, wie bereits in der Arbeit diskutiert wurde. Eine serverseitige Kompilierung würde in Anwendungen wie Node.js stattfinden, die jedoch in diesem Kontext nicht verwendet werden. Der Webserver ist entweder im lokalen Netzwerk der Testumgebung erreichbar oder über eine URL^[https://benchmark.choffmann.io/] im Internet zugänglich.
@@ -165,13 +167,7 @@ Die Anwendung für den Leistungsvergleich wird nicht direkt auf dem Testrechner 
 Die Benchmarks werden für jede Implementierung (JavaScript, TypeScript und WebAssembly) auf allen Testrechnern dreimal durchgeführt, um mögliche im Hintergrund laufende Berechnungen von anderen Programmen auszuschließen. Nach jeder vollständigen Durchführung von JavaScript, TypeScript und WebAssembly wird der Bericht heruntergeladen. Anschließend wird das Browserfenster neu geladen, der Browsercache geleert und der Benchmark erneut durchgeführt. Bei der Implementierung der Mandelbrotmenge werden die verschiedenen Versionen jeweils einzeln ausgeführt und wie separate Benchmarks behandelt.
 
 ## Aufbereitung und Auswertung der Daten
-Zur Aufbereitung und Auswertung der Daten werden die Zeitmessungen für jede Implementierung in den Berichten für jeden Benchmarkwert $n$ erfasst. Dabei werden die Benchmarks dreimal ausgeführt $k$, sodass jede Implementierung drei Zeitmessungen für jedes $n$ erhält. Anschließend wird aus diesen drei Zeitmessungen der Mittelwert berechnet, um einen Durchschnittswert $\bar{x}_n$ für jedes $n$ einer Implementierung zu erhalten.
-
-$$
-\bar{x}_n = \frac{\sum_{i=1}^k x_i}{k}
-$$
-
-Nachdem die Durchschnittswerte $\bar{x}_n$ für jede Implementierung ermittelt wurden, werden diese verglichen und ausgewertet. Hierbei wird der Median $Md_b$ der gesamten Zeitmessungen bestimmt und miteinander verglichen.  
+Zur Aufbereitung und Auswertung der Daten werden die Zeitmessungen für jede Implementierung in den Berichten für jeden Benchmarkwert $n$ erfasst. Dabei werden die Benchmarks dreimal ausgeführt $k$, sodass jede Implementierung drei Zeitmessungen für jedes $n$ erhält. Anschließend wird aus diesen drei Zeitmessungen der Median berechnet, um für alle drei Durchgänge einen Wert zu erhalten. Der Median wird wie folgt definiert:
 
 $$
 Md_b = \begin{cases}
