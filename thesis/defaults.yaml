@@ -13,8 +13,10 @@ metadata:
   fontsize: 12pt
   codeBlockCaptions: true
   bibliography: refs.bib
-  csl: https://raw.githubusercontent.com/citation-style-language/styles/master/elsevier-harvard.csl
+  # csl: https://raw.githubusercontent.com/citation-style-language/styles/master/elsevier-harvard.csl
   # csl: https://raw.githubusercontent.com/citation-style-language/styles/master/ieee.csl
+  csl: https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl
+  # csl: https://raw.githubusercontent.com/citation-style-language/styles/master/modern-language-association.csl
   figureTitle: Abbildung
   figPrefix: Abb.
   tableTitle: Tabelle
