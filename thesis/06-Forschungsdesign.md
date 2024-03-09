@@ -24,13 +24,14 @@ Die Forschungsfragen führen zu folgenden Hypothesen:
 : Aufstellung der Hypothesen {#tbl:hypothese}
 
 ## Auswahl der Stichproben
-Der Leistungsvergleich dieser Arbeit wird durch Benchmark-Algorithmen erfasst. "A benchmark is a tool coupled with a methodology for the evaluation and comparison of systems or components with respect to specific characteristics such as performance, reliability or security." [@kutz_art_2021, S. 124]. Durch diese Definition werden Benchmarks in drei verschiedene Aspekte unterteilt:
+Der Leistungsvergleich dieser Arbeit wird durch Benchmark-Algorithmen erfasst. "A benchmark is a tool coupled with a methodology for the evaluation and comparison of systems or components with respect to specific characteristics such as performance, reliability or security." [@kounev_systems_2020, S. 4]. Die Performance beschreibt die erbrachte Arbeit eines Systems im Verhältnis zu den dafür benötigten Ressourcen und der Zeit. Eine bessere Performance bedeutet somit, dass eine erbrachte Arbeit in kürzerer Zeit und/oder mit weniger Ressourcen erbracht wird [@kounev_systems_2020, S. 3]. Durch diese Definition werden Benchmarks in drei verschiedene Aspekte unterteilt:
 
 - Metriken (metrics)
 - Arbeitslast (workload)
 - Messmethodik (measurement technology)
 
 Die Metriken bestimmen, welche Werte der Messungen abgeleitet werden sollen, um das Ergebniss des Benchmarkes zu erzielen. [Weiter wenn Buch da ist...]
+
 
 Ein Leistungsvergleich kann effektiv durch Benchmark-Algorithmen gemessen werden. "Benchmarking eines Software-Systems zielt auf die Bestimmung von Software-Produktmetriken um Systeme vergleichbar zu machen, Leistungsverbesserungen aufzuzeigen, etc." [@schmid_benchmarking_2016]. Dabei ist es von entscheidender Bedeutung, dass die Ergebnisse des Benchmarkings wiederholbar und reproduzierbar sind. Durch die Auswahl geeigneter Benchmark-Algorithmen und die sorgfältige Durchführung von Benchmarks können präzise Leistungsmetriken erfasst werden, die es ermöglichen, die Leistungsfähigkeit verschiedener Technologien objektiv zu bewerten und miteinander zu vergleichen. In diesem Zusammenhang werden in dieser Arbeit die Matrizenmultiplikation und die Mandelbrot-Menge als Benchmark-Algorithmen ausgewählt, um die Leistungsunterschiede zwischen WebAssembly, JavaScript und TypeScript zu untersuchen.
 
@@ -168,6 +169,9 @@ Die Anwendung für den Leistungsvergleich wird nicht direkt auf dem Testrechner 
 Die Benchmarks werden für jede Implementierung (JavaScript, TypeScript und WebAssembly) auf allen Testrechnern dreimal durchgeführt, um mögliche im Hintergrund laufende Berechnungen von anderen Programmen auszuschließen. Nach jeder vollständigen Durchführung von JavaScript, TypeScript und WebAssembly wird der Bericht heruntergeladen. Anschließend wird das Browserfenster neu geladen, der Browsercache geleert und der Benchmark erneut durchgeführt. Bei der Implementierung der Mandelbrotmenge werden die verschiedenen Versionen jeweils einzeln ausgeführt und wie separate Benchmarks behandelt.
 
 ## Aufbereitung und Auswertung der Daten
+Die Vergleichsalgorithmen werden als `Fixed-Work Benchmarks` implementiert. Sei $W_i$ die erbrachte Arbeit von einem System zu einer bestimmten Laufzeit $T_i$, so ist die Ausführungszeit als $R_i = \frac{W_i}{T_i}$. [@kounev_systems_2020, S. 9 - 10]
+
+
 Zur Aufbereitung und Auswertung der Daten werden die Zeitmessungen für jede Implementierung in den Berichten für jeden Benchmarkwert $n$ erfasst. Dabei werden die Benchmarks dreimal ausgeführt $k$, sodass jede Implementierung drei Zeitmessungen für jedes $n$ erhält. Anschließend wird aus diesen drei Zeitmessungen der Median berechnet, um für alle drei Durchgänge einen Wert zu erhalten. Der Median wird wie folgt definiert:
 
 $$
