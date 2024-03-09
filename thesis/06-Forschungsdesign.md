@@ -33,12 +33,12 @@ Ein Leistungsvergleich kann effektiv durch Benchmark-Algorithmen gemessen werden
 ### Auswahl der Vergleichsmetriken
 In dieser Arbeit wird die Laufzeit der Implementierungen als Vergleichsmetrik verwendet. Eine weitere Metrik, die bei der Durchführung eines Benchmarks erfasst werden kann, ist der Speicherverbrauch einer Anwendung. Allerdings sind die verfügbaren Methoden zur Messung des Speicherverbrauchs in Webbrowsern nicht standardisiert und weisen einige Einschränkungen auf. Zum Beispiel ist die Verwendung von `performance.memory` veraltet und wird von den meisten Webbrowsern nicht mehr unterstützt. Eine weitere Möglichkeit wäre die Verwendung von `performance.measureUserAgentSpecificMemory()` [@noauthor_performance_2023; @noauthor_performance_2023-1]. Allerdings befindet sich diese Funktion im experimentellen Zustand und wird auch nicht von allen Browsern unterstützt. Obwohl der Speicherverbrauch auch über die Developer Tools des Webbrowsers analysiert werden könnte, besteht das Problem darin, dass dabei nicht nur der Speicherverbrauch der Implementierung des Benchmarks erfasst wird, sondern auch zusätzliche Berechnungen, die im Hintergrund zur Ausführung des Benchmarks oder zur Speicherung der gemessenen Zeit durchgeführt werden. Aufgrund der genannten Einschränkungen und der fehlenden Standardisierung wird in dieser Arbeit auf die Analyse des Speicherverbrauchs verzichtet. Stattdessen wird ausschließlich die Laufzeit der Implementierungen als Vergleichsgrundlage verwendet. Dadurch ist eine konsistente und vergleichbare Bewertung der Leistung zwischen WebAssembly und JavaScript möglich.
 
-### Auswahl der geeigneten Bechmark Algotithmen
+### Auswahl geeigneter Bechmark-Algorithmen
 Die Auswahl der geeigneten Benchmark-Algorithmen stellt einen entscheidenden Schritt dar, um die Leistungsfähigkeit verschiedener Technologien präzise zu bewerten und miteinander zu vergleichen. In dieser Arbeit konzentrieren wir uns darauf, die Leistungsunterschiede zwischen WebAssembly, JavaScript und TypeScript zu untersuchen, wobei die Ausführungsgeschwindigkeit als zentrale Metrik betrachtet wird. Um diese Unterschiede genau zu erfassen, wurden zwei Benchmark Algorithmen ausgewählt.
 
 Der erste Algorithmus, die Matrizenmultiplikation,  wurde als Benchmark ausgewählt, da sie einen wichtigen Anwendungsfall für WebAssembly demonstriert, der in verschiedenen Bereichen wie Bild- und Videobearbeitung, Spielen, CAD-Anwendungen sowie in VR- und Augmented-Reality-Anwendungen relevant ist [@noauthor_use_nodate]. In diesen Bereichen sind computergenerierte Grafiken von zentraler Bedeutung, und die Matrizenmultiplikation ist eine grundlegende Operation, die häufig zur Transformation von Geometrien verwendet wird. Transformationen wie Verschiebungen und Skalierungen von Objekten werden mithilfe von Matrizenoperationen beschrieben, was die Matrizenmultiplikation zu einem geeigneten Benchmark für die Leistungsbewertung von WebAssembly macht [@issa_essential_nodate].
 
-Als zweiter Benchmark-Algorithmus wurde die Mandelbrot-Menge ausgewählt, ein komplexer Algorithmus, der intensive numerische Berechnungen erfordert. Die Mandelbrot Menge besteht aus komplexen Zahlen, die ein bestimmtes Kriterium erfüllen müssen. Dabei werden Punkte innerhalb der komplexen Zahlenmenge durchlaufen und geprüft, ob sie sich in der Mandelbrot Menge befinden oder nicht. Die Genauigkeit der Bestimmung der Mandelbrot-Menge erhöht sich mit jeder weiteren Iteration der Punkte [@noauthor_mandelbrotmenge_nodate]. Dieser Benchmark wurde von "The Computer Language Benchmarks Game"^[https://benchmarksgame-team.pages.debian.net/benchmarksgame/index.html] ausgewählt. Diese Webseite enthält eine Vielzahl von Implementierungen spezifischer Benchmarks sowie Vergleiche zwischen verschiedenen Programmiersprachen. Die Benchmarks zielen darauf ab, verschiedene Aspekte wie Geschwindigkeit und Speicherverbrauch zu testen. Die Mandelbrot-Menge ist ein herausfordernder Benchmark, der es ermöglicht, die Leistung von WebAssembly hinsichtlich Geschwindigkeit und Speicherverbrauch zu untersuchen, wie von Pereira et al. (2017) in ihrer Analyse der Energieeffizienz betont wird [@pereira_energy_2017]. 
+Als zweiter Benchmark-Algorithmus wurde die Mandelbrot-Menge ausgewählt, ein komplexer Algorithmus, der intensive numerische Berechnungen erfordert. Die Mandelbrot Menge besteht aus komplexen Zahlen, die ein bestimmtes Kriterium erfüllen müssen. Dabei werden Punkte innerhalb der komplexen Zahlenmenge durchlaufen und geprüft, ob sie sich in der Mandelbrot Menge befinden oder nicht. Die Genauigkeit der Bestimmung der Mandelbrot-Menge erhöht sich mit jeder weiteren Iteration der Punkte [@noauthor_mandelbrotmenge_nodate]. Dieser Benchmark wurde von "The Computer Language Benchmarks Game"^[https://benchmarksgame-team.pages.debian.net/benchmarksgame/index.html] ausgewählt. Diese Webseite enthält eine Vielzahl von Implementierungen spezifischer Benchmarks sowie Vergleiche zwischen verschiedenen Programmiersprachen. Die Benchmarks zielen darauf ab, verschiedene Aspekte wie Geschwindigkeit und Speicherverbrauch zu testen. Die Mandelbrot-Menge ist ein herausfordernder Benchmark, der es ermöglicht, die Leistung von WebAssembly hinsichtlich Geschwindigkeit und Speicherverbrauch zu untersuchen, wie von Pereira et al. (2017) in ihrer Analyse der Energieeffizienz betont wird. 
 
 ### Matrizenmultiplikation
 Die Matrizenmultiplikation wird durch die folgende mathematische Formel definiert.
@@ -50,7 +50,7 @@ A \times B = C(c_{ij}) \text{  mit  }
 c_{ij} := \sum_{k=1}^{n} a_{ik} \times b_{jk}
 $$
 
-Im Benchmark Algorithmus werden ausschließlich Matrizen der Größe $N \times N$ betrachtet. Eine mögliche Implementierung der Formel in Pseudocode ist in [@#lst:matrix_pseudo] abgebildet.
+Im Benchmark Algorithmus werden ausschließlich Matrizen der Größe $N \times N$ betrachtet. Eine mögliche Implementierung der Formel in Pseudocode ist in [@lst:matrix_pseudo] abgebildet.
 
 ```
 Data: S[A][B], P[G][H]
@@ -113,6 +113,8 @@ Zu Beginn des Benchmarks werden zwei Matrizen mit der Größe von $N \times N$ e
 JavaScript Version 1, 2 &
 TypeScript Version 1, 2, 3, 4
 
+Die Mandelbrotmenge rechnet mit komplexen Zahlen. Dazu wurde eine Klasse `Complex` erstellt. Diese Klasse hat zwei Variablen für den Realteil und den Imaginärteil. Zudem erhält die Klasse Methoden zum addieren, quadieren sowie die Betragsfunktion.
+
 ### WebAssembly durch Rust
 In Rust wurde ein `trait` namens `Runner` erstellt, welches mehrere Methoden wie `init(), before_iter(), benchmark(), ...` enthält. Dazu gibt es eine Klasse namens `BenchmarkRunner`, welche die Funktionen des `Runner` ausführt. Der Aufbau des `BenchmarkRunner` ist ähnlich zu dem, der oben bereits beschrieben wurde. Jede Benchmark-Implementierung in Rust muss jetzt nur noch `Runner` implementieren und angeben, wie die Benchmark-Funktion aufgerufen werden soll. Die Zeitmessung erfolgt mit dem Paket `instant`^[https://crates.io/crates/instant/0.1.12]. Es ist möglich, auch hier `performance.now()` zu verwenden. Allerdings gab es Schwierigkeiten, da die Benchmarks in einem Web Worker aufgerufen werden. Deshalb wurde hier auf ein externes Paket zurückgegriffen, welches die Zeitmessung in WebAssembly ermöglicht.
 
@@ -154,8 +156,6 @@ Testrechner MacBook durchgeführt werden. Die [@tbl:labor_browser] gibt einen Ü
 | ------------ | --------------- | -------------- | -------------------------------- |
 | Linux   | Chromium        | V8             | Version 122.0.6261.39            |
 | Linux   | Mozilla Firefox | SpiderMonkey   | Version 122.0.1                  |
-| MacBook | Google Chrome   | V8             | Version 122.0.6167.184           |
-| MacBook | Mozilla Firefox | SpiderMonkey   | Version 123.0                    |
 | MacBook | Safari          | JavaScriptCore | Version 17.3.1 (19617.2.4.11.12) |
 
 : Übersicht der Webbrowser {#tbl:labor_browser}
