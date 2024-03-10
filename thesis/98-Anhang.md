@@ -39,3 +39,15 @@
 
 \captionof{table}{Ergebnisse Mandelbrotmenge der drei Durchläufe MacBook Firefox}
 ![](./img/mandelbrot_macos_firefox_all_3.png)
+
+\captionof{table}{Matrix Linux Boxplot Ansicht}
+![](./img/matrix_linux_boxplots.png)
+
+\captionof{table}{Matrix MacBook Boxplot Ansicht}
+![](./img/matrix_macos_boxplots.png)
+
+\captionof{table}{Mandelbrotmenge Linux Boxplot Ansicht}
+![](./img/mandelbrot_linux_boxplots.png)
+
+\captionof{table}{Matrix MacBook Boxplot Ansicht}
+![](./img/mandelbrot_macos_boxplots.png)
