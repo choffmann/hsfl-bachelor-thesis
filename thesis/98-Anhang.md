@@ -9,5 +9,17 @@
 \label{anhang:v8-ignition-bytecode}
 ![](./img/d8-print-bytecode.png)
 
-\captionof{table}{Ergebnisse MacBook Safari Matrizenmultiplikation Diagramm}
-![](./img/macbook_safari_total_run.png)
+\captionof{table}{Ergebnisse Matrizenmultiplikation der drei Durchläufe Linux Chrome}
+![](./img/matrix_linux_chrome_all_3.png)
+
+\captionof{table}{Ergebnisse Matrizenmultiplikation der drei Durchläufe Linux Firefox}
+![](./img/matrix_linux_firefox_all_3.png)
+
+\captionof{table}{Ergebnisse Matrizenmultiplikation der drei Durchläufe MacBook Safari}
+![](./img/matrix_macos_safari_all_3.png)
+
+\captionof{table}{Ergebnisse Matrizenmultiplikation der drei Durchläufe MacBook Chrome}
+![](./img/matrix_macos_chrome_all_3.png)
+
+\captionof{table}{Ergebnisse Matrizenmultiplikation der drei Durchläufe MacBook Firefox}
+![](./img/matrix_macos_firefox_all_3.png)

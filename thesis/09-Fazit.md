@@ -3,6 +3,8 @@
 # Fazit
 - Alles zusammenfassen (alle Kapitel)
 - Ergebniss der Forschung wiedergeben
-vim.cmd('nmap <C-v> "+p')
+
+## Kritik der Methodik
+- Einzeln die benchmarks durchlaufen lassen nicht gesamt
 
 ## Ausblick

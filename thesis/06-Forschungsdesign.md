@@ -117,7 +117,7 @@ Zu Beginn des Benchmarks werden zwei Matrizen mit der Größe von $N \times N$ e
 JavaScript Version 1, 2 &
 TypeScript Version 1, 2, 3, 4
 
-Die Mandelbrotmenge rechnet mit komplexen Zahlen. Dazu wurde eine Klasse `Complex` erstellt. Diese Klasse hat zwei Variablen für den Realteil und den Imaginärteil. Zudem erhält die Klasse Methoden zum addieren, quadieren sowie die Betragsfunktion.
+Die Mandelbrotmenge rechnet mit komplexen Zahlen. Dazu wurde eine Klasse `Complex` erstellt. Diese Klasse hat zwei Variablen für den Realteil und den Imaginärteil. Zudem erhält die Klasse Methoden zum addieren, quadieren sowie die Betragsfunktion. 
 
 ### WebAssembly durch Rust
 In Rust wurde ein `trait` namens `Runner` erstellt, welches mehrere Methoden wie `init(), before_iter(), benchmark(), ...` enthält. Dazu gibt es eine Klasse namens `BenchmarkRunner`, welche die Funktionen des `Runner` ausführt. Der Aufbau des `BenchmarkRunner` ist ähnlich zu der Funktion, welche in [@sec:benchmark_impl] beschreiben qurde. Jede Benchmark-Implementierung in Rust muss jetzt nur noch `Runner` implementieren und angeben, wie die Benchmark-Funktion aufgerufen werden soll. Die Zeitmessung erfolgt mit dem Paket `instant`^[https://crates.io/crates/instant/0.1.12]. Es ist möglich, auch hier `performance.now()` zu verwenden. Allerdings gab es Schwierigkeiten, da die Benchmarks in einem Web Worker aufgerufen werden. Deshalb wurde hier auf ein externes Paket zurückgegriffen, welches die Zeitmessung in WebAssembly ermöglicht.
@@ -166,20 +166,25 @@ Testrechner MacBook durchgeführt werden. Die [@tbl:labor_browser] gibt einen Ü
 Die Anwendung für den Leistungsvergleich wird nicht direkt auf dem Testrechner ausgeführt, sondern von einem Webserver gehostet. Trotzdem erfolgt die Ausführung des Codes durch den Browser des Clients, wie bereits in der Arbeit diskutiert wurde. Eine serverseitige Kompilierung würde in Anwendungen wie Node.js stattfinden, die jedoch in diesem Kontext nicht verwendet werden. Der Webserver ist entweder im lokalen Netzwerk der Testumgebung erreichbar oder über eine URL^[https://benchmark.choffmann.io/] im Internet zugänglich.
 
 ## Versuchsdurchführung
-Die Benchmarks werden für jede Implementierung (JavaScript, TypeScript und WebAssembly) auf allen Testrechnern dreimal durchgeführt, um mögliche im Hintergrund laufende Berechnungen von anderen Programmen auszuschließen. Nach jeder vollständigen Durchführung von JavaScript, TypeScript und WebAssembly wird der Bericht heruntergeladen. Anschließend wird das Browserfenster neu geladen, der Browsercache geleert und der Benchmark erneut durchgeführt. Bei der Implementierung der Mandelbrotmenge werden die verschiedenen Versionen jeweils einzeln ausgeführt und wie separate Benchmarks behandelt.
+Die Benchmarks werden für jede Implementierung (JavaScript, TypeScript und WebAssembly) auf allen Testrechnern dreimal durchgeführt, um mögliche im Hintergrund laufende Berechnungen von anderen Programmen auszuschließen. Nach jeder vollständigen Durchführung von JavaScript, TypeScript und WebAssembly wird der Bericht heruntergeladen. Anschließend wird das Browserfenster neu geladen, der Browsercache geleert und der Benchmark erneut durchgeführt. 
 
 ## Aufbereitung und Auswertung der Daten
-Die Vergleichsalgorithmen werden als `Fixed-Work Benchmarks` implementiert. Sei $W_i$ die erbrachte Arbeit von einem System zu einer bestimmten Laufzeit $T_i$, so ist die Ausführungszeit als $R_i = \frac{W_i}{T_i}$. [@kounev_systems_2020, S. 9 - 10]
-
-
-Zur Aufbereitung und Auswertung der Daten werden die Zeitmessungen für jede Implementierung in den Berichten für jeden Benchmarkwert $n$ erfasst. Dabei werden die Benchmarks dreimal ausgeführt $k$, sodass jede Implementierung drei Zeitmessungen für jedes $n$ erhält. Anschließend wird aus diesen drei Zeitmessungen der Median berechnet, um für alle drei Durchgänge einen Wert zu erhalten. Der Median wird wie folgt definiert:
+Die Benchmark-Algorithmen werden pro Browser dreimal ausgeführt, um mögliche Ausreißer zu vermeiden. Dadurch liegen pro Browser drei Werte für JavaScript, TypeScript und WebAssembly vor und es ergibt sich die Menge $T_i=\{t_1, t_2, ..., t_n\}$, wobei $t$ die gemessene Ausführungszeit in bezug auf $n$ ist und $i$ der Durchlauf, wobei $1 \le i \le 3$. Um aus diesen drei Durchläufen jeweils einen Wert $t$ für $n$ zu erhalten, wird der Median ermittelt. Der Median ist der Wert, der in der Mitte einer Menge von Werten liegt und ist definiert als:
 
 $$
-Md_b = \begin{cases}
+median = \begin{cases}
 x_{\frac{n+1}{2}} & \text{falls } n \text{ ungerade} \\
 (x_{\frac{n}{2}}+x_{\frac{n}{2}+1})/2 & \text{falls } n \text{ gerade}
 \end{cases}
 $$
+
+[@kounev_systems_2020, S. 58] beschreibt, dass Metriken im Benchmarking in der Regel durch den arithmetischen Mittelwert (Mean) bestimmt werden. Dabei wird aus den zuvor durch den Median zusammengeführten Laufzeiten jedes $n$ eines Durchlaufs der Durchschnitt ermittelt und als Vergleichswert für die Laufzeit zwischen den Implementierungen verwendet. Der arithmetische Mittelwert ist definiert als:
+
+$$
+mean = \frac{1}{n}\sum^{n}_{i=1}x_i
+$$
+
+Es werden lediglich die Laufzeiten eines Benchmarks auf einem System verglichen, und zwar hinsichtlich der verschiedenen Webbrowser. Ein Vergleich der Metriken zwischen verschiedenen Benchmark-Algorithmen und verschiedenen Systemen ist nicht sinnvoll.
 
 ## Gütekriterien
 
