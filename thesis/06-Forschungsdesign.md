@@ -114,9 +114,6 @@ Die Implementierungen von JavaScript und TypeScript unterscheiden sich nur durch
 Zu Beginn des Benchmarks werden zwei Matrizen mit der Größe von $N \times N$ erstellt. Dabei entspricht $N$ dem aktuellen Index der laufenden Iteration. Die Matrizen werden mit zufälligen Werten befüllt. Zusätzlich zu den beiden Matrizen, die miteinander multipliziert werden, wird eine leere Matrix erstellt, in der das Ergebnis gespeichert wird. Die Erstellung der Matrizen findet in jeder Iteration statt, jedoch noch bevor die Zeit gemessen wird. Die Multiplikation der Matrizen wurde gemäß dem [@sec:matrix_theory] implementiert.
 
 #### Mandelbrot {-}
-JavaScript Version 1, 2 &
-TypeScript Version 1, 2, 3, 4
-
 Die Mandelbrotmenge rechnet mit komplexen Zahlen. Dazu wurde eine Klasse `Complex` erstellt. Diese Klasse hat zwei Variablen für den Realteil und den Imaginärteil. Zudem erhält die Klasse Methoden zum addieren, quadieren sowie die Betragsfunktion. 
 
 ### WebAssembly durch Rust

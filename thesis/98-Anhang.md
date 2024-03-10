@@ -23,3 +23,19 @@
 
 \captionof{table}{Ergebnisse Matrizenmultiplikation der drei Durchläufe MacBook Firefox}
 ![](./img/matrix_macos_firefox_all_3.png)
+
+
+\captionof{table}{Ergebnisse Mandelbrotmenge der drei Durchläufe Linux Chrome}
+![](./img/mandelbrot_linux_chrome_all_3.png)
+
+\captionof{table}{Ergebnisse Mandelbrotmenge der drei Durchläufe Linux Firefox}
+![](./img/mandelbrot_linux_firefox_all_3.png)
+
+\captionof{table}{Ergebnisse Mandelbrotmenge der drei Durchläufe MacBook Safari}
+![](./img/mandelbrot_macos_safari_all_3.png)
+
+\captionof{table}{Ergebnisse Mandelbrotmenge der drei Durchläufe MacBook Chrome}
+![](./img/mandelbrot_macos_chrome_all_3.png)
+
+\captionof{table}{Ergebnisse Mandelbrotmenge der drei Durchläufe MacBook Firefox}
+![](./img/mandelbrot_macos_firefox_all_3.png)
