@@ -156,7 +156,8 @@ Testrechner MacBook durchgeführt werden. Die [@tbl:labor_browser] gibt einen Ü
 | Linux   | Chromium        | V8             | Version 122.0.6261.39            |
 | Linux   | Mozilla Firefox | SpiderMonkey   | Version 122.0.1                  |
 | MacBook | Safari          | JavaScriptCore | Version 17.3.1 (19617.2.4.11.12) |
-
+| MacBook | Google Chrome   | V8             | Version 122.0.6167.184           |
+| MacBook | Mozilla Firefox | SpiderMonkey   | Version 123.0                    |
 : Übersicht der Webbrowser {#tbl:labor_browser}
 
 ### Webserver
@@ -166,19 +167,30 @@ Die Anwendung für den Leistungsvergleich wird nicht direkt auf dem Testrechner 
 Die Benchmarks werden für jede Implementierung (JavaScript, TypeScript und WebAssembly) auf allen Testrechnern dreimal durchgeführt, um mögliche im Hintergrund laufende Berechnungen von anderen Programmen auszuschließen. Nach jeder vollständigen Durchführung von JavaScript, TypeScript und WebAssembly wird der Bericht heruntergeladen. Anschließend wird das Browserfenster neu geladen, der Browsercache geleert und der Benchmark erneut durchgeführt. 
 
 ## Aufbereitung und Auswertung der Daten
-Die Benchmark-Algorithmen werden pro Browser dreimal ausgeführt, um mögliche Ausreißer zu vermeiden. Dadurch liegen pro Browser drei Werte für JavaScript, TypeScript und WebAssembly vor und es ergibt sich die Menge $T_i=\{t_1, t_2, ..., t_n\}$, wobei $t$ die gemessene Ausführungszeit in bezug auf $n$ ist und $i$ der Durchlauf, wobei $1 \le i \le 3$. Um aus diesen drei Durchläufen jeweils einen Wert $t$ für $n$ zu erhalten, wird der Median ermittelt. Der Median ist der Wert, der in der Mitte einer Menge von Werten liegt und ist definiert als:
+Die Benchmark-Algorithmen werden für jeden Browser $k$ mal ausgeführt. Somit liegen pro Browser $k$ Zeitwerte für JavaScript, TypeScript und WebAssembly vor. Daraus ergibt sich die Menge $T_i=\{t_1, t_2, ..., t_n\}$. Dabei steht $t$ für die gemessene Ausführungszeit, $n$ für die Anzahl der Benchmarkiteration und $i$ für den Durchlauf, wobei $1 \le i \le k$. Um aus diesen $n$-Zeitwerten für eine Sprache einen einzigen, allgemeinen durschnittliche Menge $\overline{T_i}$ zu erhalten, wird der Durchschnitt (Mean) aus der Menge $T_i$ ermittel [@kounev_systems_2020, S. 57]. Der Mean ist definiert als:
+
+$$
+\overline{m} = \frac{1}{n}\sum^{n}_{i=1}x_i
+$$
+
+Aus den Durchschnittswerten der Menge $\overline{T_i}$ für einen Sprache $S$ eines Benchmarks wird wieder der Durchschnitt $\overline{S}$ ermittelt, um die durschnittliche Ausführungszeit mit den anderen Sprachen zu vergleichen [@kounev_systems_2020, S. 58]. Daraus ergibt sich folgende Berechnungen:
+
+Sei $k = 3$ und $n = 700$
+$$
+\overline{T_i} = \frac{1}{n}\sum^{n}_{i=1}t_i = \frac{t_1 + t_2 + ... + t_n}{n} = \frac{t_1 + t_2 + ... + t_{700}}{700}
+$$
+
+$$
+\overline{S} = \frac{1}{k} \sum^{k}_{i=1} \overline{T_i} = \frac{\overline{T_1} + \overline{T_2} + \overline{T_3}}{3}
+$$
+
+Als Kontrollwert wird zusätzlich zu dem Durschnitt der Median der Menge berechnet. Der Median ist der Wert, der in der Mitte einer aufsteigend sortieren Menge von Werten liegt und ist definiert als:
 
 $$
 median = \begin{cases}
 x_{\frac{n+1}{2}} & \text{falls } n \text{ ungerade} \\
 (x_{\frac{n}{2}}+x_{\frac{n}{2}+1})/2 & \text{falls } n \text{ gerade}
 \end{cases}
-$$
-
-[@kounev_systems_2020, S. 58] beschreibt, dass Metriken im Benchmarking in der Regel durch den arithmetischen Mittelwert (Mean) bestimmt werden. Dabei wird aus den zuvor durch den Median zusammengeführten Laufzeiten jedes $n$ eines Durchlaufs der Durchschnitt ermittelt und als Vergleichswert für die Laufzeit zwischen den Implementierungen verwendet. Der arithmetische Mittelwert ist definiert als:
-
-$$
-mean = \frac{1}{n}\sum^{n}_{i=1}x_i
 $$
 
 Es werden lediglich die Laufzeiten eines Benchmarks auf einem System verglichen, und zwar hinsichtlich der verschiedenen Webbrowser. Ein Vergleich der Metriken zwischen verschiedenen Benchmark-Algorithmen und verschiedenen Systemen ist nicht sinnvoll.
