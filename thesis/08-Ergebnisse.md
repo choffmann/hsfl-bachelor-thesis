@@ -46,23 +46,34 @@ Für den Benchmark-Algorithmus zur Matrizenmultiplikation wurde $N = 700$ gewäh
 
 Für den Benchmark-Algorithmus zur Mandelbrotmenge wurde ein Wert von $N = 5.000$ gewählt. Unter Verwendung von TypeScript in Chrome auf einem Linux-Testcomputer betrug die Gesamtzeit 918,07 Sekunden, mit einem Median von $182,50 ms$ und einem Durchschnitt von $183,61 ms$. JavaScript benötigte insgesamt 1260,32 Sekunden, mit einem Median von $251,17 ms$ und einem Durchschnitt von $252,06 ms$. WebAssembly benötigte insgesamt 674,96 Sekunden, mit einem Median von $135,33 ms$ und einem Durchschnitt von $134,99$. Im Firefox benötigte der Benchmark für TypeScript insgesamt 6950,67 Sekunden, mit einem Median von $1406,50 ms$ und einem Durchschnitt von $1390,13 ms$. JavaScript benötigte insgesamt 7219,73 Sekunden. Die Laufzeit betrug im Median $1441,83 ms$ und im Durchschnitt $1443,95 ms$. WebAssembly benötigte eine Gesamtlaufzeit von 684,19 Sekunden, mit einem Median von $137 ms$ und einem Durchschnitt von $136,84 ms$. Auf dem MacBook in Safari benötigte TypeScript insgesamt 1935,81 Sekunden, mit einem Median von $387,33 ms$ und einem Durchschnitt von $387,16 ms$. JavaScript benötigte insgesamt 1732,48 Sekunden, mit einem Median von $348,83 ms$ und einem Durchschnittswert von $346,50 ms$. WebAssembly benötigte insgesamt 535,29 Sekunden mit einem Median von $106,50 ms$ und einem Durchschnitt von $107,06 ms$. In Chrome benötigte TypeScript insgesamt 585,10 Sekunden, mit einem Median von $116,33 ms$ und einem Durchschnitt von $117,02 ms$. JavaScript benötigte insgesamt 539,56 Sekunden, mit einem Median von $107,67 ms$ und einem Durchschnittswert von $107,91 ms$. WebAssembly benötigte eine Gesamtlaufzeit von 534,44 Sekunden, mit einem Median von $106 ms$ und einem Durchschnitt von $106,89 ms$. TypeScript in Firefox benötigte insgesamt 3844,92 Sekunden, mit einem Median von $768,83 ms$ und einem Durchschnittswert von $768,98 ms$. JavaScript benötigte insgesamt 4051,49 Sekunden, mit einem Median von $808,17 ms$ und einem Durchschnittswert von $810,30 ms$. WebAssembly benötigte insgesamt 505,14 Sekunden, mit einem Median von $101 ms$ und einem Durchschnitt von $101,03 ms$.
 
-## Interpretation der Ergebnisse
-- Relevanz der Forschung für die Forschung und der Praxis
+[@fig:showcase_chrome_frist_100] zeigt sehr gut, wie JavaScript und TypeScript erst noch zur Laufzeit kompiliert und optimiert werden müssen.
 
-
-
-
-### Matrizenmultiplikation
-
-### Mandelbrotmenge
-[@fig:showcase_chrome_frist_100] zeigt sehr gut, wie JavaScript und TypeScript erst noch kompiliert und optimiert werden müssen.
-
-
-![Mandelbrotmenge Chrome ersten 100 Werte](./img/showcase_chrome_frist_100.png){#fig:showcase_chrome_frist_100}
-
-
+![Mandelbrotmenge Chrome ersten 100 Werte](./img/showcase_chrome_frist_100.png){#fig:showcase_chrome_frist_100 width=80%}
 
 ## Beantwortung der Forschungsfrage
-- Bestätigung / Berichtigung der Hypothesen
+- [ ] RQ1: Welchen messbaren Einfluss hat der Einsatz von WebAssembly im Vergleich zu JavaScript und TypeScript auf die Leistung einer Webanwendung in Bezug auf die Ausführungsgeschwindigkeit?
 
-Grundsätzlich sehen wir, dass WebAssembly in den aller meisten Durchläufen eine kürzere Laufzeit aufweist als JavaScript und TypeScript.
+### Forschungsfrage RQ2
+Für diese Forschungsfrage werden die Ausführungszeiten von WebAssembly im Vergleich zu JavaScript und TypeScript mittels des einseitig gerichteten Mann-Whitney U-Tests berechnet und analysiert. Es wird untersucht, ob WebAssembly in der Ausführungszeit signifikant schneller ist als JavaScript und TypeScript. Dabei wird ein Signifikanzniveau von $\alpha = 5\% = 0,05$ gesetzt und folgende Null- und Alternativhypothesen werden aufgestellt:
+
+- $H_0$: WebAssembly ist in jeder Ausführung signifikant schneller als JavaScript und TypeScript
+- $H_1$: $\neg H_0$
+
+Der Benchmark der Matrizenmultiplikation auf dem Linux-System zeigt durch den Mann-Whitney U-Test, dass WebAssembly in allen Ausführungen in Chrome und Firefox immer eine signifikant schnellere Ausführungszeit aufweist (siehe [Anhang @sec:comp_wasm_fast_linux]). Auch auf dem MacBook ist WebAssembly durchgehend signifikant schneller als JavaScript und TypeScript (siehe [Anhang @sec:comp_wasm_fast_macos]). Somit zeigt WebAssembly in diesem Benchmark eine signifikant schnellere Ausführungszeit im Vergleich zu JavaScript und TypeScript.
+
+Auch bei der Mandelbrotmenge auf dem Linux- und MacBook-Testrechner weist WebAssembly immer eine signifikant schnellere Ausführungszeit im Vergleich zu JavaScript und TypeScript auf (siehe Anhang @sec:comp_wasm_fast_macos_mandel und @sec:comp_wasm_fast_linux_mandel). Interessant ist die Auswertung des Mandelbrot-Benchmark-Algorithmus auf dem MacBook zwischen JavaScript und WebAssembly. Hier ist der Unterschied zwischen den Laufzeiten sehr gering. WebAssembly ist im Durchschnitt nur um $10,13 ms$ schneller als TypeScript und um nur $1,025 ms$ schneller als JavaScript. Dies liegt jedoch nicht daran, dass WebAssembly in Chrome in diesem Benchmark langsamer läuft als in anderen Browsern, wie im nächsten Kapitel analysiert wird. Vielmehr zeigen JavaScript und TypeScript in Chrome eine sehr schnelle Ausführungszeit. Dennoch kann durch diese Untersuchung die Nullhypothese angenommen werden, dass WebAssembly in der Ausführung immer signifikant schneller als JavaScript und TypeScript ist. Die Forschungsfrage kann somit mit Ja beantwortet werden.
+
+### Forschungsfrage RQ3
+Um die Forschungsfrage zu beantworten, ob WebAssembly in verschiedenen Webbrowsern eine gleiche Ausführungszeit aufweist, wird auf dem MacBook-Testrechner der Kruskal-Wallis-Test durchgeführt. Dieser Test bestimmt, ob signifikante Unterschiede zwischen den Stichproben bestehen. Da der Kruskal-Wallis-Test lediglich feststellt, ob ein signifikanter Unterschied besteht, wird im Anschluss der Post-hoc-Test durchgeführt. Dieser Test vergleicht verschiedene Gruppen, um herauszufinden, ob es signifikante Unterschiede zwischen ihnen gibt. Der Post-hoc-Test wird allerdings nur angewendet, wenn der Kruskal-Wallis-Test einen signifikanten Unterschied erkennt, ansonsten wird angenommen, das die Ausführungszeiten von WebAssembly zwischen den Webbrowsern gleich ist. Da die Daten der Webbrowser-Tests für Matrizenmultiplikation und Mandelbrotmenge nicht normalverteilt sind (siehe [Anhang @sec:normalverteilt_webbrowser_matrix] und [Anhang @sec:normalverteilt_webbrowser_mandel]), werden nicht-parametrische Tests angewendet. Für die Analyse eines signifikanten Unterschieds zwischen den Webbrowsern Chrome und Firefox auf dem Linux-Testcomputer reicht ein Mann-Whitney U-Test aus, da es sich hier um zwei Stichproben handelt. Dabei wird ein Signifikanzniveau von $\alpha = 5\% = 0,05$ gesetzt. Die Forschungsfrage ergibt folgende Null- und Alternativhypothesen:
+
+- $H_0$: Es gibt keinen signifikanten Unterschied in der Ausführungsgeschwindigkeit von WebAssembly zwischen Chrome, Safari und Firefox auf dem MacBook sowie zwischen Chrome und Firefox in Linux in der Mandelbrotmenge.
+- $H_1$: $\neg H_0$
+
+Im Test mit dem MacBook ergab der Kruskal-Wallis-Test keine signifikanten Unterschiede zwischen Safari, Chrome und Firefox in der Matrizenmultiplikation (siehe [Anhang @sec:anova_matrix_macbook_browser]). Es wird angenommen, dass WebAssembly in Safari, Chrome und Firefox auf dem MacBook in diesem Benchmark-Test gleich schnell ausgeführt wird. Der gleiche Benchmark-Test auf dem Testcomputer Linux ergibt durch den u-Test auch keine signifikanten Unterschiede in der Ausführungszeit von WebAssembly zwischen Chrome und Firefox (siehe [Anhang @sec:htest_matrix_linux_browser]). Somit wird auch hier angenommen, dass WebAssembly eine einheitliche Ausführungszeit zwischen den Webbrowsern aufweist.
+
+Im Mandelbrot-Benchmark-Algorithmus des MacBook wurde mittels des Kruskal-Wallis-Tests ein signifikanter Unterschied zwischen Safari, Chrome und Firefox festgestellt (siehe [Anhang @sec:anova_mandel_macbook_browser]). Der Post-hoc-Test zeigt, dass es einen signifikanten Unterschied zwischen Safari und Firefox sowie Chrome und Firefox gibt, jedoch keinen signifikanten Unterschied zwischen Safari und Chrome. Dies zeigt auch der u-Test, welcher keinen signifikanten Unterschied zwischen Chrome und Safari aufweist. Somit gibt es bereits eine Verletzung der Nullhypothese, da WebAssembly in diesem Benchmark keine gleiche Ausführungsgeschwindigkeit zwischen den Browsern aufweist. Zur Vollständigkeit werden noch die Werte dieses Benchmarks auf einem Linux-System ermittelt. Hier ergibt der u-Test, dass es keinen signifikanten Unterschied in den Ausführungszeiten gibt (siehe [Anhang @sec:htest_mandel_linux_browser]). 
+
+Die Untersuchung ergab, dass es beim Mandelbrot-Benchmark-Algorithmus einen signifikanten Geschwindigkeitsunterschied bei der Ausführung von WebAssembly zwischen Safari und Firefox sowie zwischen Chrome und Firefox gibt. Dies widerspricht der Nullhypothese und die Forschungsfrage muss mit Nein beantwortet werden. In den übrigen Durchläufen gab es jedoch keinen signifikanten Unterschied. Es ist möglich, dass verschiedene Faktoren das Ergebnis dieser Stichprobe beeinflusst haben. Das Auftreten eines signifikanten Unterschieds in einer einzigen Stichprobenauswertung bedeutet nicht zwangsläufig, dass zwischen den Gruppen generell kein Unterschied besteht. Im spezifischen Fall des Mandelbrot-Benchmark-Algorithmus wurde ein signifikanter Unterschied zwischen bestimmten Browsern festgestellt, während in anderen Tests kein signifikanter Unterschied festgestellt wurde. Daher wird die Nullhypothese angenommen und die Forschungsfrage kann beantwortet werden. Es gibt keinen signifikanten Unterschied in der Ausführungszeit von WebAssembly zwischen verschiedenen Webbrowsern. Es ist jedoch zu beachten, dass in dieser Arbeit eine Stichprobe einen signifikanten Unterschied zwischen Safari und Firefox sowie zwischen Chrome und Firefox aufwies.
+
+## Interpretation der Ergebnisse
+- Relevanz der Forschung für die Forschung und der Praxis

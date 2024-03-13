@@ -167,7 +167,7 @@ Die Anwendung für den Leistungsvergleich wird nicht direkt auf dem Testrechner 
 Die Benchmarks werden für jede Implementierung (JavaScript, TypeScript und WebAssembly) auf allen Testrechnern dreimal durchgeführt, um mögliche im Hintergrund laufende Berechnungen von anderen Programmen auszuschließen. Nach jeder vollständigen Durchführung von JavaScript, TypeScript und WebAssembly wird der Bericht heruntergeladen. Anschließend wird das Browserfenster neu geladen, der Browsercache geleert und der Benchmark erneut durchgeführt. 
 
 ## Aufbereitung und Auswertung der Daten
-Die Benchmark-Algorithmen werden für jeden Browser $k$ mal ausgeführt. Somit liegen pro Browser $k$ Zeitwerte für JavaScript, TypeScript und WebAssembly vor. Daraus ergibt sich die Menge $T_i=\{t_1, t_2, ..., t_n\}$. Dabei steht $t$ für die gemessene Ausführungszeit, $n$ für die Anzahl der Benchmarkiteration und $i$ für den Durchlauf, wobei $1 \le i \le k$. Um aus diesen $n$-Zeitwerten für eine Sprache einen einzigen, allgemeinen durschnittliche Menge $\overline{T_i}$ zu erhalten, wird der Durchschnitt (Mean) aus der Menge $T_i$ ermittel [@kounev_systems_2020, S. 57]. Der Mean ist definiert als:
+Die Benchmark-Algorithmen werden für jeden Browser $k$ mal ausgeführt. Somit liegen pro Browser $k$ Zeitwerte für JavaScript, TypeScript und WebAssembly vor. Daraus ergibt sich die Menge $T_i=\{t_1, t_2, ..., t_n\}$. Dabei steht $t$ für die gemessene Ausführungszeit, $n$ für die Anzahl der Benchmarkiteration und $i$ und $j$ für den Durchlauf als Laufvariable, wobei $1 \le i \le k$ und $1 \le j \le n$. Um aus diesen $n$-Zeitwerten für eine Sprache einen einzigen, allgemeinen durschnittliche Menge $\overline{T_i}$ zu erhalten, wird der Durchschnitt (Mean) aus der Menge $T_i$ ermittel [@kounev_systems_2020, S. 57]. Der Mean ist definiert als:
 
 $$
 \overline{m} = \frac{1}{n}\sum^{n}_{i=1}x_i
@@ -177,7 +177,7 @@ Aus den Durchschnittswerten der Menge $\overline{T_i}$ für einen Sprache $S$ ei
 
 Sei $k = 3$ und $n = 700$
 $$
-\overline{T_i} = \frac{1}{n}\sum^{n}_{i=1}t_i = \frac{t_1 + t_2 + ... + t_n}{n} = \frac{t_1 + t_2 + ... + t_{700}}{700}
+\overline{T_i} = \frac{1}{n}\sum^{n}_{j=1}t_j = \frac{t_1 + t_2 + ... + t_n}{n} = \frac{t_1 + t_2 + ... + t_{700}}{700}
 $$
 
 $$
@@ -193,7 +193,7 @@ x_{\frac{n+1}{2}} & \text{falls } n \text{ ungerade} \\
 \end{cases}
 $$
 
-Es werden lediglich die Laufzeiten eines Benchmarks auf einem System verglichen, und zwar hinsichtlich der verschiedenen Webbrowser. Ein Vergleich der Metriken zwischen verschiedenen Benchmark-Algorithmen und verschiedenen Systemen ist nicht sinnvoll.
+Zusätzlich werden die Durchschnittswerte von der Menge $\overline{T_i}$ als Boxplot dargestellt, um so die Laufzeiten der Menge im Vergleich zu einer anderen Implementierung zu vergleichen. Es werden lediglich die Laufzeiten eines Benchmarks auf einem System verglichen, und zwar hinsichtlich der verschiedenen Webbrowser. Ein Vergleich der Metriken zwischen verschiedenen Benchmark-Algorithmen und verschiedenen Systemen ist nicht sinnvoll. 
 
 ## Gütekriterien
 
