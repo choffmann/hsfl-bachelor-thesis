@@ -1,7 +1,7 @@
 \newpage 
 
 # JavaScript Engine {#sec:js-engine}
-Die JavaScript-Engine ist Bestandteil jedes modernen Browsers. Da JavaScript eine dynamische Programmiersprache ist, werden Variablen, Typen und andere Elemente in Echtzeit interpretiert. Programme, die zur Laufzeit interpretiert werden müssen, sind von Natur aus langsamer als Programme, die im Voraus kompiliert wurden. Eine JavaScript Engine enthält einen Just-In-Time-Compiler (JIT-Compiler), der den JavaScript Code in Echtzeit kompiliert. Zusätzlich enthält eine JavaScript Engine weitere Komponenten wie Parser, Garbage Collector und WebAssembly Compiler. Derzeit gibt es drei verschiedene JavaScript-Engines, die in gängigen Webbrowsern zum Einsatz kommen: 
+Die JavaScript-Engine ist Bestandteil jedes modernen Browsers. Da JavaScript eine dynamische Programmiersprache ist, werden Variablen, Typen und andere Elemente in Echtzeit interpretiert. Programme, die zur Laufzeit interpretiert werden müssen, sind von Natur aus langsamer als Programme, die im Voraus kompiliert wurden. Eine JavaScript Engine enthält einen Just-In-Time-Compiler (JIT-Compiler), der den JavaScript Code in Echtzeit kompiliert. Zusätzlich enthält eine JavaScript Engine weitere Komponenten wie Parser, Garbage Collector und WebAssembly Compiler. Derzeit gibt es drei verschiedene JavaScript-Engines, die in gängigen Webbrowsern zum Einsatz kommen (siehe [@fig:webbrowser-statistic]): 
 
 - V8 von Google
 - SpiderMonkey von Mozilla
@@ -10,7 +10,7 @@ Die JavaScript-Engine ist Bestandteil jedes modernen Browsers. Da JavaScript ein
 Die JavaScript-Engine V8 von Google ist Bestandteil von Google Chrome, Opera [@lawson_300_2013], Microsoft Edge [@microsoft_download_nodate] und vielen weiteren auf Chromium basierenden Webbrowsern. Microsoft Edge basierte auf die von JavaScript Engine Chakra, wechselte aber zur V8 Engine von Google. Darüber hinaus wird die Engine nicht nur in Browsern verwendet, sondern auch in Node.js und CouchDB eingesetzt. SpiderMonkey wird vorrangig im Webbrowser Mozilla Firefox eingesetzt. Webkit und die dazugehörige JavaScript Engine JavaScriptCore kommen in den Apple Webbrowsern Safari auf macOS und iOS zum Einsatz. Die Entwicklung der JavaScript-Engine spielte eine wichtige Rolle im Browserkrieg, da eine schnellere und flüssigere Benutzererfahrung ein wichtiger Wettbewerbsfaktor war [@bernhard_jit-picking_2022, S. 351],
 
 ## Just-In-Time Compiler
- Wie zuvor in [@sec:javacript] erwähnt, handelt es sich bei JavaScript um eine dynamisch typisierte Programmiersprache. Im Verlauf des Programmcodes können Variablen unterschiedliche Datentypen zugewiesen werden. Das kann ein Vorteil in der Programmierung sein, erschwert jedoch den Kompiliervorgang, der den Programmcode in eine für den Computer verständliche Form, wie Maschinencode, bringt. Just-In-Time Compiler, auch JIT-Compiler genannt, kompilieren nur den aktuellen Code, der gerade benötigt wird, und führen diesen aus. Wenn dieser Code erneut benötigt wird, wird er erneut kompiliert. Das Gegenstück zum JIT-Compiler sind Ahead-of-Time-Compiler (AOT). Hier wird der gesamte Quellcode zuerst kompiliert und eine ausführbare Datei erstellt, die dann ausgeführt werden kann. Ein Beispiel hierfür sind Rust und Webassembly. Beide müssen vor der Ausführung vollständig kompiliert werden [@hinkelmann_understanding_2017].
+ Wie zuvor in [@sec:javascript] erwähnt, handelt es sich bei JavaScript um eine dynamisch typisierte Programmiersprache. Im Verlauf des Programmcodes können Variablen unterschiedliche Datentypen zugewiesen werden. Das kann ein Vorteil in der Programmierung sein, erschwert jedoch den Kompiliervorgang, der den Programmcode in eine für den Computer verständliche Form, wie Maschinencode, bringt. Just-In-Time Compiler, auch JIT-Compiler genannt, kompilieren nur den aktuellen Code, der gerade benötigt wird, und führen diesen aus. Wenn dieser Code erneut benötigt wird, wird er erneut kompiliert. Das Gegenstück zum JIT-Compiler sind Ahead-of-Time-Compiler (AOT). Hier wird der gesamte Quellcode zuerst kompiliert und eine ausführbare Datei erstellt, die dann ausgeführt werden kann. Ein Beispiel hierfür sind Rust und Webassembly. Beide müssen vor der Ausführung vollständig kompiliert werden [@hinkelmann_understanding_2017].
 
 ## Grundlegender Aufbau
 Alle drei JavaScript Engines sind prinzipiell gleich aufgebaut und enthalten weitgehend die gleichen Komponenten, allerdings sind diese Komponenten unterschiedlich in die JavaScript Engine integriert. Alle drei Engines haben unterschiedliche Implementierungen für Komponenten wie Parser, Interpreter, JIT-Compiler, Garbage Collector und einen Compiler für WebAssembly [@v8_documentation_nodate; @mozilla_spidermonkey_nodate; @apple_javascriptcore_nodate].
@@ -41,7 +41,24 @@ Um JavaScript ausführen zu können, muss der in JavaScript geschriebene Code zu
 
 Da nicht alle Funktionen im Quellcode direkt beim Start benötigt werden, kommt hier ein `Lazy Parser` zum Einsatz. Somit wird nicht der komplette Quellcode als AST geparst, sondern nur die zum Start benötigten Funktionen. Der `Lazy Parser` entscheidet, ob eine Funktion übersprungen werden kann. Wird eine Funktion übersprungen, wird sie vorbereitet, damit sie bei Bedarf vollständig geparst werden kann. Nach erfolgreichem Parsen des Quellcodes wird der AST an Ignition weitergegeben [@verwaest_blazingly_2019-1].
 
-Der AST, der aus der oben genannten Funktion [@lst:v8_demo_code] entsteht, hat eine ähnliche Form wie in [@fig:ast] gezeigt. Diese Darstellung wurde mit dem npm Paket `acorn`^[https://www.npmjs.com/package/acorn] analysiert. Acorn ist ein JavaScript Parser. Obwohl Acorn nicht in der V8 Engine verwendet wird, bietet es einen guten Überblick darüber, wie der AST aufgebaut ist. 
+Der AST, der von der oben genannten Funktion [@lst:v8_demo_code] erzeugt wird, kann mit dem V8 Developer Tool `d8`^[https://v8.dev/docs/d8] erzeugt werden. In `d8` können JavaScript-Funktionen ausgeführt und mit speziellen Debug-Parametern analysiert werden. Der Parameter `--print-ast` gibt einen Überblick über den erzeugten AST, welcher in [@fig:ast] visualisiert wurde.
+
+```bash
+$ d8 --print-ast demo.js
+...
+[generating bytecode for function: foo]
+--- AST ---
+FUNC at 12
+. KIND 0
+. LITERAL ID 1
+. SUSPEND COUNT 0
+. NAME "foo"
+. PARAMS
+. . VAR (0x55a310d018d0) (mode = VAR, assigned = false) "a"
+. . VAR (0x55a310d01950) (mode = VAR, assigned = false) "b"
+...
+```
+: V8 erstellter AST {#lst:ast}
 
 ![Ansicht eines Abstact Syntax Tree](./img/v8-ast.png){#fig:ast width=80%}
 
@@ -49,7 +66,7 @@ Der AST, der aus der oben genannten Funktion [@lst:v8_demo_code] entsteht, hat e
 Ignition ist ein Interpreter, der aus den Informationen des AST Bytecode erzeugt und im Mai 2017 in die V8 Engine integriert wurde. Bytecode ist eine Abstraktion von Maschinencode und wird von einem High-Performance-Interpreter ausgeführt. Es handelt sich dabei um eine Ansammlung von Operationen, die ausgeführt werden. Obwohl der Bytecode für sich optimiert ist, ist seine Ausführung naturgemäß langsamer als die von Maschinencode. V8 überprüft, ob eine Funktion häufig ausgeführt wird. Wenn dies der Fall ist, übernimmt `TurboFan` die Kompilierung und gibt optimierten Maschinencode aus, der performanter als der Bytecode ist. Dieser Schritt ist in Abbildung 
 \ref{fig:v8-pipeline} mit einem grünen Pfeil markiert [@hinkelmann_understanding_2017; @v8_firing_2016].
 
-Der Bytecode aus der oben genannten Funktion kann mittels Node.js, Chromium oder den Developertool `d8`^[https://v8.dev/docs/d8] extrahiert werden. Mit dem Tag `--print-bytecode` kann der generierte Bytecode von Ignition ausgegeben werden. Die hier dargestellte Ausgabe in [@lst:ignition_bytecode] enthält lediglich den Bytecode der Funktion `foo()`. Die komplette Ausgabe ist im Anhang \ref{anhang:v8-ignition-bytecode} zu sehen.
+Der Bytecode aus der oben genannten Funktion [@lst:v8_demo_code] kann mit dem Tag `--print-bytecode` von Ignition ausgegeben werden. Die hier dargestellte Ausgabe in [@lst:ignition_bytecode] enthält lediglich den Bytecode der Funktion `foo()`. Die komplette Ausgabe ist im [Anhang @sec:v8-ignition-bytecode] zu sehen.
 
 ```bash
 $ d8 --print-bytecode demo.js
@@ -69,12 +86,45 @@ Es gibt hier 7 Schritte, die im Bytecode ausgeführt werden. Ignition besteht au
 Durch Ignition wird der JavaScript Code nicht mehr benötigt. Alle Informationen sind im Bytecode enthalten und werden bei Bedarf von `Turbofan` noch weiter optimiert. Dadurch muss der JavaScript Code nicht erneut geparst werden. Zudem benötigt der gesamte Bytecode weniger Speicher als ein kompilierter Maschinencode, was zu einer Reduzierung des Arbeitsspeichers führt [@v8_firing_2016].
 
 ### TurboFan
-TurboFan ist der Optimierungskompiler von V8. Er basiert auf dem Konzept `Sea of Nodes`. 
+TurboFan ist der Optimierungs-Compiler von V8. Er basiert auf dem "Sea of Nodes"-Konzept [@titzer_digging_2015]. Dabei durchläuft TurboFan mehrere Schritte, die in [@fig:v8-turbofan-pipeline] dargestellt sind. Die Pipeline gliedert sich in die Phasen `Frontend`, `Optimierung` und `Backend`. Im `Frontend` Bereich wird der Bytecode von Ignition in Graphen umgewandelt, um damit weiterzuarbeiten. Diese Graphen repräsentieren den Code und seine Abhängigkeiten in einer strukturierten Form, ähnlich wie der `Abstract Syntax Tree`. In der Optimierungsphase wird der Code aus der graphischen Darstellung analysiert und optimiert. Die Phasen `Frontend` und `Optimierung` sind nicht an die Systemumgebung gebunden, dieser Schritt läuft auf allen Endgeräten gleich ab. Die `Backend`-Phase hingegen unterscheidet sich von der Architektur des Systems. Hier werden verschiedene Optimierungen auf Maschinenebene durchgeführt, bis hin zur Codegenerierung für die spezielle Architektur des Systems. Ein Rechner mit einer x64-Architektur muss hier anders behandelt werden als z.B. eine ARM-Architektur.
 
-[@titzer_digging_2015; @indutny_sea_2015]
+![TurboFans Pipeline @meurer_introduction_2017](./img/v8-turbofan-pipeline.png){#fig:v8-turbofan-pipeline width=80%}
+
+Mit dem `d8` Developertool lassen sich zusätzliche Parameter in einer JavaScript Datei anpassen, um zum Beispiel eine Funktion zu makieren, damit diese von TurboFan optimiert wird (siehe [Anhang @sec:demo-opt.js]). 
+
+```bash
+$ d8 --allow-natives-syntax --trace-opt --print-opt-code demo-opt.js
+...
+0x7a85e0004096    56  d1ff                 sarl rdi, 1
+0x7a85e0004098    58  83ef64               subl rdi,0x64
+...
+0x7a85e00040b2    72  41d1f9               sarl r9, 1
+0x7a85e00040b5    75  410faff9             imull rdi,r9
+...
+0x7a85e00040d0    90  41d1fb               sarl r11, 1
+0x7a85e00040d3    93  4103fb               addl rdi,r11
+...
+```
+: Optimierte Code Ausgabe von der JavaScript Funktion {#lst:turbofan-opt-code}
+
+Die Ausgabe in [@lst:turbofan-opt-code] zeigt einen Ausschnitt des optimierten Codes aus [@lst:v8_demo_code] von TurboFan. Dabei wird in [@lst:turbofan-opt-code] nur die für diesen Text relevante Ausgabe dargestellt. Eine vollständige Ausgabe ist im [Anhang @sec:v8-turbofan-opt-code] zu finden. Dieser Code ist in x86-64 Assembler geschrieben und wurde auf einem System mit einer x64-Architektur ausgeführt. In diesem Abschnitt wird in der zweiten Zeile `subl rdi,0x64` die gleiche Funktion wie im JavaScript-Code `const d = c - 100` durchgeführt. Dabei wird der Wert `0x64` (entsprechend 100 in Dezimal) vom Wert im Register `rdi` subtrahiert, wobei subl verwendet wird. In Zeile 9 wird der Wert aus dem Register `rdi` mit dem Wert aus dem Register `r9` multipliziert (`imull`). Anschließend wird das Ergebnis in Zeile 16 mit dem Wert aus dem Register `r11` addiert (`addl`). Dies entspricht der JavaScript-Funktion `a + b * d` [@meurer_introduction_2017].
 
 ### Optimization und Deoptimization
 V8 überprüft, ob eine Funktion häufiger ausgeführt wird. Ist dies der Fall, wird diese Funktion als 'hot' markiert und von TurboFan in optimierten Maschinencode kompiliert, der dann ausgeführt wird. Dieser Schritt wird Optimierung genannt. Es kann jedoch auch vorkommen, dass eine Funktion wieder deoptimiert wird. Aber warum sollte man eine optimierte Funktion wieder deoptimieren? Dies hat wieder mit der Eigenschaft von JavaScript und dessen dynamischer Typisierung zu tun. TurboFan führt den Code nur aus, wenn der Datentyp bekannt ist. Wenn sich der Datentyp im Programmcode ändert, was in JavaScript der Fall sein kann, kann TurboFan nicht weiterarbeiten und greift auf den unoptimierten Bytecode von Ignition zurück. Wird dieser Code erneut ausgeführt und als hot markiert, optimiert TurboFan ihn erneut [@hinkelmann_speed_2019; @hinkelmann_understanding_2017].
+
+Dies kann auch wieder gut mit dem V8-Developertool veranschaulicht werden. Dazu wird die JavaScript-Datei aus dem [Anhang @sec:d8-demo-deopt] mit dem Parameter `--trace-deopt` aufgerufen.
+
+```bash
+$ d8 --allow-natives-syntax --trace-opt --trace-deopt demo-deopt.js
+...
+[bailout (kind: deopt-eager, reason: not a Smi): begin.
+    deoptimizing 0x35920029a8f1 <JSFunction foo (sfi = 0x35920029a831)>,
+    0x3ca200042315 <Code TURBOFAN>, opt id 0, node id 33, bytecode offset 2,
+    deopt exit 0, FP to SP delta 32, caller SP 0x7ffcae222490, pc 0x7d837d604180]
+```
+: Ausgabe Deoptimization von der Funktion {#lst:v8-deopt}
+
+In der Ausgabe wird gezeigt, dass die Funktion `foo` deoptimiert wird, da der Wert nicht vom Typ `Smi` (`SmallInteger`) ist. Zunächst wird in der ausgeführten JavaScript-Datei die Funktion `foo(5, 2, 150)` aufgerufen und von TurboFan optimiert. Anschließend wird dieselbe Funktion mit anderen Parametern eines anderen Datentyps, nämlich `Double`, ausgeführt (`foo(5.3, 2.8, 150.8)`). Dadurch wird die Funktion wieder deoptimiert und von Ignition interpretiert.
 
 ### Orinoco (Garbage Collection)
 Garbage Collection ist ein Verfahren, das verwendet wird, um nicht mehr benötigten Speicher in einem Programm freizugeben, damit dieser Speicher wieder verwendet werden kann. Peter Marshall, der als Entwickler im V8-Team tätig ist und an der Entwicklung des Garbage Collectors für V8 beteiligt war, sagte in seinem Vortrag über Orinoco "Most JavaScript is garbage, by that I mean you allocate a lot of memory every time you create an object and you don't have unlimited memory on your computer and so V8 recycles this memory for you, this is the basic concept of garbage collection" [@peter_marchall_orinoco_2018]. Dieser Vortrag behandelt die Funktionsweise des Garbage Collectors Orinoco in V8 und zeigt, dass ähnliche Techniken auch in anderen Garbage Collector Implementierungen zu finden sind. Das Problem mit Garbage Collection ist, dass das Programm während des Vorgangs zur Freigabe von nicht mehr benötigtem Speicher kurzzeitig pausiert werden muss und in dieser Zeit nicht weiterlaufen kann. Dies führt zu unerwünschten und nicht wirklich vermeidbaren Wartezeiten im Programm. Aber was macht der Garbage Collector in dieser Zeit?  

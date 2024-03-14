@@ -2,6 +2,35 @@
 
 # Ergebnisse
 
+## Aufbereitung und Auswertung der Daten
+Die Benchmark-Algorithmen werden für jeden Browser $k$ mal ausgeführt. Somit liegen pro Browser $k$ Zeitwerte für JavaScript, TypeScript und WebAssembly vor. Daraus ergibt sich die Menge $T_i=\{t_1, t_2, ..., t_n\}$. Dabei steht $t$ für die gemessene Ausführungszeit, $n$ für die Anzahl der Benchmarkiteration und $i$ und $j$ für den Durchlauf als Laufvariable, wobei $1 \le i \le k$ und $1 \le j \le n$. Um aus diesen $n$-Zeitwerten für eine Sprache einen einzigen, allgemeinen durschnittliche Menge $\overline{T_i}$ zu erhalten, wird der Durchschnitt (Mean) aus der Menge $T_i$ ermittel [@kounev_systems_2020, S. 57]. Der Mean ist definiert als:
+
+$$
+\overline{m} = \frac{1}{n}\sum^{n}_{i=1}x_i
+$$
+
+Aus den Durchschnittswerten der Menge $\overline{T_i}$ für einen Sprache $S$ eines Benchmarks wird wieder der Durchschnitt $\overline{S}$ ermittelt, um die durschnittliche Ausführungszeit mit den anderen Sprachen zu vergleichen [@kounev_systems_2020, S. 58]. Daraus ergibt sich folgende Berechnungen:
+
+Sei $k = 3$ und $n = 700$
+$$
+\overline{T_i} = \frac{1}{n}\sum^{n}_{j=1}t_j = \frac{t_1 + t_2 + ... + t_n}{n} = \frac{t_1 + t_2 + ... + t_{700}}{700}
+$$
+
+$$
+\overline{S} = \frac{1}{k} \sum^{k}_{i=1} \overline{T_i} = \frac{\overline{T_1} + \overline{T_2} + \overline{T_3}}{3}
+$$
+
+Als Kontrollwert wird zusätzlich zu dem Durschnitt der Median der Menge berechnet. Der Median ist der Wert, der in der Mitte einer aufsteigend sortieren Menge von Werten liegt und ist definiert als:
+
+$$
+median = \begin{cases}
+x_{\frac{n+1}{2}} & \text{falls } n \text{ ungerade} \\
+(x_{\frac{n}{2}}+x_{\frac{n}{2}+1})/2 & \text{falls } n \text{ gerade}
+\end{cases}
+$$
+
+Zusätzlich werden die Durchschnittswerte von der Menge $\overline{T_i}$ als Boxplot dargestellt, um so die Laufzeiten der Menge im Vergleich zu einer anderen Implementierung zu vergleichen. Die Werte aus der Menge $\overline{T_i}$ werden zur Auswertung und Analyse von Hypothesentests in [@sec:hypothesentests] verwendet. Es werden lediglich die Laufzeiten eines Benchmarks auf einem System verglichen, und zwar hinsichtlich der verschiedenen Webbrowser. Ein Vergleich der Metriken zwischen verschiedenen Benchmark-Algorithmen und verschiedenen Systemen ist nicht sinnvoll. 
+
 ## Matrizenmultiplikation
 |     Sprache| Browser| Testcomputer|   N| Gesamt in s| Median in ms| Mean in ms|
 |------------|--------|-------------|----|------------|-------------|-----------|
@@ -50,7 +79,7 @@ Für den Benchmark-Algorithmus zur Mandelbrotmenge wurde ein Wert von $N = 5.000
 
 ![Mandelbrotmenge Chrome ersten 100 Werte](./img/showcase_chrome_frist_100.png){#fig:showcase_chrome_frist_100 width=80%}
 
-## Beantwortung der Forschungsfrage
+## Beantwortung der Forschungsfrage {#sec:hypothesentests}
 - [ ] RQ1: Welchen messbaren Einfluss hat der Einsatz von WebAssembly im Vergleich zu JavaScript und TypeScript auf die Leistung einer Webanwendung in Bezug auf die Ausführungsgeschwindigkeit?
 
 ### Forschungsfrage RQ2
@@ -66,7 +95,7 @@ Auch bei der Mandelbrotmenge auf dem Linux- und MacBook-Testrechner weist WebAss
 ### Forschungsfrage RQ3
 Um die Forschungsfrage zu beantworten, ob WebAssembly in verschiedenen Webbrowsern eine gleiche Ausführungszeit aufweist, wird auf dem MacBook-Testrechner der Kruskal-Wallis-Test durchgeführt. Dieser Test bestimmt, ob signifikante Unterschiede zwischen den Stichproben bestehen. Da der Kruskal-Wallis-Test lediglich feststellt, ob ein signifikanter Unterschied besteht, wird im Anschluss der Post-hoc-Test durchgeführt. Dieser Test vergleicht verschiedene Gruppen, um herauszufinden, ob es signifikante Unterschiede zwischen ihnen gibt. Der Post-hoc-Test wird allerdings nur angewendet, wenn der Kruskal-Wallis-Test einen signifikanten Unterschied erkennt, ansonsten wird angenommen, das die Ausführungszeiten von WebAssembly zwischen den Webbrowsern gleich ist. Da die Daten der Webbrowser-Tests für Matrizenmultiplikation und Mandelbrotmenge nicht normalverteilt sind (siehe [Anhang @sec:normalverteilt_webbrowser_matrix] und [Anhang @sec:normalverteilt_webbrowser_mandel]), werden nicht-parametrische Tests angewendet. Für die Analyse eines signifikanten Unterschieds zwischen den Webbrowsern Chrome und Firefox auf dem Linux-Testcomputer reicht ein Mann-Whitney U-Test aus, da es sich hier um zwei Stichproben handelt. Dabei wird ein Signifikanzniveau von $\alpha = 5\% = 0,05$ gesetzt. Die Forschungsfrage ergibt folgende Null- und Alternativhypothesen:
 
-- $H_0$: Es gibt keinen signifikanten Unterschied in der Ausführungsgeschwindigkeit von WebAssembly zwischen Chrome, Safari und Firefox auf dem MacBook sowie zwischen Chrome und Firefox in Linux in der Mandelbrotmenge.
+- $H_0$: Es gibt keinen signifikanten Unterschied in der Ausführungsgeschwindigkeit von WebAssembly zwischen Chrome, Safari und Firefox auf dem MacBook sowie zwischen Chrome und Firefox in Linux.
 - $H_1$: $\neg H_0$
 
 Im Test mit dem MacBook ergab der Kruskal-Wallis-Test keine signifikanten Unterschiede zwischen Safari, Chrome und Firefox in der Matrizenmultiplikation (siehe [Anhang @sec:anova_matrix_macbook_browser]). Es wird angenommen, dass WebAssembly in Safari, Chrome und Firefox auf dem MacBook in diesem Benchmark-Test gleich schnell ausgeführt wird. Der gleiche Benchmark-Test auf dem Testcomputer Linux ergibt durch den u-Test auch keine signifikanten Unterschiede in der Ausführungszeit von WebAssembly zwischen Chrome und Firefox (siehe [Anhang @sec:htest_matrix_linux_browser]). Somit wird auch hier angenommen, dass WebAssembly eine einheitliche Ausführungszeit zwischen den Webbrowsern aufweist.
