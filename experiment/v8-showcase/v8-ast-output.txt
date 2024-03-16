@@ -1,0 +1,51 @@
+[generating bytecode for function: ]
+--- AST ---
+FUNC at 0
+. KIND 0
+. LITERAL ID 0
+. SUSPEND COUNT 0
+. NAME ""
+. INFERRED NAME ""
+. DECLS
+. . FUNCTION "foo" = function foo
+. EXPRESSION STATEMENT at 68
+. . kAssign at -1
+. . . VAR PROXY local[0] (0x654021578910) (mode = TEMPORARY, assigned = true) ".result"
+. . . CALL
+. . . . VAR PROXY unallocated (0x6540215787f0) (mode = VAR, assigned = true) "foo"
+. . . . LITERAL 5
+. . . . LITERAL 2
+. . . . LITERAL 150
+. RETURN at -1
+. . VAR PROXY local[0] (0x654021578910) (mode = TEMPORARY, assigned = true) ".result"
+
+[generating bytecode for function: foo]
+--- AST ---
+FUNC at 12
+. KIND 0
+. LITERAL ID 1
+. SUSPEND COUNT 0
+. NAME "foo"
+. PARAMS
+. . VAR (0x654021578880) (mode = VAR, assigned = false) "a"
+. . VAR (0x654021578900) (mode = VAR, assigned = false) "b"
+. . VAR (0x654021578980) (mode = VAR, assigned = false) "c"
+. DECLS
+. . VARIABLE (0x654021578880) (mode = VAR, assigned = false) "a"
+. . VARIABLE (0x654021578900) (mode = VAR, assigned = false) "b"
+. . VARIABLE (0x654021578980) (mode = VAR, assigned = false) "c"
+. . VARIABLE (0x654021578a00) (mode = CONST, assigned = false) "d"
+. BLOCK NOCOMPLETIONS at -1
+. . EXPRESSION STATEMENT at 36
+. . . kInit at 36
+. . . . VAR PROXY local[0] (0x654021578a00) (mode = CONST, assigned = false) "d"
+. . . . kSub at 38
+. . . . . VAR PROXY parameter[2] (0x654021578980) (mode = VAR, assigned = false) "c"
+. . . . . LITERAL 100
+. RETURN at 47
+. . kAdd at 56
+. . . VAR PROXY parameter[0] (0x654021578880) (mode = VAR, assigned = false) "a"
+. . . kMul at 60
+. . . . VAR PROXY parameter[1] (0x654021578900) (mode = VAR, assigned = false) "b"
+. . . . VAR PROXY local[0] (0x654021578a00) (mode = CONST, assigned = false) "d"
+

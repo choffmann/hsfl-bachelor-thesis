@@ -1,0 +1,4 @@
+[manually marking 0x0b2c0029a8f1 <JSFunction foo (sfi = 0xb2c0029a831)> for optimization to TURBOFAN, ConcurrencyMode::kSynchronous]
+[compiling method 0x0b2c0029a8f1 <JSFunction foo (sfi = 0xb2c0029a831)> (target TURBOFAN), mode: ConcurrencyMode::kSynchronous]
+[completed compiling 0x0b2c0029a8f1 <JSFunction foo (sfi = 0xb2c0029a831)> (target TURBOFAN) - took 0.072, 3.211, 0.347 ms]
+[bailout (kind: deopt-eager, reason: not a Smi): begin. deoptimizing 0x0b2c0029a8f1 <JSFunction foo (sfi = 0xb2c0029a831)>, 0x048800042315 <Code TURBOFAN>, opt id 0, node id 33, bytecode offset 2, deopt exit 0, FP to SP delta 32, caller SP 0x7ffc8f3745a0, pc 0x750a84804180]
