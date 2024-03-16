@@ -111,11 +111,8 @@ fun benchmark(n: Number, reporter: (...args) => void): BenchmarkReport {
 ## Gütekriterien
 Die Gütekriterien der Benchmark-Algorithmen lassen sich in folgende Gruppen kategorisieren [@kounev_systems_2020, S. 13]:
 
-1. **Relevanz (Relevance)**: Ein Benchmark sollte sich auf relevante Aspekte der Leistung konzentrieren, die für die Anwendungsszenarien von Bedeutung sind.
-
-Die Begründung der Auswahl der geeigneten Bechmark-Algorithmen in [@sec:auswahl-benchmark] 
-
-2. Reproduzierbarkeit (Reproducibility): Dieses Kriterium besagt, dass ein Benchmark konsistente Ergebnisse liefern sollte, wenn er unter denselben Testbedingungen wiederholt durchgeführt wird.
-3. Fairness: Es ist möglich, verschiedene Testkonfigurationen ohne künstliche Beschränkungen miteinander zu vergleichen. Dies bedeutet, dass der Benchmark fair und neutral sein sollte und keine bestimmten Technologien oder Plattformen bevorzugt oder benachteiligt werden dürfen.
-Es soll Vertrauen in die Genauigkeit der Benchmark-Ergebnisse geschaffen werden.
-5. Verwendbarkeit (Usability): Die Verwendbarkeit bezieht sich darauf, wie einfach und praktisch der Benchmark in der Testumgebung der Benutzer durchgeführt werden kann
+1. **Relevanz (Relevance)**: Ein Benchmark sollte sich auf relevante Aspekte der Leistung konzentrieren, die für die Anwendungsszenarien von Bedeutung sind. (Wird in [@sec:auswahl-benchmark] beschrieben)
+2. **Reproduzierbarkeit (Reproducibility)**: Dieses Kriterium besagt, dass ein Benchmark konsistente Ergebnisse liefern sollte, wenn er unter denselben Testbedingungen wiederholt durchgeführt wird. (Wird in [@sec:laboraufbau] beschrieben)
+3. **Fairness**: Es ist möglich, verschiedene Testkonfigurationen ohne künstliche Beschränkungen miteinander zu vergleichen. Dies bedeutet, dass der Benchmark fair und neutral sein sollte und keine bestimmten Technologien oder Plattformen bevorzugt oder benachteiligt werden dürfen. (Wird in mehreren Browsern Safari, Chrome und Firefox ausgeführt [@sec:list_webbrowsers])
+4. **Überprüfbarkeit (Verifiability)**: Es soll Vertrauen in die Genauigkeit der Benchmark-Ergebnisse geschaffen werden. (Weiß noch nicht ganz wie zu begründen...)
+5. **Verwendbarkeit (Usability)**: Die Verwendbarkeit bezieht sich darauf, wie einfach und praktisch der Benchmark in der Testumgebung der Benutzer durchgeführt werden kann (Wird in [@sec:frontend] beschrieben)

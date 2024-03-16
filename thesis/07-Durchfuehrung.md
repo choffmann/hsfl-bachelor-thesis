@@ -32,10 +32,10 @@ In dieser Arbeit wird das Tool wasm-pack^[https://rustwasm.github.io/docs/wasm-p
 
 Bei der Matrizenmultiplikation werden zunächst zwei Matrizen der Größe $N \times N$ sowie eine leere Matrix erzeugt, in der das Ergebnis gespeichert wird. Dies geschieht in jeder Iteration, jedoch noch bevor die Zeit gemessen wird. Die restliche Implementierung ist analog zu [@sec:matrix_theory]. Bei der Mandelbrotmenge wird ebenfalls eine Liste mit den Ergebnissen erstellt und an das Frontend übergeben. Wie auch in JavaScript und TypeScript wird hier die Liste bei der Ausführung erstellt. Es wurde eine Implementierung für komplexe Zahlen erstellt, welche die Funktionen zum Addieren, Quadrieren und zur Ermittlung der Betragsfunktion der komplexen Zahl enthält. Die restliche Implementierung erfolgt analog zu [@sec:mandelbrot_theory].
 
-## Benchmark Frontend
+## Benchmark Frontend {#sec:frontend}
 Um die verschiedenen Benchmark-Implementierung leicht ausführen zu können, wurde ein Frontend entwickelt. Dieses führt die Benchmarks aus und wurde in TypeScript mit React entwickelt. Die verschiedenen Benchmark-Implementierungen werden über Module in das Frontend geladen und durch einen Web Worker ausgeführt. Ein Web Worker ermöglicht es JavaScript, Anwendungen in einem anderen Thread auszuführen, da JavaScript eine Single-Thread-Sprache ist. Dadurch können aufwendige Berechnungen im Hintergrund ausgeführt werden, ohne den Main Thread des Frontends zu blockieren. Die Ausführung des Benchmarks im Web Worker hat zudem den Vorteil, dass der Benchmark in einer eigenen Umgebung ausgeführt wird, ohne Einmischung von Berechnungen des Frontends, wie zum Beispiel dem Garbage Collector oder anderen Berechnungen. Ein Web Worker kann über einen `MessageBus` mit dem Main-Thread kommunizieren [@mdn_web_2023]. Im Frontend kann die Konstante $N$ angegeben werden. Diese beschreibt, wie oft ein Benchmark wiederholt werden soll. Die Konstante wird an die Benchmarkmodule weitergegeben. Jeder Benchmark hat einen `reporter`-Callback, um Parameter an den ausgeführten Web Worker zu übergeben. Diese Daten können dann an das Frontend weitergegeben werden. Das Frontend zeigt eine Übersicht über den aktuellen Benchmark bei Status $N$ an. Außerdem wird ein Diagramm und eine Tabelle mit den Ergebnissen angezeigt. Der Benchmark Report, der von den Benchmark Implementierungen erstellt wird, kann heruntergeladen werden, um weitere Analysen durchzuführen.
 
-## Laboraufbau
+## Laboraufbau {#sec:laboraufbau}
 Die Vergleichsalgorithmen werden in drei verschiedenen Webbrowsern ausgeführt, die jeweils die wichtigsten, bereits in [@sec:js-engine] aufgelisteten JavaScript-Engines (V8, SpiderMonkey und JavaScriptCore) implementieren. Dabei stehen zwei Testcomputer zur Verfügung. Um das Experiment bestmöglich reproduzieren zu können, werden im Folgenden die verwendeten Systeme und Webbrowser der Testcomputer beschrieben. 
 
 ### Versuchscomputer
@@ -51,7 +51,7 @@ während des Experiments ständig an die Stromversorgung angeschlossen.
 
 : Übersicht der Testcomputer {#tbl:labor_computer}
 
-### Webbrowser
+### Webbrowser {#sec:list_webbrowsers}
 Der Leistungsvergleich wird in drei Webbrowsern mit den drei aufgeführten JavaScript Engines (V8, SpiderMonkey und JavaScriptCore) durchgeführt. Da Webkit mit 
 der JavaScript-Engine JavaScriptCore hauptsächlich im Safari-Browser für Apple macOS und iOS zur Verfügung steht, kann dieser Leistungsvergleich nur auf dem
 Testrechner MacBook durchgeführt werden. Die [@tbl:labor_browser] gibt einen Überblick über die verwendeten Webbrowser und deren Versionen.
