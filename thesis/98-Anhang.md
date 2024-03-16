@@ -23,7 +23,7 @@
 ![](./img/d8-deopt-output.png)
 
 ## D8 TurboFan Ausgabe {#sec:v8-turbofan-output}
-Da Ausgabe sehr lang siehe Speichermedium `./v8-showcase/v8-turbofan-output.txt`
+Wegen zu großem Umfang ausschließlich auf dem Speichermedium einsehbar unter `./v8-showcase/v8-turbofan-output.txt`
 
 # Auswertung der Daten in Diagrammen
 

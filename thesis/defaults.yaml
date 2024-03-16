@@ -8,6 +8,7 @@ filters:
   - citeproc
 metadata:
   papersize: a4
+  lang: de
   documentclass: scrartcl
   linestretch: 1.15
   fontsize: 12pt
