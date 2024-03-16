@@ -55,11 +55,7 @@ WebAssembly ist eine stackbasierte Programmiersprache. Alle Befehle werden vom S
 : WebAssmebly Code in Textformat {#lst:wasm_wat_code}
 
 ## Rust für WebAssembly
-Mehrere Programmiersprachen können zu WebAssembly kompiliert werden. Unter diesen ist Rust besonders beliebt für die Entwicklung von WebAssembly-Anwendungen. Dies wird durch eine Studie von Scott Logic bestätigt [@eberhardt_state_2023]. Auch andere Quellen empfehlen die Nutzung von Rust für WebAssembly [@fermyon_webassembly_2022; @fitzgerald_oxidizing_2018]. 
-
-[...]
-
-Da Rust so populär für die verwendung von WebAssembly ist, wird in dieser Arbeit die Vergleichsalgorithmen mit Rust für WebAssembly implementiert.
+Mehrere Programmiersprachen können zu WebAssembly kompiliert werden. Unter diesen ist Rust besonders beliebt für die Entwicklung von WebAssembly-Anwendungen. Dies wird durch eine Studie von Scott Logic bestätigt [@eberhardt_state_2023]. Auch andere Quellen empfehlen die Nutzung von Rust für WebAssembly [@fermyon_webassembly_2022; @fitzgerald_oxidizing_2018]. Da Rust so populär für die verwendung von WebAssembly ist, wird in dieser Arbeit die Vergleichsalgorithmen mit Rust für WebAssembly implementiert.
 
 ![Trends in der WebAssmebly Nutzung @eberhardt_state_2023](./img/wasm-language-usage-trends.png){#fig:wasm-lang-trends width=80%}
 

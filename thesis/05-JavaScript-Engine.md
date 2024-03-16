@@ -41,17 +41,12 @@ Um JavaScript ausführen zu können, muss der in JavaScript geschriebene Code zu
 
 Da nicht alle Funktionen im Quellcode direkt beim Start benötigt werden, kommt hier ein `Lazy Parser` zum Einsatz. Somit wird nicht der komplette Quellcode als AST geparst, sondern nur die zum Start benötigten Funktionen. Der `Lazy Parser` entscheidet, ob eine Funktion übersprungen werden kann. Wird eine Funktion übersprungen, wird sie vorbereitet, damit sie bei Bedarf vollständig geparst werden kann. Nach erfolgreichem Parsen des Quellcodes wird der AST an Ignition weitergegeben [@verwaest_blazingly_2019-1].
 
-Der AST, der von der oben genannten Funktion [@lst:v8_demo_code] erzeugt wird, kann mit dem V8 Developer Tool `d8`^[https://v8.dev/docs/d8] erzeugt werden. In `d8` können JavaScript-Funktionen ausgeführt und mit speziellen Debug-Parametern analysiert werden. Der Parameter `--print-ast` gibt einen Überblick über den erzeugten AST, welcher in [@fig:ast] visualisiert wurde.
+Der AST, der von der oben genannten Funktion [@lst:v8_demo_code] erzeugt wird, kann mit dem V8 Developer Tool `d8`^[https://v8.dev/docs/d8] erzeugt werden. In `d8` können JavaScript-Funktionen ausgeführt und mit speziellen Debug-Parametern analysiert werden. Der Parameter `--print-ast` gibt einen Überblick über den erzeugten AST, welcher in [@fig:ast] visualisiert wurde. Die vollständige Ausgabe ist im [Anhang @sec:d8-ast-output] verfügbar.
 
 ```bash
 $ d8 --print-ast demo.js
-...
 [generating bytecode for function: foo]
 --- AST ---
-FUNC at 12
-. KIND 0
-. LITERAL ID 1
-. SUSPEND COUNT 0
 . NAME "foo"
 . PARAMS
 . . VAR (0x55a310d018d0) (mode = VAR, assigned = false) "a"
@@ -90,11 +85,10 @@ TurboFan ist der Optimierungs-Compiler von V8. Er basiert auf dem "Sea of Nodes"
 
 ![TurboFans Pipeline @meurer_introduction_2017](./img/v8-turbofan-pipeline.png){#fig:v8-turbofan-pipeline width=80%}
 
-Mit dem `d8` Developertool lassen sich zusätzliche Parameter in einer JavaScript Datei anpassen, um zum Beispiel eine Funktion zu makieren, damit diese von TurboFan optimiert wird (siehe [Anhang @sec:demo-opt.js]). 
+Mit dem `d8` Developertool lassen sich zusätzliche Parameter in einer JavaScript Datei anpassen, um zum Beispiel eine Funktion zu makieren, damit diese von TurboFan optimiert wird (siehe [Anhang @sec:v8-opt.js]). 
 
 ```bash
 $ d8 --allow-natives-syntax --trace-opt --print-opt-code demo-opt.js
-...
 0x7a85e0004096    56  d1ff                 sarl rdi, 1
 0x7a85e0004098    58  83ef64               subl rdi,0x64
 ...
@@ -107,20 +101,18 @@ $ d8 --allow-natives-syntax --trace-opt --print-opt-code demo-opt.js
 ```
 : Optimierte Code Ausgabe von der JavaScript Funktion {#lst:turbofan-opt-code}
 
-Die Ausgabe in [@lst:turbofan-opt-code] zeigt einen Ausschnitt des optimierten Codes aus [@lst:v8_demo_code] von TurboFan. Dabei wird in [@lst:turbofan-opt-code] nur die für diesen Text relevante Ausgabe dargestellt. Eine vollständige Ausgabe ist im [Anhang @sec:v8-turbofan-opt-code] zu finden. Dieser Code ist in x86-64 Assembler geschrieben und wurde auf einem System mit einer x64-Architektur ausgeführt. In diesem Abschnitt wird in der zweiten Zeile `subl rdi,0x64` die gleiche Funktion wie im JavaScript-Code `const d = c - 100` durchgeführt. Dabei wird der Wert `0x64` (entsprechend 100 in Dezimal) vom Wert im Register `rdi` subtrahiert, wobei subl verwendet wird. In Zeile 9 wird der Wert aus dem Register `rdi` mit dem Wert aus dem Register `r9` multipliziert (`imull`). Anschließend wird das Ergebnis in Zeile 16 mit dem Wert aus dem Register `r11` addiert (`addl`). Dies entspricht der JavaScript-Funktion `a + b * d` [@meurer_introduction_2017].
+Die Ausgabe in [@lst:turbofan-opt-code] zeigt einen Ausschnitt des optimierten Codes aus [@lst:v8_demo_code] von TurboFan. Dabei wird in [@lst:turbofan-opt-code] nur die für diesen Text relevante Ausgabe dargestellt. Eine vollständige Ausgabe ist im [Anhang @sec:v8-turbofan-output] zu finden. Dieser Code ist in x86-64 Assembler geschrieben und wurde auf einem System mit einer x64-Architektur ausgeführt. In diesem Abschnitt wird in der zweiten Zeile `subl rdi,0x64` die gleiche Funktion wie im JavaScript-Code `const d = c - 100` durchgeführt. Dabei wird der Wert `0x64` (entsprechend 100 in Dezimal) vom Wert im Register `rdi` subtrahiert, wobei `subl` verwendet wird. In Zeile 5 wird der Wert aus dem Register `rdi` mit dem Wert aus dem Register `r9` multipliziert (`imull`). Anschließend wird das Ergebnis in Zeile 8 mit dem Wert aus dem Register `r11` addiert (`addl`). Dies entspricht der JavaScript-Funktion `a + b * d` [@meurer_introduction_2017].
 
 ### Optimization und Deoptimization
 V8 überprüft, ob eine Funktion häufiger ausgeführt wird. Ist dies der Fall, wird diese Funktion als 'hot' markiert und von TurboFan in optimierten Maschinencode kompiliert, der dann ausgeführt wird. Dieser Schritt wird Optimierung genannt. Es kann jedoch auch vorkommen, dass eine Funktion wieder deoptimiert wird. Aber warum sollte man eine optimierte Funktion wieder deoptimieren? Dies hat wieder mit der Eigenschaft von JavaScript und dessen dynamischer Typisierung zu tun. TurboFan führt den Code nur aus, wenn der Datentyp bekannt ist. Wenn sich der Datentyp im Programmcode ändert, was in JavaScript der Fall sein kann, kann TurboFan nicht weiterarbeiten und greift auf den unoptimierten Bytecode von Ignition zurück. Wird dieser Code erneut ausgeführt und als hot markiert, optimiert TurboFan ihn erneut [@hinkelmann_speed_2019; @hinkelmann_understanding_2017].
 
-Dies kann auch wieder gut mit dem V8-Developertool veranschaulicht werden. Dazu wird die JavaScript-Datei aus dem [Anhang @sec:d8-demo-deopt] mit dem Parameter `--trace-deopt` aufgerufen.
+Dies kann auch wieder gut mit dem V8-Developertool veranschaulicht werden. Dazu wird die JavaScript-Datei aus dem [Anhang @sec:v8-deopt.js] mit dem Parameter `--trace-deopt` aufgerufen. Die komplette Ausgabe des Befehls von [@lst:v8-deopt] kann im [Anhang @sec:d8-deopt-output] eingesehen werden.
 
 ```bash
 $ d8 --allow-natives-syntax --trace-opt --trace-deopt demo-deopt.js
 ...
 [bailout (kind: deopt-eager, reason: not a Smi): begin.
-    deoptimizing 0x35920029a8f1 <JSFunction foo (sfi = 0x35920029a831)>,
-    0x3ca200042315 <Code TURBOFAN>, opt id 0, node id 33, bytecode offset 2,
-    deopt exit 0, FP to SP delta 32, caller SP 0x7ffcae222490, pc 0x7d837d604180]
+    deoptimizing 0x35920029a8f1 <JSFunction foo (sfi = 0x35920029a831)>, ...
 ```
 : Ausgabe Deoptimization von der Funktion {#lst:v8-deopt}
 
