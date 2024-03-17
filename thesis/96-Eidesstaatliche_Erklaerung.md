@@ -1,4 +1,5 @@
 \newpage
+\pagenumbering{gobble}
 
 # Eidesstaatliche Erklärung {-}
 
