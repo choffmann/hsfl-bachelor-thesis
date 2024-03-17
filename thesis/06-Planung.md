@@ -38,7 +38,7 @@ A \times B = C(c_{ij}) \text{  mit  }
 c_{ij} := \sum_{k=1}^{n} a_{ik} \times b_{jk}
 $$
 
-Im Benchmark Algorithmus werden ausschließlich Matrizen der Größe $N \times N$ betrachtet. Eine mögliche Implementierung der Formel in Pseudocode ist in [@lst:matrix_pseudo] abgebildet.
+Im Benchmark-Algorithmus werden ausschließlich Matrizen der Größe $N \times N$ betrachtet. Eine mögliche Implementierung der Formel in Pseudocode ist in [@lst:matrix_pseudo] abgebildet.
 
 ```
 Data: S[N][N], P[N][N]
@@ -95,30 +95,13 @@ fun calc(c, n) {
 [@lst:pseudo_mandelbrot] zeigt den Pseudocode für die Mandelbrotmenge. Es werden die Variablen `width`, `height`, `xStart`, `xEnd`, `yStart`, `yEnd` und `n` definiert. `width` und `height` beschreiben die Größe des Canvas. `xStart`, `xEnd`, `yStart` und `yEnd` beschreiben die Start- und Endkoordinaten der Mandelbrotmenge. Die Variable `n` beschreibt die Anzahl der Iterationen der Mandelbrotmenge. In [@fig:mandelbrot_kooridnat] ist zu erkennen, dass in dieser Benchmark-Implementierung der Startwert von x auf -2 und der Endwert auf 1 festgelegt wird. Der Startwert für Y beträgt -1 und der Endwert 1. Anschließend wird in einer zweifach verschachtelten Schleife von 0 bis zur Höhe des Canvas und von 1 bis zur Breite des Canvas iteriert, um jeden Pixel im Canvas zu durchlaufen. Um die Position des Pixels auf das Koordinatensystem der Mandelbrotmenge zu übertragen, werden die Werte `cx` und `cy` berechnet. Diese Werte liegen zwischen den Start- und Endpunkten von x und y, also zwischen -2 und 1 für x und zwischen -1 und 1 für y. Anschließend wird die Funktion `calc()` aufgerufen, welche berechnet, ob die Zahl in der Mandelbrotmenge liegt. Dabei werden die Variablen `i`, `z` und `abs` definiert. Die Variable `z` beschreibt ein Objekt, welches die komplexe Zahl repräsentiert, `i` dient als Laufvariable und `abs` als Wert der Betragsfunktion der komplexen Zahl. Wenn dieser Wert kleiner als 2 ist und die Iteration vollständig ist, liegt der Wert in der Mandelbrotmenge. Wenn der Wert vor Abschluss der Iteration größer als zwei ist, kann die Berechnung abgebrochen werden, da dieser Wert nicht in der Mandelbrotmenge liegt.
 
 ## Auswahl der Messmethodik {#sec:benchmark_impl}
-Jeder der oben genannten Benchmarks wird in einer Funktion definiert und in einer Schleife von 1 bis zur Konstante $n$ ausgeführt. Die benötigte Ausführungszeit wird in jeder Iteration gemessen und in einem `BenchmarkReport` gespeichert. Während der Iteration wird ausschließlich die benötigte Zeit für den Algorithmus gemessen. Zeiten wie das Befüllen der `BenchmarkReport`-Liste oder weitere Operationen, die zum Ausführen des Benchmarks benötigt werden, werden nicht erfasst. Der grobe Aufbau eines Benchmark-Moduls ist in [@lst:benchmark_impl] dargestellt. Im Webbrowser kann die aktuelle Zeit mithilfe der Methode `performance.now()` ermittelt werden. Zu Beginn des Benchmarks in einer Iteration wird der Zeitstempel gespeichert und nach Abschluss der Berechnungen von einem neuen Zeitpunkt abgezogen. Auf diese Weise wird die benötigte Zeit des Benchmarks ermittelt.
-
-```
-fun benchmark(n: Number, reporter: (...args) => void): BenchmarkReport {
-  result: BenchmarkReport
-  startTime: time.now()
-  for i = 1; i <= n; i++ do
-    reporter(...args)
-    iterStartTime: time.now()
-    run() # Hier wird der Benchmark ausgeführt
-    iterTime: time.now() - iterStartTime
-    result.push({n: i, time: iterTime})
-  end
-  totalTime: time.now() - startTime
-  return result
-}
-```
-: Benchmark implementierung {#lst:benchmark_impl}
+Jeder der oben genannten Benchmarks wird in einer Funktion definiert und in einer Schleife von 1 bis zur Konstante $n$ ausgeführt. Die benötigte Ausführungszeit wird in jeder Iteration gemessen und in einem `BenchmarkReport` gespeichert. Während der Iteration wird ausschließlich die benötigte Zeit für den Algorithmus gemessen. Zeiten wie das Befüllen der `BenchmarkReport`-Liste oder weitere Operationen, die zum Ausführen des Benchmarks benötigt werden, werden nicht erfasst. Der grobe Aufbau eines Benchmark-Moduls ist in [Anhang @sec:benchmark-impl] dargestellt. Im Webbrowser kann die aktuelle Zeit mithilfe der Methode `performance.now()` ermittelt werden. Zu Beginn des Benchmarks in einer Iteration wird der Zeitstempel gespeichert und nach Abschluss der Berechnungen von einem neuen Zeitpunkt abgezogen. Auf diese Weise wird die benötigte Zeit des Benchmarks ermittelt.
 
 ## Gütekriterien
 Die Gütekriterien der Benchmark-Algorithmen lassen sich in folgende Gruppen kategorisieren [@kounev_systems_2020, S. 13]:
 
 1. **Relevanz (Relevance)**: Ein Benchmark sollte sich auf relevante Aspekte der Leistung konzentrieren, die für die Anwendungsszenarien von Bedeutung sind. Dieses Kriterium wird durch die in [@sec:auswahl-benchmark] beschriebene Auswahl der Benchmark-Algorithmen erfüllt.
 2. **Reproduzierbarkeit (Reproducibility)**: Dieses Kriterium besagt, dass ein Benchmark konsistente Ergebnisse liefern sollte, wenn er unter denselben Testbedingungen wiederholt durchgeführt wird. Um dieses Kriterium zu erfüllen, wird in dieser Arbeit eine einheitliche Testumgebung geschaffen, welche in [@sec:laboraufbau] beschrieben wird.
-3. **Fairness**: Es ist möglich, verschiedene Testkonfigurationen ohne künstliche Beschränkungen miteinander zu vergleichen. Dies bedeutet, dass der Benchmark fair und neutral sein sollte und keine bestimmten Technologien oder Plattformen bevorzugt oder benachteiligt werden dürfen. Um dieses Kriterium zu erfüllen, werden die Benchmark-Algorithmen in den wichtigsten aktuellen Webbrowsern Chrome, Safari und Firefox ausgeführt. Eine Liste der unterstützten Webbrowser finden Sie in [@sec:list_webbrowsers].
+3. **Fairness**: Es ist möglich, verschiedene Testkonfigurationen ohne künstliche Beschränkungen miteinander zu vergleichen. Dies bedeutet, dass der Benchmark fair und neutral sein sollte und keine bestimmten Technologien oder Plattformen bevorzugt oder benachteiligt werden dürfen. Um dieses Kriterium zu erfüllen, werden die Benchmark-Algorithmen in den wichtigsten aktuellen Webbrowsern Chrome, Safari und Firefox ausgeführt. Eine Liste der verwendeten Webbrowser wird in [@sec:list_webbrowsers] aufgelistet.
 4. **Überprüfbarkeit (Verifiability)**: Es soll Vertrauen in die Genauigkeit der Benchmark-Ergebnisse geschaffen werden. Die Überprüfbarkeit wird in dieser Arbeit durch die umfassende Dokumentation der Durchführung und Auswertung der Daten sichergestellt.
 5. **Verwendbarkeit (Usability)**: Die Verwendbarkeit bezieht sich darauf, wie einfach und praktisch der Benchmark in der Testumgebung der Benutzer durchgeführt werden kann. Um die Benchmarks auszuführen, wird ein Frontend entwickelt, das frei verfügbar ist und worüber die hier aufgeführten Benchmarks ausgeführt werden können. Darauf wird in [@sec:frontend] eingegangen. Durch das Frontend für die Benchmarks wird dieses Kriterium erfüllt.

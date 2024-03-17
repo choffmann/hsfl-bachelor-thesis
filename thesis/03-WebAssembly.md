@@ -23,28 +23,7 @@ WebAssembly unterteilt alles in Module. In einem Modul werden Funktionen definie
 - `i32 | i64`: 32-bit oder 64-bit Integer
 - `f32 | f64`: 32-bit oder 64-bit Float
 
-WebAssembly ist eine stackbasierte Programmiersprache. Alle Befehle werden vom Stack gelesen oder darauf geschrieben. In unserem Beispiel werden zunächst die Parameter `$x` und `$y` in den Stack geladen und anschließend mit dem Befehl `i32.mul` multipliziert. Dieser Befehl nimmt zwei Werte vom Stack, multipliziert sie und speichert das Ergebnis erneut im Stack. Das Ergebnis wird im nächsten Schritt in `$z` gespeichert. Anschließend werden die Variablen `$x` und `$z` erneut in den Stack geladen und mit dem Befehl `i32.gt_s` verglichen. Dieser Befehl ruft zwei Werte aus dem Stack ab und überprüft, ob der erste Wert größer als der zweite Wert ist. In diesem Beispiel wird überprüft, ob `x > z` ist. Das Ergebnis wird erneut auf dem Stack gespeichert. Die Anweisung `if` wird ausgeführt, wenn das Ergebnis der vorherigen Operation `true` ist. Wenn dies zutrifft, wird der Wert von `$x` zurückgegeben, andernfalls wird `$z` in den Stack geladen. Da die Funktion jetzt beendet ist, wird der oberste Wert vom Stack zurückgegeben, der hier der Wert von `$z` ist [@mdn_understanding_2023].
-
-```wasm
-(module
-  (export "foo" (func $foo))
-  (func $foo (param $x i32) (param $y i32) (param $z i32) (result i32)
-    local.get $x
-    local.get $y
-    i32.mul
-    local.set $z
-    local.get $x
-    local.get $z
-    i32.gt_s
-    if
-      local.get $x
-      return
-    end
-    local.get $z
-  )
-)
-```
-: WebAssmebly Code in Textformat {#lst:wasm_wat_code}
+WebAssembly ist eine stackbasierte Programmiersprache. Alle Befehle werden vom Stack gelesen oder darauf geschrieben. In unserem Beispiel werden zunächst die Parameter `$x` und `$y` in den Stack geladen und anschließend mit dem Befehl `i32.mul` multipliziert. Dieser Befehl nimmt zwei Werte vom Stack, multipliziert sie und speichert das Ergebnis erneut im Stack. Das Ergebnis wird im nächsten Schritt in `$z` gespeichert. Anschließend werden die Variablen `$x` und `$z` erneut in den Stack geladen und mit dem Befehl `i32.gt_s` verglichen. Dieser Befehl ruft zwei Werte aus dem Stack ab und überprüft, ob der erste Wert größer als der zweite Wert ist. In diesem Beispiel wird überprüft, ob `x > z` ist. Das Ergebnis wird erneut auf dem Stack gespeichert. Die Anweisung `if` wird ausgeführt, wenn das Ergebnis der vorherigen Operation `true` ist. Wenn dies zutrifft, wird der Wert von `$x` zurückgegeben, andernfalls wird `$z` in den Stack geladen. Da die Funktion jetzt beendet ist, wird der oberste Wert vom Stack zurückgegeben, der hier der Wert von `$z` ist [@mdn_understanding_2023]. Der erzeugte Code ist in [Anhang @sec:wasm-wat-code] aufgeführt.
 
 ## Rust für WebAssembly
 Mehrere Programmiersprachen können zu WebAssembly kompiliert werden. Unter diesen ist Rust besonders beliebt für die Entwicklung von WebAssembly-Anwendungen. Dies wird durch eine Studie von Scott Logic bestätigt [@eberhardt_state_2023]. Auch andere Quellen empfehlen die Nutzung von Rust für WebAssembly [@fermyon_webassembly_2022; @fitzgerald_oxidizing_2018]. Da Rust so populär für die Verwendung von WebAssembly ist, werden in dieser Arbeit die Vergleichsalgorithmen mit Rust für WebAssembly implementiert.

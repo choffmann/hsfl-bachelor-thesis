@@ -2,28 +2,97 @@
 \setcounter{page}{1}
 \pagenumbering{Roman}
 
+# Code aus der Arbeit
+
+## WebAssembly Code in Textformat {#sec:wasm-wat-code}
+![](./img/wasm-wat-code.png)
+
+## Benchmark Implementierung genereller Aufbau {#sec:benchmark-impl}
+![](./img/benchmark-impl.png)
+
+# Speichermedium
+
+## Digitale Bachelorarbeit
+Die digitalte Bachelorarbeit ist auf dem Speichermedium unter `/Bachelorarbeit.pdf` zu finden.
+
+## Source-Code von Benchmarks und Frontend
+
+### Benchmarks
+Auf dem Speichermedium unter `/experiment/benchmarks` ist der Source-Code für die Benchmarks zu finden.
+
+### Source-Code Frontend
+Auf dem Speichermedium unter `/experiment/webserver` ist der Source-Code für das Frontend zu finden.
+
+### Jupyter Notebook
+Erstellte berechnungen und Diagramme wurden mit Jupyter Notebook mit dem Kotlin Kernel ausgewertet. Die Datei ist auf dem Speichermedium unter `/experiment/jupyter/report.ipynb` zu finden.
+
+### BenchmarkReport
+Die Ausgeführten BenchmarkReports sind auf dem Speichermedium unter `/experiment/jupyter/benchmarks/report-<benchmark>-<system>-<browser>-<run>.json` zu finden.
+
 # V8 Developer Ausgaben
 
 ## V8 demo.js {#sec:v8-demo.js}
-![](./img/v8-demo.js.png)
+Anbei oder auf dem Speichermedium einsehbar unter `/experiment/v8-showcase/demo.js`
+```js
+function foo(a, b, c) {
+  const d = c - 100;
+  return a + b * d;
+}
+
+foo(5, 2, 150)
+```
 
 ## V8 demo-opt.js {#sec:v8-opt.js}
-![](./img/v8-demo-opt.js.png)
+Anbei oder auf dem Speichermedium einsehbar unter `/experiment/v8-showcase/demo-opt.js`
+
+```js
+function foo(a, b, c) {
+  const d = c - 100;
+  return a + b * d;
+}
+
+%PrepareFunctionForOptimization(foo)
+foo(5, 2, 150);
+%OptimizeFunctionOnNextCall(foo)
+foo(5, 2, 150);
+```
 
 ## V8 demo-deopt.js {#sec:v8-deopt.js}
-![](./img/v8-demo-deopt.js.png)
+Anbei oder auf dem Speichermedium einsehbar unter `/experiment/v8-showcase/demo-deopt.js`
+
+```js
+function foo(a, b, c) {
+  const d = c - 100;
+  return a + b * d;
+}
+
+%PrepareFunctionForOptimization(foo)
+foo(5, 2, 150);
+%OptimizeFunctionOnNextCall(foo)
+foo(5, 2, 150);
+foo(5.3, 2.8, 150.8);
+```
 
 ## D8 Abstract Syntax Tree {#sec:d8-ast-output}
+Anbei oder auf dem Speichermedium einsehbar unter \
+`/experiment/v8-showcase/v8-ast-output.txt`
+
 ![](./img/d8-ast-print.png)
 
 ## D8 Ignition Bytecode Ausgabe {#sec:v8-ignition-bytecode}
+Anbei oder auf dem Speichermedium einsehbar unter \
+`/experiment/v8-showcase/v8-ignition-bytecode-output.txt`
+
 ![](./img/d8-ignition-bytecode.png)
 
 ## D8 Deoptimierung Ausgabe {#sec:d8-deopt-output}
+Anbei oder auf dem Speichermedium einsehbar unter \
+`/experiment/v8-showcase/v8-deopt-output.txt`
+
 ![](./img/d8-deopt-output.png)
 
 ## D8 TurboFan Ausgabe {#sec:v8-turbofan-output}
-Wegen zu großem Umfang ausschließlich auf dem Speichermedium einsehbar unter `./v8-showcase/v8-turbofan-output.txt`
+Wegen zu großem Umfang ausschließlich auf dem Speichermedium einsehbar unter `/experiment/v8-showcase/v8-turbofan-output.txt`
 
 # Auswertung der Daten in Diagrammen
 
@@ -69,11 +138,29 @@ Wegen zu großem Umfang ausschließlich auf dem Speichermedium einsehbar unter `
 ## Matrix MacBook Boxplot Ansicht
 ![](./img/mandelbrot_macos_boxplots.png)
 
+## Boxplot Ansicht WebAssembly Laufzeit in Webbrowser auf MacBook
+![](./img/wasm_browser_compare_macos.png)
+
+## Boxplot Ansicht JavaScript Laufzeit in Webbrowser auf MacBook
+![](./img/js_browser_compare_macos.png)
+
+## Boxplot Ansicht TypeScript Laufzeit in Webbrowser auf MacBook
+![](./img/ts_browser_compare_macos.png)
+
+## Boxplot Ansicht WebAssembly Laufzeit in Webbrowser auf Linux
+![](./img/wasm_browser_compare_linux.png)
+
+## Boxplot Ansicht JavaScript Laufzeit in Webbrowser auf Linux
+![](./img/js_browser_compare_linux.png)
+
+## Boxplot Ansicht TypeScript Laufzeit in Webbrowser auf Linux
+![](./img/ts_browser_compare_linux.png)
+
 # Hypothesentest
-Die Daten wurden mit DATAtab^[https://datatab.de/] analysiert.
+Die Daten wurden mit DATAtab^[https://datatab.de/] analysiert. Dabei wurden die Tests wie im Text beschrieben verwendet.
 
 ## Matrizenmultiplikation Normalverteilung von Sprachen Daten {#sec:normalverteilt_lang_matrix}
-Getestet mit Daten von Macbook Zeitwerten. $\alpha = 5\% = 0.05$.
+Getestet mit Daten von Macbook Zeitwerten der Matrizenmultiplikation im Chrome Webbrowser als Stichprobe. $\alpha = 5\% = 0.05$.
 
 ### Test auf Normalverteilung WebAssembly
 | | Statistik | p |
@@ -105,6 +192,38 @@ Es wird angenommen, dass die Daten nicht normalverteilt sind, da $p < \alpha$.
 
 Es wird angenommen, dass die Daten nicht normalverteilt sind, da $p < \alpha$.
 
+## Mandelbrotmenge Normalverteilung von Sprachen Daten {#sec:normalverteilt_lang_mandel}
+Getestet mit Daten von Macbook Zeitwerten der Mandelbrotmenge im Chrome Webbrowser als Stichprobe. $\alpha = 5\% = 0.05$.
+
+### Tests auf Normalverteilung von WebAssembly
+| | Statistik | p |
+| --------------- | ------- | ---- |
+|Kolmogorov-Smirnov | 0.06 | <0.001 |
+|Kolmogorov-Smirnov (Korr. nach Lilliefors) | 0.06 | <0.001 |
+|Shapiro-Wilk | 0.96 | <0.001 |
+|Anderson-Darling | 51.79 | <0.001 |
+
+Es wird angenommen, dass die Daten nicht normalverteilt sind, da $p < \alpha$.
+
+### Tests auf Normalverteilung von JavaScript
+| | Statistik | p |
+| --------------- | ------- | ---- |
+| Kolmogorov-Smirnov | 0.06 | <0.001 |
+| Kolmogorov-Smirnov (Korr. nach Lilliefors) | 0.06 | <0.001 |
+| Shapiro-Wilk | 0.96 | <0.001 |
+| Anderson-Darling | 54.31 | <0.001 |
+
+Es wird angenommen, dass die Daten nicht normalverteilt sind, da $p < \alpha$.
+
+### Tests auf Normalverteilung von TypeScript
+| | Statistik | p |
+| --------------- | ------- | ---- |
+| Kolmogorov-Smirnov | 0.06 | <0.001 |
+| Kolmogorov-Smirnov (Korr. nach Lilliefors) | 0.06 | <0.001 | 
+| Shapiro-Wilk | 0.95 | <0.001 |
+| Anderson-Darling | 56.82 | <0.001 |
+
+Es wird angenommen, dass die Daten nicht normalverteilt sind, da $p < \alpha$.
 
 ## Matrizenmultiplikation Normalverteilung von Webbrowser Daten {#sec:normalverteilt_webbrowser_matrix}
 Getestet mit Daten von Macbook Zeitwerten. $\alpha = 5\% = 0.05$.
@@ -179,8 +298,8 @@ Es wird angenommen, dass die Daten nicht normalverteilt sind, da $p < \alpha$.
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 1436.96 | 748.33 | 1607.48 |
 | TypeScript | 700 | 4617.9 | 2289.5 | 5114.07 |
 
@@ -196,8 +315,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 1436.96 | 748.33 | 1607.48 |
 | JavaScript | 700 | 3198.93 | 1625 | 3552.64 |
 
@@ -213,8 +332,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 1265.98 | 677 | 1420.04 |
 | TypeScript | 700 | 5470.23 | 1826.17 | 7037.73 |
 
@@ -230,8 +349,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 1265.98 | 677 | 1420.04 |
 | JavaScript | 700 | 5369.33 | 1953.83 | 6816.17 |
 
@@ -250,8 +369,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 610.69 | 278.33 | 713.63 |
 | TypeScript | 700 | 1612.35 | 737.17 | 1897.05 |
 
@@ -267,8 +386,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 610.69 | 278.33 | 713.63 |
 | JavaScript | 700 | 1618.36 | 805.67 | 1869.29 |
 
@@ -284,8 +403,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 760.57 | 350.67 | 909.29 |
 | TypeScript | 700 | 2092.95 | 936.5 | 2477.03 |
 
@@ -301,8 +420,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 760.57 | 350.67 | 909.29 |
 | JavaScript | 700 | 1577.89 | 753.83 | 1883.05 |
 
@@ -318,8 +437,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 627.11 | 292.83 | 730.76 |
 | TypeScript | 700 | 1940.34 | 858 | 2364.21 |
 
@@ -335,8 +454,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 700 | 627.11 | 292.83 | 730.76 |
 | JavaScript | 700 | 1749.56 | 778.83 | 2132.27 |
 
@@ -354,8 +473,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 134.99 | 135.33 | 76.13 |
 | TypeScript | 5000 | 183.61 | 182.5 | 98.71 |
 
@@ -371,8 +490,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 134.99 | 135.33 | 76.13 |
 | JavaScript | 5000 | 252.06 | 251.17 | 141.6 |
 
@@ -388,8 +507,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 136.84 | 137 | 77.34 |
 | TypeScript | 5000 | 1390.13 | 1406.5 | 768.35 |
 
@@ -405,8 +524,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 136.84 | 137 | 77.34 |
 | JavaScript | 5000 | 1443.95 | 1441.83 | 812.48 |
 
@@ -424,8 +543,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 107.06 | 106.5 | 60.63 |
 | TypeScript | 5000 | 387.16 | 387.33 | 213.04 |
 
@@ -441,8 +560,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 107.06 | 106.5 | 60.63 |
 | JavaScript | 5000 | 346.5 | 348.83 | 192.33 |
 
@@ -458,8 +577,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 106.89 | 106 | 61.31 |
 | TypeScript | 5000 | 117.02 | 116.33 | 64.82 |
 
@@ -475,8 +594,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 106.89 | 106 | 61.31 |
 | JavaScript | 5000 | 107.91 | 107.67 | 60.21 |
 
@@ -492,8 +611,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe TypeScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 101.03 | 101 | 57.43 |
 | TypeScript | 5000 | 768.98 | 768.83 | 431.77 |
 
@@ -509,8 +628,8 @@ Nullhypothese wird angenommen, da $p > \alpha$
 - $H_1$: Die Gruppe WebAssembly hat größere Werte bei der abhängigen Variable als die Gruppe JavaScript.
 
 #### Deskriptive Statistiken
-|        | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
-| ------ | ---- | ---------- | ------------------ | ----------------------- |
+|             | n	| Mittelwert | Standardabweichung | Standardfehler Mittelwert |
+| ----------- | ---- | ---------- | ------------------ | ----------------------- |
 | WebAssembly | 5000 | 101.03 | 101 | 57.43 |
 | JavaScript | 5000 | 810.3 | 808.17 | 461.06 |
 
