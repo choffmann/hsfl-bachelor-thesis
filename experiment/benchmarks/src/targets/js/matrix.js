@@ -33,9 +33,9 @@ export function matrixMultiJs(n, reportStatus) {
 
   for (let i = 1; i <= n; i++) {
     reportStatus(i);
-    const aMatrix = generateRandomMatrix(n)
-    const bMatrix = generateRandomMatrix(n)
-    const result = generateEmptyMatrix(n)
+    const aMatrix = generateRandomMatrix(i)
+    const bMatrix = generateRandomMatrix(i)
+    const result = generateEmptyMatrix(i)
 
     const startTime = performance.now()
     for (let row = 0; row <= i; row++) {

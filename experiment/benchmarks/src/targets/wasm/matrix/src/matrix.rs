@@ -39,6 +39,12 @@ impl Matrix {
         let value = JsValue::from(report_value);
         let _ = self.report_func.call1(&this, &value);
     }
+
+    fn rebuild_matrix(&mut self, n: usize) {
+        self.a_matrix = Matrix::generate_random_matrix(n);
+        self.b_matrix = Matrix::generate_random_matrix(n);
+        self.result = vec![vec![0; n + 1]; n + 1];
+    }
 }
 
 impl Runner for Matrix {
@@ -59,6 +65,7 @@ impl Runner for Matrix {
     fn before_iter(&mut self, i: usize) {
         let report = MatrixReport { iter: i };
         self.report(report);
+        self.rebuild_matrix(i);
     }
 
     fn after_iter(&mut self, _i: usize) {}
